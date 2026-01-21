@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>AI助手集成计划 - ChatGPT API</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="/dev/null" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">AI助手集成计划 - ChatGPT API</h1>
+</header>
+<h1 id="ai-助手集成计划---chatgpt-api">AI 助手集成计划 - ChatGPT API</h1>
+<h2 id="一功能需求分析">一、功能需求分析</h2>
+<h3 id="核心功能">1.1 核心功能</h3>
+<ul>
+<li><strong>智能问答</strong>：回答基础问题（FAQ相关）</li>
+<li><strong>页面导航</strong>：跳转到服务页面、会员页面等</li>
+<li><strong>表单操作</strong>：打开预约表单、咨询表单</li>
+<li><strong>联系信息</strong>：提供电话、邮箱等联系方式</li>
+<li><strong>服务推荐</strong>：根据用户问题智能推荐相关服务</li>
+</ul>
+<h3 id="uiux-设计">1.2 UI/UX 设计</h3>
+<ul>
+<li><strong>桌面端</strong>：右下角悬浮按钮（固定位置）</li>
+<li><strong>移动端</strong>：与现有 CTA 按钮并列显示（底部左侧和右侧）</li>
+<li><strong>聊天窗口</strong>：可展开/收起的对话界面</li>
+<li><strong>多语言支持</strong>：支持英语、简体中文、繁体中文</li>
+</ul>
+<h2 id="二技术架构">二、技术架构</h2>
+<h3 id="组件结构">2.1 组件结构</h3>
+<pre><code>src/
+  components/
+    AIChatbot/
+      ├── ChatButton.tsx          # 悬浮按钮
+      ├── ChatWindow.tsx          # 聊天窗口
+      ├── MessageList.tsx          # 消息列表
+      ├── MessageBubble.tsx       # 消息气泡
+      ├── InputArea.tsx           # 输入区域
+      └── ActionButtons.tsx        # 快捷操作按钮
+  services/
+    ├── chatgpt.ts               # ChatGPT API 服务
+    ├── promptTemplates.ts       # 提示词模板
+    └── actionHandler.ts         # 操作处理器（导航、表单等）
+  hooks/
+    └── useChatbot.ts            # Chatbot 状态管理 Hook</code></pre>
+<h3 id="api-集成方案">2.2 API 集成方案</h3>
+<p><strong>方案：使用环境变量 + Vercel Serverless Functions</strong></p>
+<p>由于直接在前端调用 ChatGPT API 会暴露 API Key，采用以下架构：</p>
+<pre><code>前端 (React) 
+  ↓
+Vercel Serverless Function (/api/chat)
+  ↓
+OpenAI ChatGPT API</code></pre>
+<p><strong>优势</strong>：</p>
+<ul>
+<li>API Key 安全存储在服务器端</li>
+<li>可以添加速率限制和错误处理</li>
+<li>支持流式响应（Streaming）</li>
+<li>易于监控和日志记录</li>
+</ul>
+<h3 id="数据流">2.3 数据流</h3>
+<pre class="mermaid"><code>graph TD
+    User[用户输入] --&gt; ChatWindow[聊天窗口]
+    ChatWindow --&gt; useChatbot[useChatbot Hook]
+    useChatbot --&gt; APICall[调用 /api/chat]
+    APICall --&gt; Serverless[Vercel Serverless Function]
+    Serverless --&gt; ChatGPT[OpenAI ChatGPT API]
+    ChatGPT --&gt; Serverless
+    Serverless --&gt; Streaming[流式响应]
+    Streaming --&gt; ChatWindow
+    ChatWindow --&gt; ActionHandler[操作处理器]
+    ActionHandler --&gt; Navigation[页面导航]
+    ActionHandler --&gt; Form[打开表单]
+    ActionHandler --&gt; Contact[显示联系方式]</code></pre>
+<h2 id="三实现细节">三、实现细节</h2>
+<h3 id="悬浮按钮设计">3.1 悬浮按钮设计</h3>
+<p><strong>桌面端</strong>：</p>
+<ul>
+<li>位置：<code>fixed bottom-6 right-6</code></li>
+<li>样式：圆形按钮，带 AI 图标</li>
+<li>动画：悬停效果、点击波纹</li>
+<li>z-index: <code>z-[9998]</code> (低于移动端按钮的 9999)</li>
+</ul>
+<p><strong>移动端</strong>：</p>
+<ul>
+<li>位置：<code>fixed bottom-[30px] right-[30px]</code></li>
+<li>与现有按钮并列：左侧 CTA 按钮，右侧 AI 按钮</li>
+<li>尺寸：与 CTA 按钮协调</li>
+<li>响应式：<code>sm:hidden</code> 隐藏，移动端显示</li>
+</ul>
+<h3 id="聊天窗口设计">3.2 聊天窗口设计</h3>
+<p><strong>布局</strong>：</p>
+<ul>
+<li>宽度：桌面端 400px，移动端全屏</li>
+<li>高度：桌面端 600px，移动端 80vh</li>
+<li>位置：从右下角滑入动画</li>
+<li>关闭：点击外部或关闭按钮</li>
+</ul>
+<p><strong>功能区域</strong>：</p>
+<ol type="1">
+<li><strong>头部</strong>：标题、语言切换、关闭按钮</li>
+<li><strong>消息区</strong>：滚动消息列表，支持 Markdown 渲染</li>
+<li><strong>输入区</strong>：文本输入、发送按钮、快捷操作</li>
+<li><strong>底部</strong>：常用问题快捷按钮</li>
+</ol>
+<h3 id="chatgpt-api-集成">3.3 ChatGPT API 集成</h3>
+<p><strong>提示词设计</strong>：</p>
+<ul>
+<li>系统提示：定义助手角色、可用功能、响应格式</li>
+<li>上下文管理：保留最近 10 轮对话</li>
+<li>功能调用：识别用户意图（导航、表单、联系等）</li>
+</ul>
+<p><strong>响应格式</strong>：</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>interface ChatResponse {</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  message<span class="op">:</span> <span class="dt">string</span><span class="op">;</span>           <span class="co">// AI 回复文本</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  action<span class="op">?:</span> {                 <span class="co">// 可选操作</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    type<span class="op">:</span> <span class="st">&#39;navigate&#39;</span> <span class="op">|</span> <span class="st">&#39;form&#39;</span> <span class="op">|</span> <span class="st">&#39;contact&#39;</span> <span class="op">|</span> <span class="st">&#39;service&#39;</span><span class="op">;</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    data<span class="op">:</span> <span class="dt">any</span><span class="op">;</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  }<span class="op">;</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  suggestions<span class="op">?:</span> <span class="dt">string</span>[]<span class="op">;</span>     <span class="co">// 推荐问题</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h3 id="操作处理">3.4 操作处理</h3>
+<p><strong>页面导航</strong>：</p>
+<ul>
+<li>识别关键词：“服务”、“会员”、“FAQ”、“关于我们”</li>
+<li>使用 React Router 或 hash 导航</li>
+<li>平滑滚动到目标区域</li>
+</ul>
+<p><strong>表单操作</strong>：</p>
+<ul>
+<li>打开预约表单模态框</li>
+<li>预填充相关信息（如服务类型）</li>
+<li>触发现有表单组件</li>
+</ul>
+<p><strong>联系信息</strong>：</p>
+<ul>
+<li>显示电话号码（可点击拨打）</li>
+<li>显示邮箱（可点击发送邮件）</li>
+<li>显示地址（可打开地图）</li>
+</ul>
+<p><strong>服务推荐</strong>：</p>
+<ul>
+<li>分析用户问题关键词</li>
+<li>匹配相关服务（护理、远程医疗、疼痛管理等）</li>
+<li>提供服务卡片和链接</li>
+</ul>
+<h2 id="四文件结构">四、文件结构</h2>
+<h3 id="新建文件">4.1 新建文件</h3>
+<p><strong>组件文件</strong>：</p>
+<ul>
+<li><code>src/components/AIChatbot/ChatButton.tsx</code></li>
+<li><code>src/components/AIChatbot/ChatWindow.tsx</code></li>
+<li><code>src/components/AIChatbot/MessageList.tsx</code></li>
+<li><code>src/components/AIChatbot/MessageBubble.tsx</code></li>
+<li><code>src/components/AIChatbot/InputArea.tsx</code></li>
+<li><code>src/components/AIChatbot/ActionButtons.tsx</code></li>
+</ul>
+<p><strong>服务文件</strong>：</p>
+<ul>
+<li><code>src/services/chatgpt.ts</code> - API 调用封装</li>
+<li><code>src/services/promptTemplates.ts</code> - 提示词模板</li>
+<li><code>src/services/actionHandler.ts</code> - 操作处理逻辑</li>
+</ul>
+<p><strong>Hooks</strong>：</p>
+<ul>
+<li><code>src/hooks/useChatbot.ts</code> - Chatbot 状态管理</li>
+</ul>
+<p><strong>API 路由</strong>（Vercel Serverless）：</p>
+<ul>
+<li><code>api/chat.ts</code> - ChatGPT API 代理</li>
+</ul>
+<p><strong>配置文件</strong>：</p>
+<ul>
+<li><code>.env.example</code> - 环境变量示例</li>
+<li><code>src/config/chatbot.ts</code> - Chatbot 配置</li>
+</ul>
+<h3 id="修改文件">4.2 修改文件</h3>
+<ul>
+<li><code>src/App.tsx</code> - 集成 AI Chatbot 组件</li>
+<li><code>package.json</code> - 添加依赖（如需要）</li>
+<li><code>vercel.json</code> - 配置 API 路由</li>
+</ul>
+<h2 id="五依赖包">五、依赖包</h2>
+<h3 id="必需依赖">5.1 必需依赖</h3>
+<div class="sourceCode" id="cb5"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;openai&quot;</span><span class="fu">:</span> <span class="st">&quot;^4.0.0&quot;</span>  <span class="er">//</span> <span class="er">OpenAI</span> <span class="er">SDK（用于</span> <span class="er">Serverless</span> <span class="er">Function）</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<h3 id="可选依赖">5.2 可选依赖</h3>
+<div class="sourceCode" id="cb6"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;react-markdown&quot;</span><span class="fu">:</span> <span class="st">&quot;^9.0.0&quot;</span><span class="fu">,</span>      <span class="er">//</span> <span class="er">Markdown</span> <span class="er">渲染</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;remark-gfm&quot;</span><span class="fu">:</span> <span class="st">&quot;^4.0.0&quot;</span><span class="fu">,</span>          <span class="er">//</span> <span class="er">GitHub</span> <span class="er">Flavored</span> <span class="er">Markdown</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;react-syntax-highlighter&quot;</span><span class="fu">:</span> <span class="st">&quot;^15.5.0&quot;</span>  <span class="er">//</span> <span class="er">代码高亮（如需要）</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<h2 id="六环境变量配置">六、环境变量配置</h2>
+<h3 id="必需变量">6.1 必需变量</h3>
+<pre class="env"><code>OPENAI_API_KEY=sk-...  # OpenAI API Key</code></pre>
+<h3 id="vercel-配置">6.2 Vercel 配置</h3>
+<p>在 Vercel Dashboard 中设置：</p>
+<ul>
+<li>Settings → Environment Variables</li>
+<li>添加 <code>OPENAI_API_KEY</code></li>
+<li>选择环境：Production, Preview, Development</li>
+</ul>
+<h2 id="七提示词设计">七、提示词设计</h2>
+<h3 id="系统提示词模板">7.1 系统提示词模板</h3>
+<pre><code>你是 Careby 的智能助手。Careby 是位于加拿大安大略省的家庭护理服务平台。
+
+你的职责：
+1. 回答用户关于 Careby 服务的问题
+2. 帮助用户导航到相关页面
+3. 协助用户预约咨询
+4. 提供联系信息
+
+可用功能：
+- 页面导航：服务页面、会员方案、FAQ、关于我们
+- 表单操作：打开预约表单
+- 联系信息：电话 1-646-578-9920，邮箱 hello@getcareby.ca
+- 服务推荐：根据用户需求推荐合适的服务
+
+响应格式：
+- 友好、专业、简洁
+- 支持 Markdown 格式
+- 识别用户意图并提供相应操作
+
+当前语言：{language}</code></pre>
+<h3 id="多语言支持">7.2 多语言支持</h3>
+<ul>
+<li>根据网站当前语言动态调整提示词</li>
+<li>支持英语、简体中文、繁体中文</li>
+</ul>
+<h2 id="八安全考虑">八、安全考虑</h2>
+<h3 id="api-key-保护">8.1 API Key 保护</h3>
+<ul>
+<li>✅ 存储在 Vercel 环境变量中</li>
+<li>✅ 仅在 Serverless Function 中使用</li>
+<li>✅ 不在前端代码中暴露</li>
+</ul>
+<h3 id="速率限制">8.2 速率限制</h3>
+<ul>
+<li>每个用户每分钟最多 10 次请求</li>
+<li>使用 IP 地址或用户标识符限制</li>
+<li>防止滥用和成本控制</li>
+</ul>
+<h3 id="内容过滤">8.3 内容过滤</h3>
+<ul>
+<li>过滤不当内容</li>
+<li>限制对话主题范围（仅限 Careby 相关）</li>
+<li>错误处理和降级方案</li>
+</ul>
+<h2 id="九用户体验优化">九、用户体验优化</h2>
+<h3 id="加载状态">9.1 加载状态</h3>
+<ul>
+<li>显示打字动画（Typing indicator）</li>
+<li>流式响应显示（逐字显示）</li>
+<li>错误提示和重试机制</li>
+</ul>
+<h3 id="快捷操作">9.2 快捷操作</h3>
+<ul>
+<li>常用问题按钮（“如何预约？”、“服务价格？”等）</li>
+<li>快速导航按钮</li>
+<li>一键联系按钮</li>
+</ul>
+<h3 id="历史记录">9.3 历史记录</h3>
+<ul>
+<li>本地存储对话历史（localStorage）</li>
+<li>刷新页面后保留历史</li>
+<li>清除历史功能</li>
+</ul>
+<h2 id="十移动端适配">十、移动端适配</h2>
+<h3 id="按钮布局">10.1 按钮布局</h3>
+<pre><code>移动端底部布局：
+┌─────────────────────────────┐
+│  [CTA 按钮]    [AI 按钮]   │  ← 30px from bottom
+└─────────────────────────────┘
+   left: 30px    right: 30px</code></pre>
+<h3 id="响应式设计">10.2 响应式设计</h3>
+<ul>
+<li>按钮大小适配移动端</li>
+<li>聊天窗口移动端全屏显示</li>
+<li>触摸友好的交互设计</li>
+<li>键盘弹出时自动调整布局</li>
+</ul>
+<h2 id="十一测试计划">十一、测试计划</h2>
+<h3 id="功能测试">11.1 功能测试</h3>
+<ul class="task-list">
+<li><input type="checkbox" disabled="" />
+按钮显示和隐藏</li>
+<li><input type="checkbox" disabled="" />
+聊天窗口打开/关闭</li>
+<li><input type="checkbox" disabled="" />
+消息发送和接收</li>
+<li><input type="checkbox" disabled="" />
+页面导航功能</li>
+<li><input type="checkbox" disabled="" />
+表单打开功能</li>
+<li><input type="checkbox" disabled="" />
+联系信息显示</li>
+<li><input type="checkbox" disabled="" />
+多语言切换</li>
+</ul>
+<h3 id="性能测试">11.2 性能测试</h3>
+<ul class="task-list">
+<li><input type="checkbox" disabled="" />
+API 响应时间</li>
+<li><input type="checkbox" disabled="" />
+流式响应性能</li>
+<li><input type="checkbox" disabled="" />
+移动端性能</li>
+<li><input type="checkbox" disabled="" />
+内存使用情况</li>
+</ul>
+<h3 id="兼容性测试">11.3 兼容性测试</h3>
+<ul class="task-list">
+<li><input type="checkbox" disabled="" />
+桌面浏览器（Chrome, Safari, Firefox, Edge）</li>
+<li><input type="checkbox" disabled="" />
+移动浏览器（iOS Safari, Android Chrome）</li>
+<li><input type="checkbox" disabled="" />
+不同屏幕尺寸</li>
+</ul>
+<h2 id="十二实施步骤">十二、实施步骤</h2>
+<h3 id="phase-1-基础架构1-2天">Phase 1: 基础架构（1-2天）</h3>
+<ol type="1">
+<li>创建组件结构</li>
+<li>实现悬浮按钮和聊天窗口 UI</li>
+<li>配置 Vercel Serverless Function</li>
+<li>设置环境变量</li>
+</ol>
+<h3 id="phase-2-api-集成1-2天">Phase 2: API 集成（1-2天）</h3>
+<ol type="1">
+<li>实现 ChatGPT API 调用</li>
+<li>设计提示词模板</li>
+<li>实现流式响应</li>
+<li>错误处理</li>
+</ol>
+<h3 id="phase-3-功能实现2-3天">Phase 3: 功能实现（2-3天）</h3>
+<ol type="1">
+<li>页面导航功能</li>
+<li>表单操作功能</li>
+<li>联系信息功能</li>
+<li>服务推荐功能</li>
+</ol>
+<h3 id="phase-4-优化和测试1-2天">Phase 4: 优化和测试（1-2天）</h3>
+<ol type="1">
+<li>移动端适配</li>
+<li>性能优化</li>
+<li>用户体验优化</li>
+<li>全面测试</li>
+</ol>
+<h2 id="十三成本估算">十三、成本估算</h2>
+<h3 id="openai-api-成本">13.1 OpenAI API 成本</h3>
+<ul>
+<li>GPT-4 Turbo: ~$0.01 per 1K tokens</li>
+<li>平均对话：~500 tokens per request</li>
+<li>预计月成本：$50-200（取决于使用量）</li>
+</ul>
+<h3 id="优化建议">13.2 优化建议</h3>
+<ul>
+<li>使用 GPT-3.5 Turbo 降低成本（~$0.0005 per 1K tokens）</li>
+<li>实现缓存机制</li>
+<li>设置使用量限制</li>
+</ul>
+<h2 id="十四后续扩展">十四、后续扩展</h2>
+<h3 id="高级功能">14.1 高级功能</h3>
+<ul>
+<li>语音输入/输出</li>
+<li>图片识别（上传服务相关图片）</li>
+<li>多轮对话上下文优化</li>
+<li>用户偏好学习</li>
+</ul>
+<h3 id="分析功能">14.2 分析功能</h3>
+<ul>
+<li>对话日志分析</li>
+<li>常见问题统计</li>
+<li>用户行为追踪</li>
+<li>A/B 测试不同提示词</li>
+</ul>
+<hr />
+<p><strong>关键文件路径</strong>：</p>
+<ul>
+<li>组件：<code>src/components/AIChatbot/</code></li>
+<li>API：<code>api/chat.ts</code></li>
+<li>配置：<code>src/config/chatbot.ts</code></li>
+<li>集成：<code>src/App.tsx</code></li>
+</ul>
+<p><strong>环境变量</strong>：</p>
+<ul>
+<li><code>OPENAI_API_KEY</code> - 在 Vercel Dashboard 中配置</li>
+</ul>
+</body>
+</html>

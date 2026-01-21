@@ -1,0 +1,365 @@
+/* Fonts loaded asynchronously via preload in index.html to avoid render blocking */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Use system fonts first for instant rendering, then upgrade to Google Fonts when loaded */
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* Apply Google Fonts only after they're loaded to avoid FOIT */
+.fonts-loaded :root {
+  font-family: 'Inter', 'Noto Sans SC', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+body {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Performance optimizations */
+img, video {
+  content-visibility: auto;
+}
+
+/* Mobile SEO optimizations */
+@media (max-width: 768px) {
+  /* Ensure minimum touch target size (44x44px) */
+  button, a, input, select, textarea {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Optimize text readability on mobile */
+  body {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+  
+  /* Improve image loading on mobile */
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+/* Hide all video controls and play buttons */
+video::-webkit-media-controls {
+  display: none !important;
+}
+
+video::-webkit-media-controls-enclosure {
+  display: none !important;
+}
+
+video::-webkit-media-controls-panel {
+  display: none !important;
+}
+
+video::-webkit-media-controls-play-button {
+  display: none !important;
+}
+
+video::-webkit-media-controls-start-playback-button {
+  display: none !important;
+}
+
+video::-webkit-media-controls-timeline {
+  display: none !important;
+}
+
+video::-webkit-media-controls-current-time-display {
+  display: none !important;
+}
+
+video::-webkit-media-controls-time-remaining-display {
+  display: none !important;
+}
+
+video::-webkit-media-controls-mute-button {
+  display: none !important;
+}
+
+video::-webkit-media-controls-volume-slider {
+  display: none !important;
+}
+
+video::-webkit-media-controls-fullscreen-button {
+  display: none !important;
+}
+
+/* Hide controls for all browsers */
+video[controls] {
+  display: none;
+}
+
+video {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+/* Lazy loading support */
+img[loading="lazy"] {
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+img[loading="lazy"].loaded {
+  opacity: 1;
+}
+
+/* Text selection color */
+::selection {
+  background-color: #FACC15;
+  color: #0F172A;
+}
+
+::-moz-selection {
+  background-color: #FACC15;
+  color: #0F172A;
+}
+
+/* Hand-drawn underline effect */
+.hand-drawn-underline {
+  position: relative;
+  display: inline-block;
+  z-index: 2;
+}
+
+.hand-drawn-underline::before {
+  content: '';
+  position: absolute;
+  left: -0.15em;
+  right: -0.15em;
+  bottom: 0px;
+  height: 0.4em;
+  background: linear-gradient(to right, #FACC15 0%, #FACC15 70%, rgba(250, 204, 21, 0.3) 100%);
+  z-index: -1;
+  transform: rotate(-2deg);
+  transform-origin: left bottom;
+  opacity: 0.85;
+  border-radius: 50px;
+  clip-path: polygon(
+    0% 20%,
+    2% 0%,
+    98% 40%,
+    100% 60%,
+    98% 100%,
+    2% 80%
+  );
+  animation: draw-underline 0.6s ease-out 0.3s both;
+}
+
+@keyframes draw-underline {
+  from {
+    transform: scaleX(0) rotate(-2deg);
+    transform-origin: left bottom;
+  }
+  to {
+    transform: scaleX(1) rotate(-2deg);
+    transform-origin: left bottom;
+  }
+}
+
+/* Hero specific underline - moved down 5px */
+.hand-drawn-underline-hero {
+  position: relative;
+  display: inline-block;
+  z-index: 2;
+}
+
+.hand-drawn-underline-hero::before {
+  content: '';
+  position: absolute;
+  left: -0.15em;
+  right: -0.15em;
+  bottom: -5px;
+  height: 0.4em;
+  background: linear-gradient(to right, #FACC15 0%, #FACC15 70%, rgba(250, 204, 21, 0.3) 100%);
+  z-index: -1;
+  transform: rotate(-2deg);
+  transform-origin: left bottom;
+  opacity: 0.85;
+  border-radius: 50px;
+  clip-path: polygon(
+    0% 20%,
+    2% 0%,
+    98% 40%,
+    100% 60%,
+    98% 100%,
+    2% 80%
+  );
+  animation: draw-underline 0.6s ease-out 0.3s both;
+}
+
+/* Jade-like button effect with random sparkles */
+.animated-gradient-button {
+  background: linear-gradient(
+    135deg,
+    #3B8C75 0%,
+    #4BA68A 30%,
+    #3B8C75 60%,
+    #2A6B5A 100%
+  );
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+}
+
+/* Main slow shimmer effect */
+.animated-gradient-button::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(
+    circle at 30% 30%,
+    rgba(255, 255, 255, 0.15) 0%,
+    rgba(255, 255, 255, 0.05) 20%,
+    transparent 50%
+  );
+  animation: jade-shimmer 15s ease-in-out infinite;
+  opacity: 0.6;
+}
+
+/* Secondary shimmer */
+.animated-gradient-button::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(
+    circle at 70% 70%,
+    rgba(255, 255, 255, 0.12) 0%,
+    rgba(255, 255, 255, 0.04) 25%,
+    transparent 60%
+  );
+  animation: jade-shimmer 20s ease-in-out infinite reverse;
+  opacity: 0.5;
+}
+
+@keyframes jade-shimmer {
+  0%, 100% {
+    transform: translate(0, 0) rotate(0deg);
+    opacity: 0.3;
+  }
+  25% {
+    transform: translate(20px, -30px) rotate(5deg);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translate(-15px, 20px) rotate(-3deg);
+    opacity: 0.4;
+  }
+  75% {
+    transform: translate(30px, 10px) rotate(2deg);
+    opacity: 0.7;
+  }
+}
+
+/* Sparkle points */
+.animated-gradient-button .sparkle {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.6);
+  animation: sparkle 8s ease-in-out infinite;
+}
+
+.animated-gradient-button .sparkle:nth-child(1) {
+  top: 20%;
+  left: 15%;
+  animation-delay: 0s;
+  animation-duration: 10s;
+}
+
+.animated-gradient-button .sparkle:nth-child(2) {
+  top: 60%;
+  left: 40%;
+  animation-delay: 2s;
+  animation-duration: 12s;
+}
+
+.animated-gradient-button .sparkle:nth-child(3) {
+  top: 35%;
+  left: 70%;
+  animation-delay: 4s;
+  animation-duration: 9s;
+}
+
+.animated-gradient-button .sparkle:nth-child(4) {
+  top: 75%;
+  left: 25%;
+  animation-delay: 3s;
+  animation-duration: 11s;
+}
+
+.animated-gradient-button .sparkle:nth-child(5) {
+  top: 45%;
+  left: 85%;
+  animation-delay: 5s;
+  animation-duration: 13s;
+}
+
+@keyframes sparkle {
+  0%, 100% {
+    opacity: 0;
+    transform: scale(0) translate(0, 0);
+  }
+  10% {
+    opacity: 1;
+    transform: scale(1) translate(0, 0);
+  }
+  20% {
+    opacity: 0.8;
+    transform: scale(1.2) translate(5px, -5px);
+  }
+  30% {
+    opacity: 0.6;
+    transform: scale(0.9) translate(-3px, 3px);
+  }
+  40% {
+    opacity: 0.9;
+    transform: scale(1.1) translate(2px, -2px);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1) translate(-4px, 4px);
+  }
+  60% {
+    opacity: 0.5;
+    transform: scale(0.8) translate(3px, -3px);
+  }
+  70% {
+    opacity: 0.9;
+    transform: scale(1.3) translate(-2px, 2px);
+  }
+  80% {
+    opacity: 0.6;
+    transform: scale(1) translate(4px, -4px);
+  }
+  90% {
+    opacity: 0.8;
+    transform: scale(1.1) translate(-3px, 3px);
+  }
+}
+
+.animated-gradient-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(59, 140, 117, 0.5);
+}
+
+.animated-gradient-button:hover::before,
+.animated-gradient-button:hover::after {
+  animation-duration: 10s;
+}

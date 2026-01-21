@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Google Tag Manager -->
+    <!-- TODO: Replace GTM-XXXXXXX with your actual GTM ID -->
+    <!-- 
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-XXXXXXX');</script>
+    -->
+    <!-- End Google Tag Manager -->
+    
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/careby.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    
+    <!-- Google Search Console Verification -->
+    <meta name="google-site-verification" content="Hm1jeHEhFI1dQRdCuvnMC-AAaR29NTRNkl_9MqGXjtg" />
+    
+    <!-- Primary Meta Tags -->
+    <meta name="title" content="Careby - Premium Home Care Services in Ontario" />
+    <meta name="description" content="Careby provides comprehensive home care services including caregiver matching, 24/7 telehealth access, medical accompaniment, and pain management in Ontario, Canada." />
+    <meta name="keywords" content="home care services Ontario, personal support worker Toronto, caregiver matching Canada, 24/7 telehealth Ontario, bilingual home care" />
+    
+    <!-- Hreflang Tags for Multi-language -->
+    <link rel="alternate" hreflang="en" href="https://getcareby.ca/" />
+    <link rel="alternate" hreflang="zh-Hans" href="https://getcareby.ca/" />
+    <link rel="alternate" hreflang="zh-Hant" href="https://getcareby.ca/" />
+    <link rel="alternate" hreflang="x-default" href="https://getcareby.ca/" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://getcareby.ca/" />
+    <meta property="og:title" content="Careby - Premium Home Care Services in Ontario" />
+    <meta property="og:description" content="Comprehensive home care services including caregiver matching, 24/7 telehealth access, and pain management in Ontario, Canada." />
+    <meta property="og:image" content="https://getcareby.ca/Hero.png" />
+    <meta property="og:locale" content="en_CA" />
+    <meta property="og:locale:alternate" content="zh_CN" />
+    <meta property="og:locale:alternate" content="zh_TW" />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://getcareby.ca/" />
+    <meta property="twitter:title" content="Careby - Premium Home Care Services in Ontario" />
+    <meta property="twitter:description" content="Comprehensive home care services including caregiver matching, 24/7 telehealth access, and pain management in Ontario, Canada." />
+    <meta property="twitter:image" content="https://getcareby.ca/Hero.png" />
+    
+    <!-- DNS prefetch for external resources -->
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+    
+    <!-- Preconnect to external resources (only for critical resources) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    
+    <!-- Fonts - Load Material Symbols immediately (critical for icons), defer text fonts -->
+    <!-- Material Symbols - Load immediately as icons are critical UI elements -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&display=swap" /></noscript>
+    
+    <!-- Text fonts - Load after page load to avoid blocking critical rendering -->
+    <script>
+      // Load text fonts asynchronously after page load
+      window.addEventListener('load', function() {
+        var fontLink = document.createElement('link');
+        fontLink.rel = 'stylesheet';
+        fontLink.href = 'https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+SC:wght@400;600;700&display=swap';
+        document.head.appendChild(fontLink);
+        
+        // Mark fonts as loaded
+        document.documentElement.classList.add('fonts-loaded');
+      });
+    </script>
+    
+    <!-- Preload critical assets -->
+    <link rel="preload" as="image" href="/Hero.png" />
+    <link rel="preload" as="image" href="/carebylogo_white.svg" />
+    
+    <!-- Google Analytics 4 -->
+    <!-- TODO: Replace G-XXXXXXXXXX with your actual GA4 Measurement ID -->
+    <!--
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-XXXXXXXXXX');
+    </script>
+    -->
+    <!-- End Google Analytics 4 -->
+    
+    <title>Careby - Premium Home Care Services in Ontario</title>
+  </head>
+  <body>
+    <!-- Google Tag Manager (noscript) -->
+    <!-- TODO: Replace GTM-XXXXXXX with your actual GTM ID -->
+    <!--
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-XXXXXXX"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    -->
+    <!-- End Google Tag Manager (noscript) -->
+    
+    <div id="root"></div>
+    <!-- Load JavaScript with defer to avoid blocking render -->
+    <script type="module" src="/src/main.tsx" defer></script>
+  </body>
+</html>
