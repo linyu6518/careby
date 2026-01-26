@@ -4,7 +4,8 @@ import ComingSoon from './ComingSoon'
 import SEO from './components/SEO'
 import { generateHomepageSchema } from './utils/structuredData'
 import { convertObjectToTraditional } from './utils/convertToTraditional'
-import AIChatbot from './components/AIChatbot'
+// import AIChatbot from './components/AIChatbot' // Hidden - using Elfsight AI Chatbot instead
+// import VoiceInputButton from './components/VoiceInputButton' // Hidden
 
 const fadeUp = {
   hidden: { opacity: 0, y: 32 },
@@ -50,191 +51,143 @@ const content = {
       title: 'Comprehensive Health and Care Services',
       subtitle: 'AI-powered technology connecting quality medical and life resources.',
       service1: {
-        title: 'Professional Home Care',
-        subtitle: 'Gold Standard Certified Caregivers Who Actually Show Up',
-        desc: "We don't just send bodies—we send professionals. Every Careby caregiver undergoes our rigorous 10-step Gold Standard certification process. Only 1 in 8 applicants make the cut.",
+        title: 'Healthcare Access & System Navigation',
+        subtitle: 'Skip the Wait. Get Treatment Now.',
+        desc: '6-month waits for specialists. 12-month waits for MRIs. No family doctor accepting patients. We navigate Ontario\'s healthcare system to get you the care you need—fast.',
         details: {
-          services: [
-            {
-              category: 'Post-Surgical Home Care',
-              items: [
-                'Wound care & dressing changes',
-                'Pain management & medication administration',
-                'Mobility assistance & physical therapy support',
-                'Post-op monitoring & complication detection',
-                'Coordination with surgical team',
-              ],
-            },
-            {
-              category: 'Medical Accompaniment',
-              items: [
-                'Transportation to appointments',
-                'Communication with healthcare providers',
-                'Medication pickup & coordination',
-                'Detailed visit notes shared with family',
-              ],
-            },
-            {
-              category: 'Daily Living Support (PSW Services)',
-              items: [
-                'Personal care (bathing, dressing, grooming)',
-                'Meal preparation & feeding assistance',
-                'Medication reminders & administration',
-                'Light housekeeping & errands',
-                'Companionship & social engagement',
-              ],
-            },
-          ],
-          differentiators: [
-            'Only Gold Standard certified caregivers',
-            'Real-time family portal (know what\'s happening 24/7)',
-            'Medical team coordination (we talk to your doctors)',
-            'Cultural & language matching (English, Mandarin, Cantonese)',
-            'Guaranteed backup coverage (never a no-show)',
-          ],
-          pricing: [
-            'Hourly Care: $35-$45/hour (standard) | $55-$65/hour (specialized/post-surgical)',
-            '4-Hour Minimum Visit: Starting at $140',
-            'Overnight Care (12 hours): $420-$540',
-            '24/7 Live-In Care: $350-$450/day',
-          ],
+          problem: {
+            title: 'The Problem',
+            items: [
+              '6-month waits for specialists',
+              '12-month waits for MRIs',
+              'No family doctor accepting patients',
+            ],
+          },
+          solutions: {
+            title: 'Our Solution',
+            items: [
+              'Same-day virtual doctors - English, Mandarin, Cantonese (via GoToDoctor)',
+              'Specialist Wait-Time Navigator - We find OHIP-covered specialists with 2-4 week waits instead of 6-12 months',
+              'Fast-track diagnostic testing - MRI, ultrasound, CT scans in 2-4 weeks (not 6-12 months)',
+              'Medical accompaniment - Bilingual staff attend appointments with you, translate, take notes',
+              'Prescription delivery - Medications to your door, auto-refills',
+            ],
+          },
+          realExample: 'Real Example: Family doctor refers to psychiatrist → 6-month public waitlist → We found OHIP-covered option → 3-week wait',
+          result: 'Get into the system fast. Get treatment now.',
         },
       },
       service2: {
-        title: 'Advanced Fall Detection & Health Monitoring',
-        subtitle: 'AI-Powered Radar Technology That Predicts Falls Before They Happen',
-        desc: "Fall detection waits until someone's already on the ground. Our radar-based monitoring system detects patterns before falls occur.",
+        title: 'Trusted In-Home Care Professionals',
+        subtitle: 'Qualified Professionals You Actually Trust in Your Home',
+        desc: 'Need help at home but terrified of hiring strangers from Kijiji. Agencies send whoever\'s available. We send professionals you can trust.',
         details: {
-          howItWorks: [
-            'Contactless radar sensors installed in key rooms (no cameras, no wearables)',
-            'AI algorithms analyze gait, balance, movement patterns 24/7',
-            'Early warning system alerts family & caregivers of increasing fall risk',
-            'Instant emergency response if a fall is detected',
-            'Comprehensive data shared with care team for better decision-making',
-          ],
-          whatWeMonitor: [
-            'Walking speed & gait changes',
-            'Balance deterioration',
-            'Room-to-room movement patterns',
-            'Sleep quality & overnight activity',
-            'Time spent in bathroom (UTI indicator)',
-            'Overall mobility trends',
-          ],
-          familyPortal: 'Real-time monitoring dashboard accessible from your phone. See activity patterns, receive alerts, track health trends.',
-          pricing: [
-            'Equipment Installation: $299 one-time',
-            'Monthly Monitoring Service: $79-$99/month',
-            'Bundle with Home Care: Save 15% when combined with care services',
-          ],
-          idealFor: 'Post-surgical patients • Seniors with mobility challenges • Anyone with fall history • Families seeking peace of mind',
+          problem: {
+            title: 'The Problem',
+            items: [
+              'Need help at home but terrified of hiring strangers from Kijiji',
+              'Agencies send whoever\'s available',
+            ],
+          },
+          solutions: {
+            title: 'Our Solution',
+            items: [
+              'Rigorous screening - Criminal checks, license verification, skills testing, reference checks - Only 1 in 8 pass',
+              'Personal Support Workers - Help with bathing, dressing, meals, mobility',
+              'Registered Nurses & Practical Nurses - Wound care, medication management, health monitoring',
+              'Therapists - Physiotherapy, massage therapy, occupational therapy',
+              'Specialized support - Nutritionists, social workers, mental health counselors',
+              'Perfect matching - Cultural fit, language, personality, skills',
+              '48-hour replacement - Not working out? We find someone new, no questions asked',
+            ],
+          },
+          result: 'Qualified professionals you actually trust in your home.',
         },
       },
       service3: {
-        title: 'Instant Telehealth Access',
-        subtitle: 'Connect to Doctors in Minutes, Not Days',
-        desc: 'Powered by GotoDoctors technology, Careby provides on-demand access to Ontario-licensed physicians and medical specialists—no waiting rooms, no weeks-long appointments.',
+        title: 'AI Health Monitoring + Expert Analysis',
+        subtitle: 'Know What Your Body Is Telling You. Know What to Do About It.',
+        desc: 'Your smartwatch tracks everything but nobody tells you what it means or what to do. We combine AI monitoring with expert healthcare analysis.',
         details: {
-          services: [
-            {
-              category: 'Services available',
-              items: [
-                'Virtual doctor consultations - Same-day or immediate access for urgent concerns',
-                'Prescription refills & renewals - Fast processing and pharmacy coordination',
-                'Lab & diagnostic requisitions - Order tests without seeing a GP first',
-                'Specialist referrals - Fast-tracked access to specialists',
-                'Post-surgical follow-ups - Virtual check-ins with surgical teams',
-                'Chronic disease management - Ongoing monitoring with virtual care team',
-              ],
-            },
-          ],
-          howItWorks: 'Book through Careby platform → Connect via video in minutes → Prescriptions sent directly to your pharmacy → Medical records updated automatically',
-          languages: 'English, Mandarin, Cantonese',
-          pricing: [
-            'Pay-Per-Visit: $79/consultation',
-            'Monthly Subscription: $49/month (unlimited consultations + priority booking)',
-            'Family Plan (up to 4 members): $99/month',
-            'Bundle with Care Services: Included free with Premium care packages',
-          ],
+          problem: {
+            title: 'The Problem',
+            items: [
+              'Your smartwatch tracks everything but nobody tells you what it means or what to do',
+            ],
+          },
+          solutions: {
+            title: 'Our Solution',
+            items: [
+              'AI monitoring technology - Fall detection, walking patterns, sleep quality, heart health, 60+ health markers',
+              'Monthly expert review - Real healthcare professionals analyze your data',
+              'Actionable recommendations - Specific nutrition plans, exercise protocols, lifestyle changes',
+              'East meets West - Combines Western medicine diagnostics with Traditional Chinese Medicine approach',
+              'Early warning system - Catch health decline before it becomes a crisis',
+            ],
+          },
+          result: 'Know what your body is telling you. Know what to do about it.',
         },
       },
       service4: {
-        title: 'Regenerative Medicine & Longevity',
-        subtitle: 'Banking Your Health for the Future',
-        desc: 'In partnership with Progenics, Careby offers cutting-edge stem cell and exosome banking—preserving your body\'s most powerful healing resources for future use.',
+        title: 'Benefits Navigation & Medical Verification',
+        subtitle: 'Stop Leaving Money on the Table. Make Informed Decisions.',
+        desc: 'Leaving $5,000-$15,000 in benefits unclaimed. Insurance denies claims. Don\'t know if that "miracle treatment" is real or a scam. We help you navigate the system and verify what\'s legitimate.',
         details: {
-          services: [
-            {
-              category: 'Stem Cell Banking',
-              items: [
-                'Collection and cryogenic storage of your stem cells at optimal health',
-                'Future availability for regenerative treatments',
-                'Banking now = younger, healthier cells available later',
-                'Secure, medically supervised storage facility',
-              ],
-            },
-            {
-              category: 'Exosome Banking',
-              items: [
-                'Advanced cellular communication molecules with anti-aging potential',
-                'Collected and stored for future therapeutic use',
-                'Emerging applications in tissue repair, immune support, and longevity',
-                'Research-backed preservation protocols',
-              ],
-            },
-          ],
-          whyBank: 'Your cells are healthiest today. Banking preserves your biology at its peak for future regenerative treatments, anti-aging therapies, and health optimization.',
-          comingSoon: 'Therapeutic administration protocols for anti-aging, joint repair, immune enhancement, and performance optimization.',
-          pricing: [
-            'Initial Consultation: $200 (applied to banking fees)',
-            'Stem Cell Collection & Banking: $2,500-$4,500 (first year)',
-            'Annual Storage Fees: $300/year',
-            'Exosome Banking: $3,500-$6,000 (first year) + $400/year storage',
-          ],
-          idealFor: 'Health-conscious individuals • Those with family history of degenerative conditions • Anyone interested in longevity optimization • Pre-retirement planning',
+          problem: {
+            title: 'The Problem',
+            items: [
+              'Leaving $5,000-$15,000 in benefits unclaimed',
+              'Insurance denies claims',
+              'Don\'t know if that "miracle treatment" is real or a scam',
+            ],
+          },
+          solutions: {
+            title: 'Our Solution',
+            items: [
+              'Benefits detective work - Find every government program you qualify for (OHIP+, disability support, assistive devices, tax credits)',
+              'Insurance optimization - We submit claims properly, appeal denials (70% success rate)',
+              'Care financing - Reverse mortgage consultations, payment options',
+              'Second opinion coordination - Connect you with top specialists, handle all logistics',
+              'Medical fact-checking - Is that treatment legitimate? We verify so you don\'t waste money on scams',
+            ],
+          },
+          result: 'Stop leaving money on the table. Make informed decisions.',
         },
       },
       service5: {
-        title: 'Complete Care Coordination',
-        subtitle: 'One Team Managing Your Entire Health Journey',
-        desc: "This is what separates Careby from every other home care company: we don't just provide caregivers—we coordinate your entire health ecosystem.",
+        title: 'Automated Wellness Hub Solutions',
+        subtitle: 'For Business Owners & Entrepreneurs',
+        desc: 'Traditional wellness businesses need expensive staff. Limited hours = limited revenue. We provide AI-powered wellness equipment solutions—exclusive in Canada.',
         details: {
-          services: [
-            {
-              category: 'Medical Team Communication',
-              items: [
-                'Direct communication with your doctors, surgeons, specialists',
-                'Medical appointment scheduling & transportation',
-                'Treatment plan adherence & monitoring',
-                'Medication reconciliation & management',
-              ],
-            },
-            {
-              category: 'Family Updates & Transparency',
-              items: [
-                'Daily care notes & health updates via family portal',
-                'Weekly coordination calls (premium packages)',
-                '24/7 access to care coordinators',
-                'Real-time alerts for any concerns',
-              ],
-            },
-            {
-              category: 'Insurance & Funding Navigation',
-              items: [
-                'Private insurance claims assistance',
-                'OHIP coverage coordination',
-                'Veterans Affairs liaison services',
-                'Equipment funding & procurement support',
-              ],
-            },
-          ],
-          integratedPlatform: 'All your health information in one place—accessible to caregivers, family, and medical team (with your permission):',
-          platformFeatures: [
-            'Care visit notes & activities',
-            'Fall detection & monitoring data',
-            'Telehealth consultation records',
-            'Medication schedules & adherence',
-            'Health vitals & trend analysis',
-          ],
+          problem: {
+            title: 'The Problem',
+            items: [
+              'Traditional wellness businesses need expensive staff',
+              'Limited hours = limited revenue',
+            ],
+          },
+          solutions: {
+            title: 'Our Solution - Exclusive in Canada',
+            items: [
+              'AI-powered wellness equipment - Proven technology from 2,000+ locations in China',
+              'Zero employees needed - Intelligent massage chairs, automated acupuncture beds, robotic massage tables, health testing stations',
+              '24/7 operation - Customers pay and use equipment themselves',
+              'Two options: Buy equipment to add to your existing clinic, gym, spa, or hotel | Launch complete automated wellness center with our turnkey support',
+            ],
+          },
+          whatWeProvide: {
+            title: 'What We Provide',
+            items: [
+              'Equipment (self-service payment, AI customization, auto-sanitization)',
+              'Marketing and branding support',
+              'Site selection and setup guidance',
+              'Operations training',
+              'Ongoing technical support',
+            ],
+          },
+          roi: 'Typical ROI: 15-24 months',
+          operatingCosts: 'Operating Costs: Minimal (no payroll, just rent and cleaning)',
+          result: 'Passive wellness income with proven technology.',
         },
       },
       service6: {
@@ -431,191 +384,143 @@ const content = {
       title: '全方位的健康与照护服务',
       subtitle: '以AI科技为核心，连接优质医疗与生活资源。',
       service1: {
-        title: '专业家庭护理',
-        subtitle: '黄金标准认证护理人员，真正到岗服务',
-        desc: '我们不只是派人——我们派专业人士。每位 Careby 护理人员都经过我们严格的10步黄金标准认证流程。只有八分之一的申请者能够通过。',
+        title: '医疗系统导航与快速就医',
+        subtitle: '跳过等待。立即获得治疗。',
+        desc: '专科医生等待6个月。MRI等待12个月。没有家庭医生接受新患者。我们帮您导航安大略省的医疗系统，快速获得您需要的护理。',
         details: {
-          services: [
-            {
-              category: '术后家庭护理',
-              items: [
-                '伤口护理与换药',
-                '疼痛管理与用药管理',
-                '行动辅助与物理治疗支持',
-                '术后监测与并发症检测',
-                '与手术团队协调',
-              ],
-            },
-            {
-              category: '医疗陪同',
-              items: [
-                '预约就诊接送',
-                '与医疗提供者沟通',
-                '取药与协调',
-                '与家人分享详细访问记录',
-              ],
-            },
-            {
-              category: '日常生活支持（PSW服务）',
-              items: [
-                '个人护理（洗澡、穿衣、梳妆）',
-                '备餐与喂食协助',
-                '用药提醒与管理',
-                '轻度家务与跑腿',
-                '陪伴与社交参与',
-              ],
-            },
-          ],
-          differentiators: [
-            '仅黄金标准认证护理人员',
-            '实时家庭门户（24/7了解情况）',
-            '医疗团队协调（我们与您的医生沟通）',
-            '文化与语言匹配（英语、普通话、粤语）',
-            '保证备用覆盖（永不缺席）',
-          ],
-          pricing: [
-            '按小时护理：$35-$45/小时（标准）| $55-$65/小时（专业/术后）',
-            '4小时最低访问：起价 $140',
-            '过夜护理（12小时）：$420-$540',
-            '24/7 住家护理：$350-$450/天',
-          ],
+          problem: {
+            title: '面临的问题',
+            items: [
+              '专科医生等待6个月',
+              'MRI等待12个月',
+              '没有家庭医生接受新患者',
+            ],
+          },
+          solutions: {
+            title: '我们的解决方案',
+            items: [
+              '当日虚拟医生 - 英语、普通话、粤语（通过GoToDoctor）',
+              '专科等待时间导航 - 我们找到OHIP覆盖的专科医生，等待时间2-4周，而不是6-12个月',
+              '快速诊断检查 - MRI、超声、CT扫描在2-4周内完成（而不是6-12个月）',
+              '医疗陪同 - 双语工作人员陪同您就诊，翻译，做笔记',
+              '处方配送 - 药物送到您家门口，自动续药',
+            ],
+          },
+          realExample: '真实案例：家庭医生转诊精神科医生 → 公共等待名单6个月 → 我们找到OHIP覆盖的选项 → 3周等待',
+          result: '快速进入医疗系统。立即获得治疗。',
         },
       },
       service2: {
-        title: '高级跌倒检测与健康监测',
-        subtitle: 'AI驱动的雷达技术，在跌倒发生前预测',
-        desc: '跌倒检测要等到有人已经倒地。我们的雷达监测系统在跌倒发生前检测危险模式。',
+        title: '值得信赖的家庭护理专业人员',
+        subtitle: '您真正信任的合格专业人员在家中服务',
+        desc: '需要家庭帮助，但害怕从Kijiji雇佣陌生人。机构派来任何可用的人。我们派来您可以信任的专业人员。',
         details: {
-          howItWorks: [
-            '在关键房间安装非接触式雷达传感器（无摄像头，无需穿戴设备）',
-            'AI算法24/7分析步态、平衡、运动模式',
-            '早期预警系统向家人和护理人员发出跌倒风险增加的警报',
-            '如果检测到跌倒，立即紧急响应',
-            '与护理团队共享全面数据，以便更好地决策',
-          ],
-          whatWeMonitor: [
-            '步行速度与步态变化',
-            '平衡能力下降',
-            '房间间移动模式',
-            '睡眠质量与夜间活动',
-            '在浴室的时间（UTI指标）',
-            '整体行动能力趋势',
-          ],
-          familyPortal: '从您的手机访问实时监测仪表板。查看活动模式，接收警报，跟踪健康趋势。',
-          pricing: [
-            '设备安装：$299 一次性',
-            '月度监测服务：$79-$99/月',
-            '与家庭护理捆绑：与护理服务结合可节省15%',
-          ],
-          idealFor: '术后患者 • 行动不便的老年人 • 有跌倒史的人 • 寻求安心的家庭',
+          problem: {
+            title: '面临的问题',
+            items: [
+              '需要家庭帮助，但害怕从Kijiji雇佣陌生人',
+              '机构派来任何可用的人',
+            ],
+          },
+          solutions: {
+            title: '我们的解决方案',
+            items: [
+              '严格筛选 - 犯罪背景检查、执照验证、技能测试、推荐人检查 - 只有八分之一通过',
+              '个人支持工作者 - 协助洗澡、穿衣、用餐、行动',
+              '注册护士和实用护士 - 伤口护理、用药管理、健康监测',
+              '治疗师 - 物理治疗、按摩治疗、职业治疗',
+              '专业支持 - 营养师、社会工作者、心理健康咨询师',
+              '完美匹配 - 文化契合、语言、性格、技能',
+              '48小时替换 - 不合适？我们找新人，无需任何问题',
+            ],
+          },
+          result: '您真正信任的合格专业人员在家中服务。',
         },
       },
       service3: {
-        title: '即时远程医疗访问',
-        subtitle: '几分钟内连接医生，无需等待数天',
-        desc: '由 GotoDoctors 技术驱动，Careby 提供按需访问安大略省持牌医生和医疗专家——无需候诊室，无需数周预约。',
+        title: 'AI健康监测 + 专家分析',
+        subtitle: '了解您的身体在告诉您什么。知道该怎么做。',
+        desc: '您的智能手表追踪一切，但没有人告诉您这意味着什么或该做什么。我们将AI监测与专业医疗分析相结合。',
         details: {
-          services: [
-            {
-              category: '可用服务',
-              items: [
-                '虚拟医生咨询 - 当日或紧急情况即时访问',
-                '处方续药与更新 - 快速处理与药房协调',
-                '实验室与诊断申请 - 无需先看全科医生即可订购检查',
-                '专科转诊 - 快速访问专科医生',
-                '术后随访 - 与手术团队进行虚拟检查',
-                '慢性病管理 - 与虚拟护理团队持续监测',
-              ],
-            },
-          ],
-          howItWorks: '通过 Careby 平台预订 → 几分钟内通过视频连接 → 处方直接发送到您的药房 → 医疗记录自动更新',
-          languages: '英语、普通话、粤语',
-          pricing: [
-            '按次付费：$79/次咨询',
-            '月度订阅：$49/月（无限咨询 + 优先预订）',
-            '家庭计划（最多4名成员）：$99/月',
-            '与护理服务捆绑：高级护理套餐免费包含',
-          ],
+          problem: {
+            title: '面临的问题',
+            items: [
+              '您的智能手表追踪一切，但没有人告诉您这意味着什么或该做什么',
+            ],
+          },
+          solutions: {
+            title: '我们的解决方案',
+            items: [
+              'AI监测技术 - 跌倒检测、步行模式、睡眠质量、心脏健康、60+健康指标',
+              '月度专家审查 - 真正的医疗专业人员分析您的数据',
+              '可执行的建议 - 具体的营养计划、运动方案、生活方式改变',
+              '东西方结合 - 结合西医诊断与中医方法',
+              '早期预警系统 - 在健康下降成为危机之前抓住它',
+            ],
+          },
+          result: '了解您的身体在告诉您什么。知道该怎么做。',
         },
       },
       service4: {
-        title: '再生医学与长寿',
-        subtitle: '为未来储备您的健康',
-        desc: '与 Progenics 合作，Careby 提供前沿的干细胞和外泌体储存——为您身体最强大的愈合资源进行未来使用储备。',
+        title: '福利导航与医疗验证',
+        subtitle: '停止把钱留在桌上。做出明智的决定。',
+        desc: '未申请的福利$5,000-$15,000。保险拒绝理赔。不知道那个"奇迹治疗"是真是假。我们帮您导航系统并验证什么是合法的。',
         details: {
-          services: [
-            {
-              category: '干细胞储存',
-              items: [
-                '在最佳健康状态下收集和低温储存您的干细胞',
-                '未来可用于再生治疗',
-                '现在储存 = 未来可用更年轻、更健康的细胞',
-                '安全、医疗监督的储存设施',
-              ],
-            },
-            {
-              category: '外泌体储存',
-              items: [
-                '具有抗衰老潜力的先进细胞通讯分子',
-                '收集并储存用于未来治疗用途',
-                '在组织修复、免疫支持和长寿方面的新兴应用',
-                '研究支持的保存协议',
-              ],
-            },
-          ],
-          whyBank: '您的细胞今天最健康。储存可以保存您处于巅峰状态的生物学，用于未来的再生治疗、抗衰老疗法和健康优化。',
-          comingSoon: '抗衰老、关节修复、免疫增强和性能优化的治疗管理协议。',
-          pricing: [
-            '初始咨询：$200（应用于储存费用）',
-            '干细胞收集与储存：$2,500-$4,500（第一年）',
-            '年度储存费用：$300/年',
-            '外泌体储存：$3,500-$6,000（第一年）+ $400/年储存',
-          ],
-          idealFor: '注重健康的人 • 有退行性疾病家族史的人 • 对长寿优化感兴趣的人 • 退休前规划',
+          problem: {
+            title: '面临的问题',
+            items: [
+              '未申请的福利$5,000-$15,000',
+              '保险拒绝理赔',
+              '不知道那个"奇迹治疗"是真是假',
+            ],
+          },
+          solutions: {
+            title: '我们的解决方案',
+            items: [
+              '福利侦探工作 - 找到您有资格的所有政府项目（OHIP+、残疾支持、辅助设备、税收抵免）',
+              '保险优化 - 我们正确提交理赔，对拒绝提出上诉（70%成功率）',
+              '护理融资 - 反向抵押贷款咨询、付款选项',
+              '第二意见协调 - 将您与顶级专家联系，处理所有后勤工作',
+              '医疗事实核查 - 那个治疗合法吗？我们验证，这样您就不会在骗局上浪费钱',
+            ],
+          },
+          result: '停止把钱留在桌上。做出明智的决定。',
         },
       },
       service5: {
-        title: '完整护理协调',
-        subtitle: '一个团队管理您的整个健康旅程',
-        desc: '这就是 Careby 与其他所有家庭护理公司的区别：我们不仅提供护理人员——我们协调您的整个健康生态系统。',
+        title: '自动化健康中心解决方案',
+        subtitle: '面向企业主和创业者',
+        desc: '传统健康业务需要昂贵的员工。有限的时间 = 有限的收入。我们提供AI驱动的健康设备解决方案——加拿大独家。',
         details: {
-          services: [
-            {
-              category: '医疗团队沟通',
-              items: [
-                '与您的医生、外科医生、专科医生直接沟通',
-                '医疗预约安排与接送',
-                '治疗计划依从性与监测',
-                '用药核对与管理',
-              ],
-            },
-            {
-              category: '家庭更新与透明度',
-              items: [
-                '通过家庭门户每日护理记录与健康更新',
-                '每周协调电话（高级套餐）',
-                '24/7 访问护理协调员',
-                '任何担忧的实时警报',
-              ],
-            },
-            {
-              category: '保险与资金导航',
-              items: [
-                '私人保险索赔协助',
-                'OHIP 覆盖协调',
-                '退伍军人事务联络服务',
-                '设备资金与采购支持',
-              ],
-            },
-          ],
-          integratedPlatform: '您所有的健康信息集中在一处——护理人员、家人和医疗团队可访问（经您许可）：',
-          platformFeatures: [
-            '护理访问记录与活动',
-            '跌倒检测与监测数据',
-            '远程医疗咨询记录',
-            '用药时间表与依从性',
-            '健康生命体征与趋势分析',
-          ],
+          problem: {
+            title: '面临的问题',
+            items: [
+              '传统健康业务需要昂贵的员工',
+              '有限的时间 = 有限的收入',
+            ],
+          },
+          solutions: {
+            title: '我们的解决方案 - 加拿大独家',
+            items: [
+              'AI驱动的健康设备 - 来自中国2,000+地点的成熟技术',
+              '零员工需求 - 智能按摩椅、自动化针灸床、机器人按摩台、健康检测站',
+              '24/7运营 - 客户自行付费和使用设备',
+              '两种选择：购买设备添加到您现有的诊所、健身房、水疗中心或酒店 | 在我们的交钥匙支持下启动完整的自动化健康中心',
+            ],
+          },
+          whatWeProvide: {
+            title: '我们提供什么',
+            items: [
+              '设备（自助支付、AI定制、自动消毒）',
+              '营销和品牌支持',
+              '场地选择和设置指导',
+              '运营培训',
+              '持续技术支持',
+            ],
+          },
+          roi: '典型投资回报率：15-24个月',
+          operatingCosts: '运营成本：最低（无工资支出，只需租金和清洁）',
+          result: '使用成熟技术的被动健康收入。',
         },
       },
       service6: {
@@ -1067,7 +972,13 @@ function App() {
       </AnimatePresence>
       
       {/* AI Chatbot - Desktop: bottom-right, Mobile: bottom-right (alongside CTA) */}
-      <AIChatbot lang={lang} />
+      {/* <AIChatbot lang={lang} /> */}
+      
+      {/* Elfsight AI Chatbot | Careby Assistant */}
+      <div className="elfsight-app-a97596aa-6ea7-4ebd-b608-a9f22fc19f4d" data-elfsight-app-lazy></div>
+      
+      {/* Voice Input Button for Elfsight Chatbot - Hidden */}
+      {/* <VoiceInputButton lang={lang} /> */}
       
       {/* Fixed button for mobile - outside all containers to ensure it sticks at bottom */}
       {/* Updated to work alongside AI Chatbot button with 15px gap */}
@@ -1542,8 +1453,8 @@ function HeroSection({ t, lang }: { t: typeof content.en, lang: 'en' | 'zh' | 'z
           className="flex items-center"
         >
           <img 
-            src="/carebylogo_white.svg" 
-            alt="Careby Solutions Inc. - Premium Home Care Services in Toronto and Ontario" 
+            src={lang === 'en' ? "/carebylogo_white.svg" : "/logo-zh.png"} 
+            alt={lang === 'en' ? "Careby Solutions Inc. - Premium Home Care Services in Toronto and Ontario" : "康伴解决方案 - 多伦多和安大略省高端家庭护理服务"} 
             className="h-11 w-auto sm:h-[70px]"
             itemProp="logo"
           />
@@ -1560,29 +1471,56 @@ function HeroSection({ t, lang }: { t: typeof content.en, lang: 'en' | 'zh' | 'z
           variants={fadeUp}
           transition={{ duration: 0.8, ease: 'easeOut' }}
         >
-          <span className="block text-yellow-400 text-sm font-medium tracking-wide text-left mt-[10px] mb-[-10px]">
-            Smarter Healthcare<br />Closer to Home
+          <span className={`block text-yellow-400 text-sm font-medium tracking-wide text-left mt-[10px] mb-[-10px] ${lang !== 'en' ? 'leading-tight' : ''}`}>
+            {lang === 'en' ? (
+              <>
+                Smarter Healthcare<br />Closer to Home
+              </>
+            ) : (
+              <span className="block">{t.hero.tagline}</span>
+            )}
           </span>
           <h1
             id="hero-heading"
             className="text-3xl font-semibold leading-tight sm:text-4xl md:text-5xl lg:text-6xl"
             itemProp="headline"
           >
-            <span className="whitespace-nowrap">
-              {t.hero.headlinePrefix}{' '}
-              <span className="relative inline-block min-w-[180px] sm:min-w-[240px] md:min-w-[280px] lg:min-w-[320px] text-left">
-                <span className="hand-drawn-underline">
-                  {displayText}
+            {lang === 'en' ? (
+              <>
+                <span className="whitespace-nowrap">
+                  {t.hero.headlinePrefix}{' '}
+                  <span className="relative inline-block min-w-[180px] sm:min-w-[240px] md:min-w-[280px] lg:min-w-[320px] text-left">
+                    <span className="hand-drawn-underline">
+                      {displayText}
+                    </span>
+                    {!isInitial && (
+                      <span className="inline-block w-0.5 h-5 sm:h-6 bg-yellow-400 ml-1 animate-pulse" />
+                    )}
+                  </span>
                 </span>
-                {!isInitial && (
-                  <span className="inline-block w-0.5 h-5 sm:h-6 bg-yellow-400 ml-1 animate-pulse" />
-                )}
-              </span>
-            </span>
-            {' '}
-            <span className="whitespace-normal break-words">
-              {t.hero.headlineSuffix}
-            </span>
+                {' '}
+                <span className="whitespace-normal break-words">
+                  {t.hero.headlineSuffix}
+                </span>
+              </>
+            ) : (
+              <>
+                <span className="block">
+                  {t.hero.headlinePrefix}
+                  <span className="relative inline-block mx-1 text-left">
+                    <span className="hand-drawn-underline">
+                      {displayText}
+                    </span>
+                    {!isInitial && (
+                      <span className="inline-block w-0.5 h-5 sm:h-6 bg-yellow-400 ml-1 animate-pulse" />
+                    )}
+                  </span>
+                </span>
+                <span className="block">
+                  {t.hero.headlineSuffix}
+                </span>
+              </>
+            )}
           </h1>
           <p className="text-base text-white/85 sm:text-lg lg:text-xl mb-6 sm:mb-[87px]">
             {t.hero.subheadline}
@@ -1695,6 +1633,16 @@ function ServiceModal({
                   </div>
                 ) : null}
 
+                {/* Real Example Section - for service1 */}
+                {('realExample' in service.details && service.details.realExample) ? (
+                  <div className="mb-8 rounded-2xl border-2 border-blue-200 bg-blue-50 p-6">
+                    <h3 className="mb-3 text-xl font-semibold text-midnight">
+                      Real Example:
+                    </h3>
+                    <p className="text-lg font-medium text-slate-700">{String(service.details.realExample)}</p>
+                  </div>
+                ) : null}
+
                 {/* Result Section - for service1 */}
                 {('result' in service.details && service.details.result) ? (
                   <div className="mb-8 rounded-2xl border-2 border-green-200 bg-green-50 p-6">
@@ -1792,7 +1740,7 @@ function ServiceModal({
                     <h3 className="mb-3 text-xl font-semibold text-midnight">
                       Languages:
                     </h3>
-                    <p className="text-slate-700">{service.details.languages}</p>
+                    <p className="text-slate-700">{String(service.details.languages)}</p>
                   </div>
                 )}
 
@@ -1802,7 +1750,7 @@ function ServiceModal({
                     <h3 className="mb-3 text-xl font-semibold text-midnight">
                       Why bank now?
                     </h3>
-                    <p className="text-slate-700">{service.details.whyBank}</p>
+                    <p className="text-slate-700">{String(service.details.whyBank)}</p>
                   </div>
                 )}
 
@@ -1812,27 +1760,33 @@ function ServiceModal({
                     <h3 className="mb-3 text-lg font-semibold text-midnight">
                       Coming soon:
                     </h3>
-                    <p className="text-slate-700">{service.details.comingSoon}</p>
+                    <p className="text-slate-700">{String(service.details.comingSoon)}</p>
                   </div>
                 )}
 
-                {/* Integrated Platform - for service5 */}
+                {/* Integrated Platform - for service5 (old structure) */}
                 {'integratedPlatform' in service.details && service.details.integratedPlatform && (
                   <div className="mb-8 rounded-2xl border-2 border-primary/20 bg-primary/5 p-6">
                     <h3 className="mb-4 text-xl font-semibold text-midnight">
                       Integrated Data Platform:
                     </h3>
-                    <p className="mb-4 text-slate-700">{service.details.integratedPlatform}</p>
-                    {service.details.platformFeatures && (
-                      <ul className="space-y-2">
-                        {service.details.platformFeatures.map((feature, index) => (
-                          <li key={index} className="flex items-start gap-2 text-slate-700">
-                            <span className="mt-1 text-primary">•</span>
-                            <span>{feature}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    )}
+                    <p className="mb-4 text-slate-700">{String(service.details.integratedPlatform)}</p>
+                    {(() => {
+                      const details = service.details as any
+                      if ('platformFeatures' in details && details.platformFeatures && Array.isArray(details.platformFeatures)) {
+                        return (
+                          <ul className="space-y-2">
+                            {(details.platformFeatures as string[]).map((feature: string, index: number) => (
+                              <li key={index} className="flex items-start gap-2 text-slate-700">
+                                <span className="mt-1 text-primary">•</span>
+                                <span>{feature}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        )
+                      }
+                      return null
+                    })()}
                   </div>
                 )}
 
@@ -2629,17 +2583,17 @@ function ServiceSection({ t, lang }: { t: typeof content.en, lang: 'en' | 'zh' |
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const services = lang === 'en' ? [
-    { icon: 'elderly', service: t.services.service1, keyword: 'Professional' },
-    { icon: 'home_health', service: t.services.service2, keyword: 'Advanced' },
-    { icon: 'psychology', service: t.services.service3, keyword: 'Instant' },
-    { icon: 'spa', service: t.services.service4, keyword: 'Longevity' },
+    { icon: 'elderly', service: t.services.service1, keyword: 'Healthcare' },
+    { icon: 'home_health', service: t.services.service2, keyword: 'Trusted' },
+    { icon: 'psychology', service: t.services.service3, keyword: 'AI' },
+    { icon: 'spa', service: t.services.service4, keyword: 'Benefits' },
     { icon: 'health_and_safety', service: t.services.service5, keyword: 'Complete' },
     { icon: 'account_balance', service: t.services.service6, keyword: 'Financial' },
   ] : [
-    { icon: 'elderly', service: t.services.service1, keyword: '专业' },
-    { icon: 'home_health', service: t.services.service2, keyword: '高级' },
-    { icon: 'psychology', service: t.services.service3, keyword: '即时' },
-    { icon: 'spa', service: t.services.service4, keyword: '长寿' },
+    { icon: 'elderly', service: t.services.service1, keyword: '医疗' },
+    { icon: 'home_health', service: t.services.service2, keyword: '值得信赖' },
+    { icon: 'psychology', service: t.services.service3, keyword: 'AI' },
+    { icon: 'spa', service: t.services.service4, keyword: '福利' },
     { icon: 'health_and_safety', service: t.services.service5, keyword: '完整' },
     { icon: 'account_balance', service: t.services.service6, keyword: '金融' },
   ]
