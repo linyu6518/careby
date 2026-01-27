@@ -46,112 +46,116 @@ const content = {
       monitoring2: 'Monitoring',
       cloudDesc: 'Powered by millimeter-wave radar and AI physical examination models to protect family health.',
     },
+    painPoints: {
+      sectionTitle: 'Who We Serve',
+      title: 'We Understand Your Challenges',
+      subtitle: 'Three audiences, one need: better healthcare coordination.',
+      audience1: {
+        title: 'Entrepreneurs & Busy Professionals',
+        subtitle: 'Building a business while caring for health, family, and team.',
+        image: 'https://images.unsplash.com/photo-1551601651-2a8555f1a136?w=400&h=300&fit=crop&q=80',
+        reality: 'The reality:',
+        points: [
+          'Family needs medical help, but you\'re always at work',
+          'Hours wasted navigating healthcare systems',
+          'Employees lose half a day for a 15-minute doctor visit',
+          'No one coordinates — it all falls on you',
+        ],
+      },
+      audience2: {
+        title: 'Seniors Living at Home',
+        subtitle: 'Stay independent while feeling safe and supported.',
+        image: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=400&h=300&fit=crop&q=80',
+        problem: 'The problem:',
+        points: [
+          'Hard to find trusted caregivers at home',
+          'Rehabilitation support is difficult to arrange',
+          'No help when sick, recovering, or needing daily support',
+          'Family worries but can\'t always check on you',
+        ],
+      },
+      audience3: {
+        title: 'Health-Conscious Individuals',
+        subtitle: 'Take control of your health before problems begin.',
+        image: 'https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=400&h=300&fit=crop&q=80',
+        missing: 'What\'s missing:',
+        points: [
+          'Health data scattered — no one helps turn it into a plan',
+          'Want new health tech but don\'t know what to use',
+          'Need ongoing guidance, not just occasional checkups',
+        ],
+      },
+    },
     services: {
       sectionTitle: 'Our Core Services',
       title: 'Comprehensive Health and Care Services',
       subtitle: 'AI-powered technology connecting quality medical and life resources.',
       service1: {
-        title: 'Healthcare Access & System Navigation',
-        subtitle: 'Skip the Wait. Get Treatment Now.',
-        desc: '6-month waits for specialists. 12-month waits for MRIs. No family doctor accepting patients. We navigate Ontario\'s healthcare system to get you the care you need—fast.',
+        title: 'Virtual Doctors & Fast Access',
+        subtitle: 'Skip long wait times and complicated healthcare systems.',
+        desc: 'Reduce specialist and diagnostic wait times by over 50% through guided care navigation. Virtual care supported by nationwide clinic and pharmacy network.',
         details: {
-          problem: {
-            title: 'The Problem',
-            items: [
-              '6-month waits for specialists',
-              '12-month waits for MRIs',
-              'No family doctor accepting patients',
-            ],
-          },
           solutions: {
             title: 'Our Solution',
             items: [
-              'Same-day virtual doctors - English, Mandarin, Cantonese (via GoToDoctor)',
-              'Specialist Wait-Time Navigator - We find OHIP-covered specialists with 2-4 week waits instead of 6-12 months',
-              'Fast-track diagnostic testing - MRI, ultrasound, CT scans in 2-4 weeks (not 6-12 months)',
-              'Medical accompaniment - Bilingual staff attend appointments with you, translate, take notes',
-              'Prescription delivery - Medications to your door, auto-refills',
+              'Reduce specialist and diagnostic wait times by over 50% on average through guided care navigation',
+              'Virtual care supported by a nationwide network of clinic location and pharmacy for blood work, diagnostics, and physical assessments',
+              'Same-day and extended-hour appointments, including evenings and weekends',
+              'Doctor consultations, on-site testing, and prescription pickup coordinated in a single visit',
+              'Integrated e-prescribing with medications sent directly to your preferred pharmacy or delivered to your home',
             ],
           },
-          realExample: 'Real Example: Family doctor refers to psychiatrist → 6-month public waitlist → We found OHIP-covered option → 3-week wait',
-          result: 'Get into the system fast. Get treatment now.',
+          result: 'Save time, reduce time off work, and get care when virtual works — with physical backup when it doesn\'t.',
         },
       },
       service2: {
-        title: 'Trusted In-Home Care Professionals',
-        subtitle: 'Qualified Professionals You Actually Trust in Your Home',
-        desc: 'Need help at home but terrified of hiring strangers from Kijiji. Agencies send whoever\'s available. We send professionals you can trust.',
+        title: 'Trusted In-Home Care Services',
+        subtitle: 'Professional care, delivered safely in your home.',
+        desc: 'Carefully vetted personal support workers, therapists, nutritionists, and home care professionals. Personalized in-home care plans for seniors and families.',
         details: {
-          problem: {
-            title: 'The Problem',
-            items: [
-              'Need help at home but terrified of hiring strangers from Kijiji',
-              'Agencies send whoever\'s available',
-            ],
-          },
           solutions: {
             title: 'Our Solution',
             items: [
-              'Rigorous screening - Criminal checks, license verification, skills testing, reference checks - Only 1 in 8 pass',
-              'Personal Support Workers - Help with bathing, dressing, meals, mobility',
-              'Registered Nurses & Practical Nurses - Wound care, medication management, health monitoring',
-              'Therapists - Physiotherapy, massage therapy, occupational therapy',
-              'Specialized support - Nutritionists, social workers, mental health counselors',
-              'Perfect matching - Cultural fit, language, personality, skills',
-              '48-hour replacement - Not working out? We find someone new, no questions asked',
+              'Carefully vetted personal support workers, therapists, nutritionists, and home care professionals',
+              'Personalized in-home care plans for seniors and families',
+              'Flexible support for daily care, recovery, and long-term wellness',
+              'Multilingual support available',
             ],
           },
-          result: 'Qualified professionals you actually trust in your home.',
+          result: 'Reliable care for seniors, families, and anyone who needs support at home.',
         },
       },
       service3: {
-        title: 'AI Health Monitoring + Expert Analysis',
-        subtitle: 'Know What Your Body Is Telling You. Know What to Do About It.',
-        desc: 'Your smartwatch tracks everything but nobody tells you what it means or what to do. We combine AI monitoring with expert healthcare analysis.',
+        title: 'Innovative Health Solutions',
+        subtitle: 'Proactive care powered by advanced technology and medical expertise.',
+        desc: 'AI smart wearables and contactless health monitoring. Advanced health testing with personalized reports combining Western medicine and TCM insights.',
         details: {
-          problem: {
-            title: 'The Problem',
-            items: [
-              'Your smartwatch tracks everything but nobody tells you what it means or what to do',
-            ],
-          },
           solutions: {
             title: 'Our Solution',
             items: [
-              'AI monitoring technology - Fall detection, walking patterns, sleep quality, heart health, 60+ health markers',
-              'Monthly expert review - Real healthcare professionals analyze your data',
-              'Actionable recommendations - Specific nutrition plans, exercise protocols, lifestyle changes',
-              'East meets West - Combines Western medicine diagnostics with Traditional Chinese Medicine approach',
-              'Early warning system - Catch health decline before it becomes a crisis',
+              'AI smart wearables and contactless health monitoring',
+              'Advanced genetic and comprehensive health testing',
+              'Personalized reports combining Western medicine and TCM insights',
+              'Ongoing expert review with lifestyle, nutrition, and wellness guidance',
             ],
           },
-          result: 'Know what your body is telling you. Know what to do about it.',
+          result: 'Monitor your health, understand your body, and prevent problems before they start.',
         },
       },
       service4: {
-        title: 'Benefits Navigation & Medical Verification',
-        subtitle: 'Stop Leaving Money on the Table. Make Informed Decisions.',
-        desc: 'Leaving $5,000-$15,000 in benefits unclaimed. Insurance denies claims. Don\'t know if that "miracle treatment" is real or a scam. We help you navigate the system and verify what\'s legitimate.',
+        title: 'Benefits & Financial Assistance',
+        subtitle: 'Expert support to help you access the benefits and financial support you deserve.',
+        desc: 'Guidance on government benefits and senior financial assistance programs. Insurance and coverage support for long-term care and retirement needs.',
         details: {
-          problem: {
-            title: 'The Problem',
-            items: [
-              'Leaving $5,000-$15,000 in benefits unclaimed',
-              'Insurance denies claims',
-              'Don\'t know if that "miracle treatment" is real or a scam',
-            ],
-          },
           solutions: {
             title: 'Our Solution',
             items: [
-              'Benefits detective work - Find every government program you qualify for (OHIP+, disability support, assistive devices, tax credits)',
-              'Insurance optimization - We submit claims properly, appeal denials (70% success rate)',
-              'Care financing - Reverse mortgage consultations, payment options',
-              'Second opinion coordination - Connect you with top specialists, handle all logistics',
-              'Medical fact-checking - Is that treatment legitimate? We verify so you don\'t waste money on scams',
+              'Guidance on government benefits and senior financial assistance programs',
+              'Insurance and coverage support',
+              'Support exploring home-based financial options to fund long-term care and retirement needs',
             ],
           },
-          result: 'Stop leaving money on the table. Make informed decisions.',
+          result: 'Reduce financial stress and make sure you receive every benefit and support option available to you.',
         },
       },
       service5: {
@@ -379,112 +383,116 @@ const content = {
       monitoring2: '观察中',
       cloudDesc: '通过毫米波雷达与AI体检模型，全程守护家庭健康。',
     },
+    painPoints: {
+      sectionTitle: '我们服务的人群',
+      title: '我们理解您的挑战',
+      subtitle: '三个受众，一个需求：更好的医疗协调。',
+      audience1: {
+        title: '企业家与忙碌的专业人士',
+        subtitle: '创业的同时，关心健康、家人和团队。',
+        image: 'https://images.unsplash.com/photo-1551601651-2a8555f1a136?w=400&h=300&fit=crop&q=80',
+        reality: '现实情况：',
+        points: [
+          '家人需要医疗帮助，但您总是忙于工作',
+          '花费数小时导航医疗系统',
+          '员工为15分钟看诊损失半天工作时间',
+          '无人协调，一切落在您身上',
+        ],
+      },
+      audience2: {
+        title: '居家老年人',
+        subtitle: '保持独立，同时感到安全和支持。',
+        image: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=400&h=300&fit=crop&q=80',
+        problem: '问题：',
+        points: [
+          '很难找到值得信赖的家庭护理人员',
+          '康复支持难以安排',
+          '生病、康复或需要日常支持时缺少帮助',
+          '家人担心但无法经常检查',
+        ],
+      },
+      audience3: {
+        title: '注重健康的人士',
+        subtitle: '在问题出现之前控制健康。',
+        image: 'https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=400&h=300&fit=crop&q=80',
+        missing: '缺少什么：',
+        points: [
+          '健康数据分散，无人帮助转化为改善计划',
+          '想用新健康技术但不知如何选择',
+          '需要持续指导，不只是偶尔检查',
+        ],
+      },
+    },
     services: {
       sectionTitle: '我们的核心服务',
       title: '全方位的健康与照护服务',
       subtitle: '以AI科技为核心，连接优质医疗与生活资源。',
       service1: {
-        title: '医疗系统导航与快速就医',
-        subtitle: '跳过等待。立即获得治疗。',
-        desc: '专科医生等待6个月。MRI等待12个月。没有家庭医生接受新患者。我们帮您导航安大略省的医疗系统，快速获得您需要的护理。',
+        title: '虚拟医生与快速访问',
+        subtitle: '跳过漫长的等待时间和复杂的医疗系统。',
+        desc: '通过引导式护理导航，减少超过50%的专科医生和诊断等待时间。虚拟护理由全国诊所和药房网络支持。',
         details: {
-          problem: {
-            title: '面临的问题',
-            items: [
-              '专科医生等待6个月',
-              'MRI等待12个月',
-              '没有家庭医生接受新患者',
-            ],
-          },
           solutions: {
             title: '我们的解决方案',
             items: [
-              '当日虚拟医生 - 英语、普通话、粤语（通过GoToDoctor）',
-              '专科等待时间导航 - 我们找到OHIP覆盖的专科医生，等待时间2-4周，而不是6-12个月',
-              '快速诊断检查 - MRI、超声、CT扫描在2-4周内完成（而不是6-12个月）',
-              '医疗陪同 - 双语工作人员陪同您就诊，翻译，做笔记',
-              '处方配送 - 药物送到您家门口，自动续药',
+              '通过引导式护理导航，平均减少超过50%的专科医生和诊断等待时间',
+              '虚拟护理由全国诊所和药房网络支持，提供血液检查、诊断和身体评估',
+              '当日和延长时段预约，包括晚上和周末',
+              '医生咨询、现场检测和处方取药在一次访问中协调完成',
+              '集成电子处方，药物直接发送到您首选的药房或配送到家',
             ],
           },
-          realExample: '真实案例：家庭医生转诊精神科医生 → 公共等待名单6个月 → 我们找到OHIP覆盖的选项 → 3周等待',
-          result: '快速进入医疗系统。立即获得治疗。',
+          result: '节省时间，减少工作时间损失，在虚拟医疗可行时获得护理——在需要时提供实体支持。',
         },
       },
       service2: {
-        title: '值得信赖的家庭护理专业人员',
-        subtitle: '您真正信任的合格专业人员在家中服务',
-        desc: '需要家庭帮助，但害怕从Kijiji雇佣陌生人。机构派来任何可用的人。我们派来您可以信任的专业人员。',
+        title: '值得信赖的家庭护理服务',
+        subtitle: '专业护理，安全送到您家。',
+        desc: '经过严格筛选的个人支持工作者、治疗师、营养师和家庭护理专业人员。为老年人和家庭提供个性化的家庭护理计划。',
         details: {
-          problem: {
-            title: '面临的问题',
-            items: [
-              '需要家庭帮助，但害怕从Kijiji雇佣陌生人',
-              '机构派来任何可用的人',
-            ],
-          },
           solutions: {
             title: '我们的解决方案',
             items: [
-              '严格筛选 - 犯罪背景检查、执照验证、技能测试、推荐人检查 - 只有八分之一通过',
-              '个人支持工作者 - 协助洗澡、穿衣、用餐、行动',
-              '注册护士和实用护士 - 伤口护理、用药管理、健康监测',
-              '治疗师 - 物理治疗、按摩治疗、职业治疗',
-              '专业支持 - 营养师、社会工作者、心理健康咨询师',
-              '完美匹配 - 文化契合、语言、性格、技能',
-              '48小时替换 - 不合适？我们找新人，无需任何问题',
+              '经过严格筛选的个人支持工作者、治疗师、营养师和家庭护理专业人员',
+              '为老年人和家庭提供个性化的家庭护理计划',
+              '灵活的日常护理、康复和长期健康支持',
+              '提供多语言支持',
             ],
           },
-          result: '您真正信任的合格专业人员在家中服务。',
+          result: '为老年人、家庭和任何需要家庭支持的人提供可靠的护理。',
         },
       },
       service3: {
-        title: 'AI健康监测 + 专家分析',
-        subtitle: '了解您的身体在告诉您什么。知道该怎么做。',
-        desc: '您的智能手表追踪一切，但没有人告诉您这意味着什么或该做什么。我们将AI监测与专业医疗分析相结合。',
+        title: '创新健康解决方案',
+        subtitle: '由先进技术和医疗专业知识驱动的主动护理。',
+        desc: 'AI智能可穿戴设备和非接触式健康监测。先进的健康检测，提供结合西医和中医见解的个性化报告。',
         details: {
-          problem: {
-            title: '面临的问题',
-            items: [
-              '您的智能手表追踪一切，但没有人告诉您这意味着什么或该做什么',
-            ],
-          },
           solutions: {
             title: '我们的解决方案',
             items: [
-              'AI监测技术 - 跌倒检测、步行模式、睡眠质量、心脏健康、60+健康指标',
-              '月度专家审查 - 真正的医疗专业人员分析您的数据',
-              '可执行的建议 - 具体的营养计划、运动方案、生活方式改变',
-              '东西方结合 - 结合西医诊断与中医方法',
-              '早期预警系统 - 在健康下降成为危机之前抓住它',
+              'AI智能可穿戴设备和非接触式健康监测',
+              '先进的基因和综合健康检测',
+              '结合西医和中医见解的个性化报告',
+              '持续专家审查，提供生活方式、营养和健康指导',
             ],
           },
-          result: '了解您的身体在告诉您什么。知道该怎么做。',
+          result: '监测您的健康，了解您的身体，在问题出现之前预防。',
         },
       },
       service4: {
-        title: '福利导航与医疗验证',
-        subtitle: '停止把钱留在桌上。做出明智的决定。',
-        desc: '未申请的福利$5,000-$15,000。保险拒绝理赔。不知道那个"奇迹治疗"是真是假。我们帮您导航系统并验证什么是合法的。',
+        title: '福利与财务援助',
+        subtitle: '专家支持，帮助您获得应得的福利和财务支持。',
+        desc: '政府福利和老年人财务援助计划指导。保险和保障支持，为长期护理和退休需求提供资金。',
         details: {
-          problem: {
-            title: '面临的问题',
-            items: [
-              '未申请的福利$5,000-$15,000',
-              '保险拒绝理赔',
-              '不知道那个"奇迹治疗"是真是假',
-            ],
-          },
           solutions: {
             title: '我们的解决方案',
             items: [
-              '福利侦探工作 - 找到您有资格的所有政府项目（OHIP+、残疾支持、辅助设备、税收抵免）',
-              '保险优化 - 我们正确提交理赔，对拒绝提出上诉（70%成功率）',
-              '护理融资 - 反向抵押贷款咨询、付款选项',
-              '第二意见协调 - 将您与顶级专家联系，处理所有后勤工作',
-              '医疗事实核查 - 那个治疗合法吗？我们验证，这样您就不会在骗局上浪费钱',
+              '政府福利和老年人财务援助计划指导',
+              '保险和保障支持',
+              '支持探索基于家庭的财务选项，为长期护理和退休需求提供资金',
             ],
           },
-          result: '停止把钱留在桌上。做出明智的决定。',
+          result: '减少财务压力，确保您获得所有可用的福利和支持选项。',
         },
       },
       service5: {
@@ -956,6 +964,7 @@ function App() {
         {/* Temporarily hidden - uncomment to restore */}
         {/* <NewSection t={t as typeof content.en} lang={lang} /> */}
         {/* <PlatformSection t={t as typeof content.en} lang={lang} /> */}
+        <PainPointsSection t={t as typeof content.en} lang={lang} />
         <ServiceSection t={t as typeof content.en} lang={lang} />
         <TechnologySection t={t as typeof content.en} lang={lang} onHowItWorks={() => setShowHowItWorks(true)} />
         <PartnersSection t={t as typeof content.en} />
@@ -1471,7 +1480,7 @@ function HeroSection({ t, lang }: { t: typeof content.en, lang: 'en' | 'zh' | 'z
           variants={fadeUp}
           transition={{ duration: 0.8, ease: 'easeOut' }}
         >
-          <span className={`block text-yellow-400 text-sm font-medium tracking-wide text-left mt-[10px] mb-[-10px] ${lang !== 'en' ? 'leading-tight' : ''}`}>
+          <span className={`block text-yellow-400 text-base sm:text-lg lg:text-xl font-medium tracking-wide text-left mt-[10px] mb-[-10px] ${lang !== 'en' ? 'leading-tight' : ''}`}>
             {lang === 'en' ? (
               <>
                 Smarter Healthcare<br />Closer to Home
@@ -1482,7 +1491,7 @@ function HeroSection({ t, lang }: { t: typeof content.en, lang: 'en' | 'zh' | 'z
           </span>
           <h1
             id="hero-heading"
-            className="text-3xl font-semibold leading-tight sm:text-4xl md:text-5xl lg:text-6xl"
+            className="text-4xl font-bold leading-tight sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl"
             itemProp="headline"
           >
             {lang === 'en' ? (
@@ -1499,7 +1508,7 @@ function HeroSection({ t, lang }: { t: typeof content.en, lang: 'en' | 'zh' | 'z
                   </span>
                 </span>
                 {' '}
-                <span className="whitespace-normal break-words">
+                <span className="whitespace-nowrap">
                   {t.hero.headlineSuffix}
                 </span>
               </>
@@ -1522,13 +1531,13 @@ function HeroSection({ t, lang }: { t: typeof content.en, lang: 'en' | 'zh' | 'z
               </>
             )}
           </h1>
-          <p className="text-base text-white/85 sm:text-lg lg:text-xl mb-6 sm:mb-[87px]">
+          <p className="text-lg sm:text-xl lg:text-2xl xl:text-3xl text-white/85 mb-6 sm:mb-[87px] leading-relaxed">
             {t.hero.subheadline}
           </p>
           <a
             ref={buttonRef}
             href="https://app.getcareby.ca/"
-            className="animated-gradient-button sm:inline-flex sm:items-center sm:justify-center hidden sm:inline-flex items-center justify-center px-7 py-4 sm:px-7 sm:py-3 text-white transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 w-full sm:w-auto rounded-full sm:!mt-5"
+            className="animated-gradient-button sm:inline-flex sm:items-center sm:justify-center hidden sm:inline-flex items-center justify-center px-8 py-4 sm:px-10 sm:py-4 text-lg sm:text-xl font-semibold text-white transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 w-full sm:w-auto rounded-full sm:!mt-5"
             onFocus={(e) => {
               e.currentTarget.style.outlineColor = '#3B8C75'
             }}
@@ -1552,7 +1561,7 @@ function ServiceModal({
   isOpen, 
   onClose 
 }: { 
-  service: typeof content.en.services.service1 | typeof content.en.services.service2 | typeof content.en.services.service3 | typeof content.en.services.service4 | typeof content.en.services.service5 | typeof content.en.services.service6 | null, 
+  service: typeof content.en.services.service1 | typeof content.en.services.service2 | typeof content.en.services.service3 | typeof content.en.services.service4 | null, 
   isOpen: boolean, 
   onClose: () => void 
 }) {
@@ -1654,30 +1663,37 @@ function ServiceModal({
                 ) : null}
 
                 {/* Services Section - for service3, service4, service5 */}
-                {'services' in service.details && service.details.services && !('problem' in service.details) && (
-                  <div className="mb-8">
-                    <h3 className="mb-4 text-xl font-semibold text-midnight">
-                      {service.details.services[0]?.category === 'Services available' ? 'Services available:' : 'Our services include:'}
-                    </h3>
-                    <div className="space-y-6">
-                      {service.details.services.map((category, index) => (
-                        <div key={index} className="rounded-2xl border border-slate-200 bg-slate-50 p-6">
-                          <h4 className="mb-3 text-lg font-semibold text-primary">
-                            {category.category}:
-                          </h4>
-                          <ul className="space-y-2">
-                            {category.items.map((item, itemIndex) => (
-                              <li key={itemIndex} className="flex items-start gap-2 text-slate-700">
-                                <span className="mt-1 text-primary">•</span>
-                                <span>{item}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      ))}
+                {(() => {
+                  const details = service.details as any
+                  if (!('services' in details) || !details.services || !Array.isArray(details.services) || ('problem' in details)) {
+                    return null
+                  }
+                  const services = details.services as Array<{ category: string; items: string[] }>
+                  return (
+                    <div className="mb-8">
+                      <h3 className="mb-4 text-xl font-semibold text-midnight">
+                        {services[0]?.category === 'Services available' ? 'Services available:' : 'Our services include:'}
+                      </h3>
+                      <div className="space-y-6">
+                        {services.map((category, index) => (
+                          <div key={index} className="rounded-2xl border border-slate-200 bg-slate-50 p-6">
+                            <h4 className="mb-3 text-lg font-semibold text-primary">
+                              {category.category}:
+                            </h4>
+                            <ul className="space-y-2">
+                              {category.items.map((item, itemIndex) => (
+                                <li key={itemIndex} className="flex items-start gap-2 text-slate-700">
+                                  <span className="mt-1 text-primary">•</span>
+                                  <span>{item}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        ))}
+                      </div>
                     </div>
-                  </div>
-                )}
+                  ) as any
+                })() as any}
 
                 {/* How It Works - for service2, service3 */}
                 {'howItWorks' in service.details && service.details.howItWorks && (
@@ -1830,66 +1846,73 @@ function ServiceModal({
                     <h3 className="mb-2 text-lg font-semibold text-midnight">
                       Ideal for:
                     </h3>
-                    <p className="text-slate-700">{service.details.idealFor}</p>
+                    <p className="text-slate-700">{String(service.details.idealFor)}</p>
                   </div>
                 )}
 
                 {/* Pricing Section */}
-                {'pricing' in service.details && service.details.pricing && (
-                <div className="rounded-3xl border-2 border-primary/20 bg-gradient-to-br from-white via-primary/5 to-accent/5 p-8 shadow-lg">
-                  <div className="mb-6 flex items-center gap-3">
-                    <span className="material-symbols-outlined text-3xl text-primary">payments</span>
-                    <h3 className="text-2xl font-bold text-midnight">
-                      Pricing
-                    </h3>
-                  </div>
-                  <div className="grid gap-4 sm:grid-cols-2">
-                    {service.details.pricing.map((price, index) => {
-                      // Split by | if it contains multiple price options
-                      const priceParts = price.split('|').map(p => p.trim())
-                      
-                      return (
-                        <div
-                          key={index}
-                          className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition-all hover:border-primary/40 hover:shadow-md"
-                        >
-                          <div className="absolute right-0 top-0 h-20 w-20 rounded-bl-full bg-primary/5" />
-                          <div className="relative">
-                            {priceParts.map((part, partIndex) => {
-                              // Extract price range (e.g., $35-$45/hour)
-                              const priceRangeMatch = part.match(/(\$[\d,]+(?:-\$[\d,]+)?(?:\/hour|\/day)?)/)
-                              const priceRange = priceRangeMatch?.[0] || ''
-                              const description = part.replace(priceRange, '').replace(/^[:\s]+|[:\s]+$/g, '').trim()
-                              
-                              return (
-                                <div key={partIndex} className={partIndex > 0 ? 'mt-3 border-t border-slate-100 pt-3' : ''}>
-                                  <div className="mb-2 flex flex-wrap items-baseline gap-2">
-                                    {priceRange && (
-                                      <span className="text-2xl font-bold text-primary">
-                                        {priceRange}
-                                      </span>
-                                    )}
-                                  </div>
-                                  {description && (
-                                    <p className="text-sm font-medium text-slate-600">
-                                      {description}
-                                    </p>
-                                  )}
-                                </div>
-                              )
-                            })}
-                          </div>
-                        </div>
-                      )
-                    })}
-                  </div>
-                  <div className="mt-6 rounded-xl bg-yellow-50 border border-yellow-200 p-4">
-                    <p className="text-sm text-slate-700">
-                      <span className="font-semibold text-primary">Note:</span> All prices are in CAD. Custom packages available upon request.
-                    </p>
-                  </div>
-                </div>
-                )}
+                {(() => {
+                  const details = service.details as any
+                  if (!('pricing' in details) || !details.pricing || !Array.isArray(details.pricing)) {
+                    return null
+                  }
+                  const pricing = details.pricing as string[]
+                  return (
+                    <div className="rounded-3xl border-2 border-primary/20 bg-gradient-to-br from-white via-primary/5 to-accent/5 p-8 shadow-lg">
+                      <div className="mb-6 flex items-center gap-3">
+                        <span className="material-symbols-outlined text-3xl text-primary">payments</span>
+                        <h3 className="text-2xl font-bold text-midnight">
+                          Pricing
+                        </h3>
+                      </div>
+                      <div className="grid gap-4 sm:grid-cols-2">
+                        {pricing.map((price: string, index: number) => {
+                          // Split by | if it contains multiple price options
+                          const priceParts = price.split('|').map((p: string) => p.trim())
+                          
+                          return (
+                            <div
+                              key={index}
+                              className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition-all hover:border-primary/40 hover:shadow-md"
+                            >
+                              <div className="absolute right-0 top-0 h-20 w-20 rounded-bl-full bg-primary/5" />
+                              <div className="relative">
+                                {priceParts.map((part: string, partIndex: number) => {
+                                  // Extract price range (e.g., $35-$45/hour)
+                                  const priceRangeMatch = part.match(/(\$[\d,]+(?:-\$[\d,]+)?(?:\/hour|\/day)?)/)
+                                  const priceRange = priceRangeMatch?.[0] || ''
+                                  const description = part.replace(priceRange, '').replace(/^[:\s]+|[:\s]+$/g, '').trim()
+                                  
+                                  return (
+                                    <div key={partIndex} className={partIndex > 0 ? 'mt-3 border-t border-slate-100 pt-3' : ''}>
+                                      <div className="mb-2 flex flex-wrap items-baseline gap-2">
+                                        {priceRange && (
+                                          <span className="text-2xl font-bold text-primary">
+                                            {priceRange}
+                                          </span>
+                                        )}
+                                      </div>
+                                      {description && (
+                                        <p className="text-sm font-medium text-slate-600">
+                                          {description}
+                                        </p>
+                                      )}
+                                    </div>
+                                  )
+                                })}
+                              </div>
+                            </div>
+                          )
+                        })}
+                      </div>
+                      <div className="mt-6 rounded-xl bg-yellow-50 border border-yellow-200 p-4">
+                        <p className="text-sm text-slate-700">
+                          <span className="font-semibold text-primary">Note:</span> All prices are in CAD. Custom packages available upon request.
+                        </p>
+                      </div>
+                    </div>
+                  ) as any
+                })() as any}
               </div>
             </motion.div>
           </div>
@@ -2578,24 +2601,123 @@ function PlatformSection({ t, lang }: { t: typeof content.en, lang: 'en' | 'zh' 
   )
 }
 
+function PainPointsSection({ t }: { t: typeof content.en, lang: 'en' | 'zh' | 'zh-TW' }) {
+  const audiences = [
+    {
+      data: t.painPoints.audience1,
+      label: t.painPoints.audience1.reality,
+    },
+    {
+      data: t.painPoints.audience2,
+      label: t.painPoints.audience2.problem,
+    },
+    {
+      data: t.painPoints.audience3,
+      label: t.painPoints.audience3.missing,
+    },
+  ]
+
+  return (
+    <section
+      id="pain-points"
+      className="w-full bg-white py-32 lg:py-40"
+      aria-labelledby="pain-points-heading"
+    >
+      <div className="mx-auto max-w-[1600px] px-6 sm:px-10 md:px-16 lg:px-24">
+      <motion.div
+        className="text-center mb-20 lg:mb-24"
+        initial="hidden"
+        whileInView="visible"
+        variants={fadeUp}
+        viewport={{ once: true, amount: 0.3 }}
+      >
+        <p className="text-sm font-semibold uppercase tracking-[0.3em] text-primary mb-4">
+          {t.painPoints.sectionTitle}
+        </p>
+        <h2
+          id="pain-points-heading"
+          className="mt-6 text-4xl font-bold text-midnight sm:text-5xl lg:text-6xl leading-tight"
+        >
+          {t.painPoints.title}
+        </h2>
+        <p className="mx-auto mt-6 max-w-3xl text-lg sm:text-xl text-slate-600 leading-relaxed">
+          {t.painPoints.subtitle}
+        </p>
+      </motion.div>
+
+      <div className="grid gap-4 md:gap-6 md:grid-cols-3">
+        {audiences.map((audience, index) => (
+          <motion.div
+            key={index}
+            initial="hidden"
+            whileInView="visible"
+            variants={fadeUp}
+            viewport={{ once: true, amount: 0.4 }}
+            transition={{ duration: 0.6, ease: 'easeOut', delay: index * 0.1 }}
+            className="flex flex-col rounded-3xl border border-slate-200 bg-white overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 w-full transform hover:-translate-y-2"
+          >
+            {/* Image Section with Title Overlay */}
+            <div className="relative h-56 w-full overflow-hidden bg-slate-100">
+              <img
+                src={audience.data.image}
+                alt={audience.data.title}
+                className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                onError={(e) => {
+                  // Fallback to placeholder if image doesn't exist
+                  const target = e.target as HTMLImageElement
+                  target.src = 'https://via.placeholder.com/400x300?text=' + encodeURIComponent(audience.data.title)
+                }}
+              />
+              {/* Title Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent flex items-end">
+                <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white p-8 w-full leading-tight">
+                  {audience.data.title}
+                </h3>
+              </div>
+            </div>
+            
+            {/* Content Section */}
+            <div className="flex flex-col flex-grow p-8 lg:p-10">
+              <p className="mb-6 text-base sm:text-lg leading-relaxed text-slate-600">
+                {audience.data.subtitle}
+              </p>
+
+              <div className="mt-auto">
+                <p className="mb-4 text-base font-bold text-primary">
+                  {audience.label}
+                </p>
+                <ul className="space-y-3">
+                  {audience.data.points.map((point, pointIndex) => (
+                    <li key={pointIndex} className="flex items-start gap-3 text-base text-slate-700 leading-relaxed">
+                      <span className="mt-1 text-red-500 flex-shrink-0 text-lg font-bold">!</span>
+                      <span>{point}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </motion.div>
+        ))}
+      </div>
+      </div>
+    </section>
+  )
+}
+
 function ServiceSection({ t, lang }: { t: typeof content.en, lang: 'en' | 'zh' | 'zh-TW' }) {
-  const [selectedService, setSelectedService] = useState<typeof content.en.services.service1 | typeof content.en.services.service2 | typeof content.en.services.service3 | typeof content.en.services.service4 | typeof content.en.services.service5 | typeof content.en.services.service6 | null>(null)
+  const [selectedService, setSelectedService] = useState<typeof content.en.services.service1 | typeof content.en.services.service2 | typeof content.en.services.service3 | typeof content.en.services.service4 | null>(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const services = lang === 'en' ? [
-    { icon: 'elderly', service: t.services.service1, keyword: 'Healthcare' },
+    { icon: 'elderly', service: t.services.service1, keyword: 'Virtual' },
     { icon: 'home_health', service: t.services.service2, keyword: 'Trusted' },
-    { icon: 'psychology', service: t.services.service3, keyword: 'AI' },
-    { icon: 'spa', service: t.services.service4, keyword: 'Benefits' },
-    { icon: 'health_and_safety', service: t.services.service5, keyword: 'Complete' },
-    { icon: 'account_balance', service: t.services.service6, keyword: 'Financial' },
+    { icon: 'psychology', service: t.services.service3, keyword: 'Innovative' },
+    { icon: 'account_balance', service: t.services.service4, keyword: 'Benefit' },
   ] : [
-    { icon: 'elderly', service: t.services.service1, keyword: '医疗' },
+    { icon: 'elderly', service: t.services.service1, keyword: '虚拟' },
     { icon: 'home_health', service: t.services.service2, keyword: '值得信赖' },
-    { icon: 'psychology', service: t.services.service3, keyword: 'AI' },
-    { icon: 'spa', service: t.services.service4, keyword: '福利' },
-    { icon: 'health_and_safety', service: t.services.service5, keyword: '完整' },
-    { icon: 'account_balance', service: t.services.service6, keyword: '金融' },
+    { icon: 'psychology', service: t.services.service3, keyword: '创新' },
+    { icon: 'account_balance', service: t.services.service4, keyword: '福利' },
   ]
 
   const getTitleWithUnderline = (title: string, keyword: string) => {
@@ -2614,7 +2736,7 @@ function ServiceSection({ t, lang }: { t: typeof content.en, lang: 'en' | 'zh' |
     return title
   }
 
-  const handleViewMore = (service: typeof content.en.services.service1 | typeof content.en.services.service2 | typeof content.en.services.service3 | typeof content.en.services.service4 | typeof content.en.services.service5 | typeof content.en.services.service6) => {
+  const handleViewMore = (service: typeof content.en.services.service1 | typeof content.en.services.service2 | typeof content.en.services.service3 | typeof content.en.services.service4) => {
     if (service.details) {
       setSelectedService(service)
       setIsModalOpen(true)
@@ -2629,60 +2751,60 @@ function ServiceSection({ t, lang }: { t: typeof content.en, lang: 'en' | 'zh' |
   return (
     <section
       id="services"
-      className="mx-auto max-w-6xl px-6 py-20 sm:px-10 md:px-16 lg:px-24"
+      className="mx-auto max-w-[1600px] px-6 py-32 lg:py-40 sm:px-10 md:px-16 lg:px-24"
       aria-labelledby="services-heading"
     >
       <motion.div
-        className="text-center"
+        className="text-center mb-20 lg:mb-24"
         initial="hidden"
         whileInView="visible"
         variants={fadeUp}
         viewport={{ once: true, amount: 0.3 }}
       >
-        <p className="text-sm font-semibold uppercase tracking-[0.3em] text-primary">
+        <p className="text-sm font-semibold uppercase tracking-[0.3em] text-primary mb-4">
           {t.services.sectionTitle}
         </p>
         <h2
           id="services-heading"
-          className="mt-4 text-3xl font-semibold text-midnight sm:text-4xl"
+          className="mt-6 text-4xl font-bold text-midnight sm:text-5xl lg:text-6xl leading-tight"
           itemProp="name"
         >
           {t.services.title}
         </h2>
-        <p className="mx-auto mt-4 max-w-2xl text-base text-slate-600">
+        <p className="mx-auto mt-6 max-w-3xl text-lg sm:text-xl text-slate-600 leading-relaxed">
           {t.services.subtitle}
         </p>
       </motion.div>
 
-      <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-12 grid gap-0 md:grid-cols-2 lg:grid-cols-4 border border-slate-200 rounded-3xl overflow-hidden">
         {services.map((service) => (
           <motion.article
             key={service.service.title}
-            className="group flex flex-col rounded-3xl border border-slate-200 bg-white/70 p-6 shadow-sm transition hover:-translate-y-2 hover:shadow-lg"
+            className="group flex flex-col rounded-none border-r border-slate-200 bg-white/70 p-10 lg:p-12 shadow-lg transition-all duration-300 hover:-translate-y-3 hover:shadow-2xl last:border-r-0"
             initial="hidden"
             whileInView="visible"
             variants={fadeUp}
             viewport={{ once: true, amount: 0.4 }}
             transition={{ duration: 0.6, ease: 'easeOut' }}
           >
-            <span className="material-symbols-outlined mb-4 text-5xl text-primary">
+            <span className="material-symbols-outlined mb-6 text-6xl lg:text-7xl text-primary transition-transform duration-300 group-hover:scale-110">
               {service.icon}
             </span>
-              <h3 className="text-lg font-semibold text-midnight">
+              <h3 className="text-xl sm:text-2xl font-bold text-midnight whitespace-nowrap overflow-hidden text-ellipsis mb-3">
                 {getTitleWithUnderline(service.service.title, service.keyword)}
               </h3>
               {service.service.subtitle && (
-                <p className="mt-2 text-sm font-medium text-primary">
+                <p className="mt-2 text-base sm:text-lg font-semibold text-primary mb-4">
                   {service.service.subtitle}
                 </p>
               )}
-              <p className="mt-3 text-sm leading-relaxed text-slate-600">
+              <p className="mt-3 text-base sm:text-lg leading-relaxed text-slate-600 flex-grow mb-8">
                 {service.service.desc}
               </p>
               {service.service.details && (
                 <button
                   onClick={() => handleViewMore(service.service)}
-                  className="mt-6 inline-flex items-center gap-2 rounded-full border border-primary bg-white px-5 py-2 text-sm font-medium text-primary transition hover:bg-primary hover:text-white focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="mt-auto inline-flex items-center gap-2 rounded-full border border-primary bg-white px-5 py-2 text-sm font-medium text-primary transition hover:bg-primary hover:text-white focus:outline-none focus:ring-2 focus:ring-primary"
                 >
                   <span>{lang === 'en' ? 'Learn More' : '了解更多'}</span>
                   <span className="material-symbols-outlined text-base">arrow_forward</span>
@@ -2882,7 +3004,7 @@ function TechnologySection({ t, lang, onHowItWorks }: { t: typeof content.en, la
       <div className="absolute inset-0 -skew-y-2 bg-gradient-to-br from-teal-800/60 via-cyan-800/40 to-slate-900/80" />
       <div className="relative mx-auto max-w-6xl">
         <motion.div
-          className="text-center mb-12"
+          className="text-center mb-20 lg:mb-24"
           initial="hidden"
           whileInView="visible"
           variants={fadeUp}
@@ -2894,10 +3016,20 @@ function TechnologySection({ t, lang, onHowItWorks }: { t: typeof content.en, la
           </p>
           <h2
             id="technology-heading"
-            className="text-3xl font-semibold text-white sm:text-4xl lg:text-5xl mb-6"
+            className="text-4xl font-bold text-white sm:text-5xl lg:text-6xl mb-6 leading-tight"
             itemProp="name"
           >
-            {String(t.technology.title)}
+            {lang === 'en' ? (
+              <>
+                <span className="block">Technology Enables Care.</span>
+                <span className="block">Humans Deliver It.</span>
+              </>
+            ) : (
+              <>
+                <span className="block">科技赋能护理。</span>
+                <span className="block">人文传递关怀。</span>
+              </>
+            )}
           </h2>
         </motion.div>
 
@@ -3069,27 +3201,27 @@ function PartnersSection({ t }: { t: typeof content.en }) {
   return (
     <section
       id="partners"
-      className="mx-auto max-w-6xl px-6 py-20 sm:px-10 md:px-16 lg:px-24"
+      className="mx-auto max-w-6xl px-6 py-32 lg:py-40 sm:px-10 md:px-16 lg:px-24"
       aria-labelledby="partners-heading"
     >
       <motion.div
-        className="text-center"
+        className="text-center mb-20 lg:mb-24"
         initial="hidden"
         whileInView="visible"
         variants={fadeUp}
         viewport={{ once: true, amount: 0.3 }}
       >
-        <p className="text-sm font-semibold uppercase tracking-[0.3em] text-primary">
+        <p className="text-sm font-semibold uppercase tracking-[0.3em] text-primary mb-4">
           {t.partners.sectionTitle}
         </p>
         <h2
           id="partners-heading"
-          className="mt-4 text-3xl font-semibold text-midnight sm:text-4xl"
+          className="mt-6 text-4xl font-bold text-midnight sm:text-5xl lg:text-6xl leading-tight"
           itemProp="name"
         >
           {t.partners.title}
         </h2>
-        <p className="mx-auto mt-4 max-w-3xl text-base text-slate-600">
+        <p className="mx-auto mt-6 max-w-3xl text-lg sm:text-xl text-slate-600 leading-relaxed">
           {t.partners.subtitle}
         </p>
       </motion.div>
@@ -3153,7 +3285,7 @@ function ImpactSection({ t }: { t: typeof content.en }) {
   return (
     <section
       id="impact"
-      className="bg-white px-6 py-20 sm:px-10 md:px-16 lg:px-24"
+      className="bg-white px-6 py-32 lg:py-40 sm:px-10 md:px-16 lg:px-24"
       aria-labelledby="impact-heading"
     >
       <motion.div
@@ -3163,18 +3295,18 @@ function ImpactSection({ t }: { t: typeof content.en }) {
         variants={fadeUp}
         viewport={{ once: true, amount: 0.3 }}
       >
-        <div className="text-center">
-          <p className="text-sm font-semibold uppercase tracking-[0.3em] text-primary">
+        <div className="text-center mb-20 lg:mb-24">
+          <p className="text-sm font-semibold uppercase tracking-[0.3em] text-primary mb-4">
             {t.impact.sectionTitle}
           </p>
           <h2
             id="impact-heading"
-            className="mt-4 text-3xl font-semibold text-midnight sm:text-4xl"
+            className="mt-6 text-4xl font-bold text-midnight sm:text-5xl lg:text-6xl leading-tight"
             itemProp="name"
           >
             {t.impact.title}
           </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-base text-slate-600">
+          <p className="mx-auto mt-6 max-w-3xl text-lg sm:text-xl text-slate-600 leading-relaxed">
             {t.impact.subtitle}
           </p>
         </div>
@@ -3365,17 +3497,17 @@ function MembershipTiersSection({ t, lang }: { t: typeof content.en, lang: 'en' 
   const currentTiers = tiers[currentLangForTiers as 'en' | 'zh'] || tiers.en
 
   return (
-    <section id="membership" className="bg-gradient-to-br from-primary/5 via-white to-accent/5 px-6 py-20 sm:px-10 md:px-16 lg:px-24">
+    <section id="membership" className="bg-gradient-to-br from-primary/5 via-white to-accent/5 px-6 py-32 lg:py-40 sm:px-10 md:px-16 lg:px-24">
       <div className="mx-auto max-w-7xl">
         <motion.div
-          className="text-center"
+          className="text-center mb-20 lg:mb-24"
           initial="hidden"
           whileInView="visible"
           variants={fadeUp}
           viewport={{ once: true, amount: 0.3 }}
         >
-          <p className="text-sm font-semibold uppercase tracking-[0.3em] text-primary">{t.membership.sectionTitle}</p>
-          <h2 id="membership-heading" className="mt-4 text-3xl font-semibold text-midnight sm:text-4xl" itemProp="name">{t.membership.title}</h2>
+          <p className="text-sm font-semibold uppercase tracking-[0.3em] text-primary mb-4">{t.membership.sectionTitle}</p>
+          <h2 id="membership-heading" className="mt-6 text-4xl font-bold text-midnight sm:text-5xl lg:text-6xl leading-tight" itemProp="name">{t.membership.title}</h2>
         </motion.div>
 
         <div className="mt-12 grid gap-8 lg:grid-cols-3">
@@ -3453,11 +3585,11 @@ function FAQSection({ t, lang }: { t: typeof content.en, lang: 'en' | 'zh' | 'zh
   const items = faqItems[currentLangForFaq as 'en' | 'zh'] || faqItems.en
 
   return (
-    <section id="faq" className="bg-white px-6 py-20 sm:px-10 md:px-16 lg:px-24">
+    <section id="faq" className="bg-white px-6 py-32 lg:py-40 sm:px-10 md:px-16 lg:px-24">
       <div className="mx-auto max-w-6xl">
-        <div className="text-center">
-          <p className="text-sm font-semibold uppercase tracking-[0.3em] text-primary">{t.faq.sectionTitle}</p>
-          <h2 id="faq-heading" className="mt-4 text-3xl font-semibold text-midnight sm:text-4xl" itemProp="name">{t.faq.title}</h2>
+        <div className="text-center mb-20 lg:mb-24">
+          <p className="text-sm font-semibold uppercase tracking-[0.3em] text-primary mb-4">{t.faq.sectionTitle}</p>
+          <h2 id="faq-heading" className="mt-6 text-4xl font-bold text-midnight sm:text-5xl lg:text-6xl leading-tight" itemProp="name">{t.faq.title}</h2>
         </div>
         <div className="mt-12 space-y-6">
           {items.map((item: any, index: number) => (
