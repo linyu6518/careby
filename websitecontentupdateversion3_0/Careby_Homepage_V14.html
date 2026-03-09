@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Careby — Health Coordination for Your Whole Family</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --ink:#0E1B2A;
+  --ink2:#1C2F42;
+  --jade:#1B6B4A;
+  --jade2:#2A8B62;
+  --jade3:#3DAF7A;
+  --jade-light:#E8F5EE;
+  --gold:#C49A3C;
+  --gold-light:#FBF4E3;
+  --blue:#1A4A7A;
+  --blue2:#2260A8;
+  --blue-light:#E8F0FA;
+  --cream:#FAFAF7;
+  --warm:#F4F1EB;
+  --border:#E2DDD4;
+  --mid:#6B7280;
+  --lt:#9CA3AF;
+}
+html{scroll-behavior:smooth;}
+body{font-family:'Outfit',sans-serif;background:var(--cream);color:var(--ink);overflow-x:hidden;}
+
+/* ── REVEAL ── */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease;}
+.reveal.visible{opacity:1;transform:none;}
+.reveal-delay-1{transition-delay:.1s;}
+.reveal-delay-2{transition-delay:.2s;}
+.reveal-delay-3{transition-delay:.3s;}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(14,27,42,0.96);backdrop-filter:blur(20px);height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 48px;border-bottom:1px solid rgba(255,255,255,0.06);}
+.nav-logo{font-family:'Fraunces',serif;font-size:22px;font-style:italic;font-weight:300;color:#fff;text-decoration:none;display:flex;align-items:center;gap:8px;letter-spacing:-0.3px;}
+.nav-logo-dot{width:7px;height:7px;background:var(--jade3);border-radius:50%;}
+.nav-links{display:flex;align-items:center;gap:28px;}
+.nav-links a{color:rgba(255,255,255,0.5);text-decoration:none;font-size:13px;font-weight:400;transition:color .2s;}
+.nav-links a:hover{color:#fff;}
+.nav-right{display:flex;align-items:center;gap:14px;}
+.nav-lang{color:rgba(255,255,255,0.35);font-size:12px;cursor:pointer;letter-spacing:0.3px;}
+.nav-consult{color:rgba(255,255,255,0.55);font-size:13px;text-decoration:none;border:1px solid rgba(255,255,255,0.15);padding:8px 18px;border-radius:20px;transition:all .2s;}
+.nav-consult:hover{border-color:rgba(255,255,255,0.4);color:#fff;}
+.nav-cta{background:var(--jade2);color:#fff;padding:9px 22px;border-radius:20px;font-size:13px;font-weight:500;text-decoration:none;transition:all .2s;}
+.nav-cta:hover{background:var(--jade);transform:translateY(-1px);}
+
+/* ── HERO ── */
+.hero{min-height:100vh;padding-top:64px;background:linear-gradient(160deg,#071520 0%,#0C1E30 50%,#081A12 100%);display:flex;align-items:center;position:relative;overflow:hidden;}
+.hero-orb{position:absolute;border-radius:50%;pointer-events:none;}
+.ho1{width:600px;height:600px;background:radial-gradient(circle,rgba(29,107,74,0.14) 0%,transparent 65%);top:-100px;right:-100px;}
+.ho2{width:400px;height:400px;background:radial-gradient(circle,rgba(26,74,122,0.1) 0%,transparent 65%);bottom:100px;left:-50px;}
+.hero-inner{max-width:1200px;margin:0 auto;padding:80px 48px;width:100%;position:relative;z-index:1;}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(61,175,122,0.1);border:1px solid rgba(61,175,122,0.2);color:var(--jade3);padding:6px 14px;border-radius:20px;font-size:11px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:32px;}
+.hero-eyebrow-dot{width:5px;height:5px;background:var(--jade3);border-radius:50%;}
+
+/* Hero two-col layout */
+.hero-cols{display:grid;grid-template-columns:1fr 420px;gap:80px;align-items:center;}
+.hero-left{}
+
+/* Wordplay — small, stacked, sets brand tone */
+.hero-wordplay{display:flex;flex-direction:column;gap:2px;margin-bottom:24px;}
+.hwp{font-family:'Outfit',sans-serif;font-size:13px;font-weight:400;color:rgba(255,255,255,0.35);letter-spacing:0.2px;}
+.hwp span{font-weight:600;font-size:14px;margin-left:2px;}
+.hwp-experts span{color:#7BBFF5;}
+.hwp-love span{color:var(--jade3);}
+.hwp-trust span{color:var(--gold);}
+
+/* Main headline — single, dominant, specific */
+.hero-h1{font-family:'Fraunces',serif;font-weight:300;font-size:52px;line-height:1.05;color:#fff;letter-spacing:-1.5px;margin-bottom:20px;}
+.hero-h1 em{font-style:italic;color:var(--jade3);}
+.hero-h1 strong{font-weight:400;color:rgba(255,255,255,0.75);}
+
+.hero-sub{font-size:16px;color:rgba(255,255,255,0.55);line-height:1.7;font-weight:300;margin-bottom:36px;max-width:520px;}
+.hero-sub em{color:rgba(255,255,255,0.8);font-style:normal;font-weight:500;}
+
+/* Entry product CTA block */
+.hero-cta-block{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:20px 24px;margin-bottom:28px;display:flex;align-items:center;justify-content:space-between;gap:20px;}
+.hcb-left{}
+.hcb-label{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--jade3);margin-bottom:4px;}
+.hcb-product{font-size:16px;font-weight:600;color:#fff;margin-bottom:2px;}
+.hcb-desc{font-size:12.5px;color:rgba(255,255,255,0.45);}
+.hcb-right{display:flex;flex-direction:column;align-items:flex-end;gap:8px;flex-shrink:0;}
+.hcb-price{font-family:'Fraunces',serif;font-size:28px;font-weight:300;color:#fff;white-space:nowrap;}
+.hcb-price sub{font-size:14px;color:rgba(255,255,255,0.45);}
+.btn-buy{background:var(--jade2);color:#fff;padding:12px 28px;border-radius:24px;font-size:14px;font-weight:600;text-decoration:none;white-space:nowrap;transition:all .22s;box-shadow:0 4px 20px rgba(42,139,98,0.4);}
+.btn-buy:hover{background:var(--jade);transform:translateY(-2px);box-shadow:0 6px 28px rgba(42,139,98,0.5);}
+
+.hero-secondary{display:flex;align-items:center;gap:20px;}
+.btn-consult{color:rgba(255,255,255,0.5);font-size:13px;text-decoration:none;display:flex;align-items:center;gap:8px;transition:color .2s;}
+.btn-consult:hover{color:#fff;}
+.btn-consult-icon{width:32px;height:32px;border-radius:50%;border:1px solid rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;font-size:11px;}
+.hero-sep{width:1px;height:16px;background:rgba(255,255,255,0.1);}
+.hero-plans-link{color:rgba(255,255,255,0.4);font-size:13px;text-decoration:none;transition:color .2s;}
+.hero-plans-link:hover{color:var(--jade3);}
+
+/* Hero trust row */
+.hero-trust{display:flex;flex-wrap:wrap;gap:18px;margin-top:40px;padding-top:32px;border-top:1px solid rgba(255,255,255,0.06);}
+.trust-chip{display:flex;align-items:center;gap:6px;color:rgba(255,255,255,0.38);font-size:11.5px;}
+.trust-dot{width:3px;height:3px;background:var(--jade3);border-radius:50%;}
+
+/* Hero right — product preview cards */
+.hero-right{}
+.hero-preview{display:flex;flex-direction:column;gap:10px;}
+.hprev{border-radius:14px;padding:16px 18px;border:1px solid;cursor:pointer;transition:all .25s;text-decoration:none;display:block;}
+.hprev-health{background:rgba(26,74,122,0.25);border-color:rgba(34,96,168,0.3);}
+.hprev-health:hover{background:rgba(26,74,122,0.4);border-color:rgba(34,96,168,0.5);transform:translateX(4px);}
+.hprev-home{background:rgba(27,107,74,0.2);border-color:rgba(42,139,98,0.3);}
+.hprev-home:hover{background:rgba(27,107,74,0.35);border-color:rgba(42,139,98,0.5);transform:translateX(4px);}
+.hprev-companion{background:rgba(196,154,60,0.1);border-color:rgba(196,154,60,0.2);}
+.hprev-companion:hover{background:rgba(196,154,60,0.18);border-color:rgba(196,154,60,0.35);transform:translateX(4px);}
+.hprev-top{display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+.hprev-tag{font-size:9.5px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;padding:2px 8px;border-radius:8px;}
+.hpt-blue{background:rgba(34,96,168,0.2);color:#7BBFF5;}
+.hpt-jade{background:rgba(42,139,98,0.2);color:var(--jade3);}
+.hpt-gold{background:rgba(196,154,60,0.2);color:var(--gold);}
+.hprev-title{font-size:14px;font-weight:500;color:#fff;margin-bottom:3px;}
+.hprev-desc{font-size:11.5px;color:rgba(255,255,255,0.45);line-height:1.5;}
+.hprev-price{font-size:12px;font-weight:600;color:rgba(255,255,255,0.6);margin-top:10px;}
+.hprev-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;}
+.hprev-chip{font-size:10.5px;font-weight:500;padding:3px 10px;border-radius:10px;}
+.hchip-blue{background:rgba(34,96,168,0.25);color:#7BBFF5;}
+.hchip-jade{background:rgba(42,139,98,0.25);color:var(--jade3);}
+.hprev-bridge{text-align:center;font-size:11px;color:rgba(255,255,255,0.2);font-style:italic;padding:2px 0;}
+.hero-view-all{text-align:center;margin-top:12px;}
+.hero-view-all a{font-size:12px;color:rgba(255,255,255,0.3);text-decoration:none;transition:color .2s;}
+.hero-view-all a:hover{color:var(--jade3);}
+
+/* ── PROBLEM BAND ── */
+.problem-band{background:var(--ink);padding:80px 0;}
+.problem-inner{max-width:1200px;margin:0 auto;padding:0 48px;}
+.problem-eyebrow{font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--jade3);text-align:center;margin-bottom:16px;}
+.problem-h2{font-family:'Fraunces',serif;font-size:42px;font-weight:300;font-style:italic;color:#fff;text-align:center;line-height:1.2;margin-bottom:56px;max-width:680px;margin-left:auto;margin-right:auto;}
+.problem-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,0.06);border-radius:16px;overflow:hidden;}
+.prob{background:var(--ink);padding:36px 32px;}
+.prob:hover{background:rgba(255,255,255,0.02);}
+.prob-num{font-family:'Fraunces',serif;font-size:48px;font-weight:300;font-style:italic;margin-bottom:16px;line-height:1;}
+.prob-num-1{color:#7BBFF5;}
+.prob-num-2{color:var(--jade3);}
+.prob-num-3{color:var(--gold);}
+.prob-situation{font-size:12px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:10px;}
+.prob-fear{font-family:'Fraunces',serif;font-size:19px;font-weight:300;font-style:italic;color:rgba(255,255,255,0.85);line-height:1.5;margin-bottom:16px;}
+.prob-answer{font-size:13px;color:rgba(255,255,255,0.45);line-height:1.7;border-top:1px solid rgba(255,255,255,0.06);padding-top:16px;}
+.prob-answer em{color:var(--jade3);font-style:normal;font-weight:500;}
+
+/* ── HOW IT WORKS ── */
+.how-wrap{background:var(--cream);padding:96px 0;}
+.how-inner{max-width:1200px;margin:0 auto;padding:0 48px;}
+.section-eyebrow{font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--jade2);text-align:center;margin-bottom:12px;}
+.section-h2{font-family:'Fraunces',serif;font-size:42px;font-weight:300;color:var(--ink);text-align:center;line-height:1.2;margin-bottom:56px;}
+.section-h2 em{font-style:italic;color:var(--jade2);}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;position:relative;}
+.steps::before{content:'';position:absolute;top:28px;left:10%;right:10%;height:1px;background:linear-gradient(90deg,transparent,var(--border) 20%,var(--border) 80%,transparent);}
+.step{text-align:center;position:relative;}
+.step-num{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-size:22px;font-weight:300;margin:0 auto 20px;position:relative;z-index:1;}
+.sn1{background:var(--blue-light);color:var(--blue2);}
+.sn2{background:var(--jade-light);color:var(--jade);}
+.sn3{background:var(--jade-light);color:var(--jade);}
+.sn4{background:var(--gold-light);color:var(--gold);}
+.step-title{font-size:15px;font-weight:600;color:var(--ink);margin-bottom:8px;}
+.step-desc{font-size:13px;color:var(--mid);line-height:1.65;}
+
+/* ── CAREBY EQUATION (Care by brand moment) ── */
+.equation-wrap{background:var(--ink2);padding:96px 0;}
+.equation-inner{max-width:1100px;margin:0 auto;padding:0 48px;}
+.eq-headline{font-family:'Fraunces',serif;font-size:14px;font-weight:300;font-style:italic;color:rgba(255,255,255,0.35);text-align:center;letter-spacing:1px;text-transform:uppercase;margin-bottom:48px;}
+.eq-grid{display:grid;grid-template-columns:1fr 40px 1fr 40px 1fr;align-items:start;margin-bottom:40px;}
+.eq-item{text-align:center;padding:0 20px;}
+.eq-by{font-size:10px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;color:rgba(255,255,255,0.25);margin-bottom:4px;}
+.eq-word{font-family:'Fraunces',serif;font-size:56px;font-weight:300;font-style:italic;line-height:1;margin-bottom:20px;}
+.eq-blue{color:#7BBFF5;}
+.eq-jade{color:var(--jade3);}
+.eq-gold{color:var(--gold);}
+.eq-def{font-size:13px;color:rgba(255,255,255,0.45);line-height:1.7;font-weight:300;}
+.eq-op{font-family:'Fraunces',serif;font-size:36px;font-weight:300;color:rgba(255,255,255,0.12);text-align:center;padding-top:42px;}
+.eq-result-row{border-top:1px solid rgba(255,255,255,0.06);padding-top:36px;text-align:center;}
+.eq-equals{font-size:28px;color:rgba(255,255,255,0.12);margin-bottom:12px;}
+.eq-result{font-family:'Fraunces',serif;font-size:26px;font-weight:300;font-style:italic;color:rgba(255,255,255,0.8);max-width:700px;margin:0 auto;line-height:1.5;}
+.eq-result em{color:var(--jade3);font-style:normal;}
+
+/* ── DIAGNOSTIC TIER LABEL ── */
+.diag-tier-label{text-align:center;margin-bottom:16px;}
+.diag-tier-eyebrow{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--jade2);background:var(--jade-light);padding:4px 16px;border-radius:12px;}
+.diag-three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:20px;}
+.plan-card-infinity{background:var(--ink);border-color:rgba(196,154,60,0.3) !important;}
+.plan-card-infinity:hover{border-color:var(--gold) !important;box-shadow:0 8px 32px rgba(196,154,60,0.12) !important;}
+.plan-card-infinity .pc-feat{color:rgba(255,255,255,0.65);}
+@media(max-width:960px){.diag-three-col{grid-template-columns:1fr;}}
+/* ── PLANS / PRICING ── */
+.plans-wrap{background:var(--cream);padding:96px 0;}
+.plans-inner{max-width:1200px;margin:0 auto;padding:0 48px;}
+.plans-intro{max-width:580px;margin:0 auto 56px;text-align:center;}
+.plans-intro p{font-size:15px;color:var(--mid);line-height:1.7;margin-top:12px;}
+
+/* Entry product — hero plan */
+.plan-hero{background:var(--ink);border-radius:20px;padding:40px 48px;margin-bottom:20px;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;position:relative;overflow:hidden;}
+.plan-hero::before{content:'';position:absolute;top:-80px;right:-80px;width:300px;height:300px;background:radial-gradient(circle,rgba(42,139,98,0.15) 0%,transparent 65%);}
+.ph-left{}
+.ph-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(61,175,122,0.12);border:1px solid rgba(61,175,122,0.22);color:var(--jade3);padding:4px 12px;border-radius:12px;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:16px;}
+.ph-title{font-family:'Fraunces',serif;font-size:36px;font-weight:300;color:#fff;margin-bottom:6px;}
+.ph-tagline{font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:24px;line-height:1.6;}
+.ph-features{display:flex;flex-direction:column;gap:10px;}
+.ph-feat{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:rgba(255,255,255,0.65);line-height:1.5;}
+.ph-feat-ck{color:var(--jade3);font-size:14px;flex-shrink:0;margin-top:1px;}
+.ph-feat em{color:rgba(255,255,255,0.9);font-style:normal;font-weight:500;}
+.ph-right{text-align:right;}
+.ph-price-label{font-size:11px;color:rgba(255,255,255,0.3);letter-spacing:0.5px;margin-bottom:6px;}
+.ph-price{font-family:'Fraunces',serif;font-size:64px;font-weight:300;color:#fff;line-height:1;}
+.ph-price sup{font-size:28px;vertical-align:top;margin-top:8px;}
+.ph-price sub{font-size:18px;color:rgba(255,255,255,0.4);}
+.ph-price-note{font-size:12px;color:rgba(255,255,255,0.3);margin-top:6px;margin-bottom:28px;}
+.btn-buy-lg{display:inline-block;background:var(--jade2);color:#fff;padding:15px 40px;border-radius:28px;font-size:15px;font-weight:600;text-decoration:none;box-shadow:0 6px 28px rgba(42,139,98,0.4);transition:all .25s;}
+.btn-buy-lg:hover{background:var(--jade);transform:translateY(-2px);}
+.ph-upgrade-note{font-size:11.5px;color:rgba(255,255,255,0.25);margin-top:12px;}
+
+/* Upgrade row */
+.upgrade-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;}
+.plan-card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:28px 28px;transition:all .25s;}
+.plan-card:hover{border-color:var(--jade3);box-shadow:0 8px 32px rgba(42,139,98,0.08);transform:translateY(-2px);}
+.plan-card.pc-featured{border-color:var(--jade2);background:linear-gradient(145deg,#fff,var(--jade-light));}
+.pc-badge{font-size:9.5px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;color:var(--jade2);margin-bottom:10px;}
+.pc-title{font-family:'Fraunces',serif;font-size:22px;font-weight:400;color:var(--ink);margin-bottom:4px;}
+.pc-tagline{font-size:12.5px;color:var(--mid);margin-bottom:16px;line-height:1.5;}
+.pc-price{font-family:'Fraunces',serif;font-size:32px;font-weight:300;color:var(--ink);margin-bottom:4px;}
+.pc-price sub{font-size:15px;color:var(--mid);}
+.pc-saving{font-size:11px;color:var(--jade2);font-weight:600;background:var(--jade-light);padding:2px 8px;border-radius:8px;display:inline-block;margin-bottom:16px;}
+.pc-feats{display:flex;flex-direction:column;gap:7px;margin-bottom:20px;}
+.pc-feat{display:flex;gap:8px;font-size:12.5px;color:var(--mid);line-height:1.5;}
+.pc-ck{color:var(--jade2);flex-shrink:0;}
+.btn-plan{display:block;text-align:center;padding:11px 0;border-radius:20px;font-size:13px;font-weight:600;text-decoration:none;transition:all .2s;}
+.btn-plan-solid{background:var(--jade2);color:#fff;}
+.btn-plan-solid:hover{background:var(--jade);}
+.btn-plan-outline{border:1.5px solid var(--border);color:var(--ink);}
+.btn-plan-outline:hover{border-color:var(--jade2);color:var(--jade2);}
+
+/* Credits row */
+.credits-row{background:var(--warm);border:1px solid var(--border);border-radius:16px;padding:28px 32px;display:grid;grid-template-columns:1fr 2fr;gap:32px;align-items:center;}
+.cr-left{}
+.cr-badge{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--gold);background:var(--gold-light);padding:3px 10px;border-radius:8px;display:inline-block;margin-bottom:10px;}
+.cr-title{font-family:'Fraunces',serif;font-size:22px;font-weight:300;color:var(--ink);margin-bottom:6px;}
+.cr-desc{font-size:13px;color:var(--mid);line-height:1.65;}
+.cr-right{display:flex;gap:12px;}
+.crpkg{flex:1;background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px;text-align:center;transition:all .2s;}
+.crpkg:hover{border-color:var(--jade2);transform:translateY(-2px);}
+.crpkg.crpkg-pop{border-color:var(--jade2);background:var(--jade-light);}
+.crpkg-name{font-size:12px;font-weight:600;color:var(--ink);margin-bottom:4px;}
+.crpkg-price{font-family:'Fraunces',serif;font-size:22px;font-weight:300;color:var(--ink);}
+.crpkg-credits{font-size:11px;color:var(--mid);margin-top:2px;}
+.crpkg-save{font-size:10px;font-weight:700;color:var(--jade2);margin-top:4px;}
+.crpkg-pop .crpkg-save{color:var(--jade);}
+
+/* Plans note */
+.plans-note{text-align:center;margin-top:20px;font-size:13px;color:var(--lt);}
+.plans-note a{color:var(--jade2);text-decoration:none;}
+.plans-note a:hover{text-decoration:underline;}
+
+/* ── TRUST / PROOF ── */
+.proof-wrap{background:var(--ink);padding:96px 0;}
+.proof-inner{max-width:1200px;margin:0 auto;padding:0 48px;}
+/* Five-stat grid */
+.proof-five{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:rgba(255,255,255,0.06);border-radius:20px;overflow:hidden;margin-bottom:24px;}
+.pstat5{background:var(--ink);padding:32px 24px;transition:background .2s;}
+.pstat5:hover{background:rgba(255,255,255,0.025);}
+.pstat5-center{background:rgba(42,139,98,0.06);}
+.pstat5-num{font-family:'Fraunces',serif;font-size:36px;font-weight:300;color:#fff;line-height:1;margin-bottom:10px;}
+.pstat5-num em{font-style:italic;color:var(--jade3);}
+.pstat5-title{font-size:13px;font-weight:600;color:#fff;margin-bottom:8px;line-height:1.4;}
+.pstat5-body{font-size:12px;color:rgba(255,255,255,0.4);line-height:1.65;margin-bottom:12px;}
+.pstat5-source{font-size:10px;color:rgba(255,255,255,0.2);font-weight:600;letter-spacing:0.5px;text-transform:uppercase;}
+/* Guarantee strip */
+.proof-guarantee-strip{background:rgba(42,139,98,0.07);border:1px solid rgba(42,139,98,0.18);border-radius:16px;padding:28px 32px;display:flex;align-items:center;justify-content:space-between;gap:32px;}
+.pgs-left{display:flex;gap:20px;align-items:flex-start;}
+.pgs-icon{font-size:28px;flex-shrink:0;}
+.pgs-title{font-size:16px;font-weight:600;color:#fff;margin-bottom:6px;}
+.pgs-body{font-size:13px;color:rgba(255,255,255,0.5);line-height:1.65;}
+@media(max-width:960px){.proof-five{grid-template-columns:1fr 1fr;}.proof-guarantee-strip{flex-direction:column;align-items:flex-start;}}
+
+/* ── BILINGUAL ── */
+.bilingual-wrap{background:var(--warm);padding:72px 0;}
+.bilingual-inner{max-width:1200px;margin:0 auto;padding:0 48px;display:grid;grid-template-columns:1fr 1fr;gap:48px;}
+.bi-col{padding:32px;}
+.bi-tag{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--mid);margin-bottom:14px;}
+.bi-h{font-family:'Fraunces',serif;font-size:24px;font-weight:300;color:var(--ink);margin-bottom:12px;line-height:1.4;}
+.bi-h em{font-style:italic;color:var(--jade2);}
+.bi-body{font-size:13.5px;color:var(--mid);line-height:1.7;margin-bottom:20px;}
+.bi-wechat{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--border);border-radius:12px;padding:14px 18px;}
+.bi-wc-icon{font-size:22px;}
+.bi-wc-text{}
+.bi-wc-title{font-size:13px;font-weight:600;color:var(--ink);}
+.bi-wc-sub{font-size:11.5px;color:var(--mid);}
+
+/* ── FINAL CTA ── */
+.final-cta{background:linear-gradient(145deg,var(--jade) 0%,var(--ink2) 100%);padding:96px 0;text-align:center;}
+.final-inner{max-width:700px;margin:0 auto;padding:0 48px;}
+.final-h{font-family:'Fraunces',serif;font-size:48px;font-weight:300;font-style:italic;color:#fff;line-height:1.2;margin-bottom:16px;}
+.final-sub{font-size:16px;color:rgba(255,255,255,0.6);margin-bottom:40px;line-height:1.6;}
+.final-btns{display:flex;align-items:center;justify-content:center;gap:16px;}
+.btn-final-buy{background:#fff;color:var(--jade);padding:16px 44px;border-radius:30px;font-size:15px;font-weight:700;text-decoration:none;transition:all .25s;box-shadow:0 6px 28px rgba(0,0,0,0.2);}
+.btn-final-buy:hover{transform:translateY(-2px);box-shadow:0 8px 36px rgba(0,0,0,0.25);}
+.btn-final-consult{color:rgba(255,255,255,0.6);font-size:14px;text-decoration:none;border-bottom:1px solid rgba(255,255,255,0.25);padding-bottom:2px;transition:all .2s;}
+.btn-final-consult:hover{color:#fff;border-color:#fff;}
+
+/* ── FOOTER ── */
+footer{background:var(--ink);padding:56px 0 32px;}
+.footer-inner{max-width:1200px;margin:0 auto;padding:0 48px;}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:40px;}
+.footer-brand{}
+.footer-logo{font-family:'Fraunces',serif;font-size:20px;font-style:italic;font-weight:300;color:#fff;margin-bottom:10px;}
+.footer-tagline{font-size:13px;color:rgba(255,255,255,0.35);line-height:1.6;max-width:220px;}
+.footer-col-title{font-size:11px;font-weight:700;letter-spacing:0.9px;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:14px;}
+.footer-links{display:flex;flex-direction:column;gap:8px;}
+.footer-links a{color:rgba(255,255,255,0.45);text-decoration:none;font-size:13px;transition:color .2s;}
+.footer-links a:hover{color:#fff;}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.06);padding-top:24px;display:flex;justify-content:space-between;align-items:center;}
+.footer-legal{font-size:11.5px;color:rgba(255,255,255,0.25);}
+.footer-legal a{color:rgba(255,255,255,0.35);text-decoration:none;}
+.footer-lang{display:flex;gap:12px;}
+.footer-lang span{font-size:12px;color:rgba(255,255,255,0.3);cursor:pointer;transition:color .2s;}
+.footer-lang span:hover{color:#fff;}
+
+@media(max-width:960px){
+  .hero-cols{grid-template-columns:1fr;}
+  .hero-right{display:none;}
+  .problem-grid{grid-template-columns:1fr;}
+  .steps{grid-template-columns:1fr 1fr;}
+  .steps::before{display:none;}
+  .eq-grid{grid-template-columns:1fr;}
+  .eq-op{padding-top:0;}
+  .plan-hero{grid-template-columns:1fr;}
+  .ph-right{text-align:left;}
+  .upgrade-row{grid-template-columns:1fr;}
+  .proof-grid{grid-template-columns:1fr;}
+  .bilingual-inner{grid-template-columns:1fr;}
+  .footer-grid{grid-template-columns:1fr 1fr;}
+  .credits-row{grid-template-columns:1fr;}
+}
+
+/* ── PLAN TABS ── */
+.tab-nav{display:flex;gap:8px;margin-bottom:28px;flex-wrap:wrap;justify-content:center;}
+.tab-btn{padding:9px 20px;border-radius:24px;border:1.5px solid #d0e6da;background:transparent;color:var(--lt);font-size:13px;font-weight:500;cursor:pointer;transition:all .2s;font-family:'Outfit',sans-serif;}
+.tab-btn:hover{border-color:var(--jade2);color:var(--jade2);}
+.tab-active{background:var(--jade2) !important;border-color:var(--jade2) !important;color:#fff !important;}
+.tab-panel{display:block;}
+.tab-hidden{display:none;}
+.companion-distinction{display:flex;gap:16px;align-items:flex-start;background:var(--jade-light);border-radius:12px;padding:18px 20px;margin-top:20px;}
+.cd-icon{font-size:20px;flex-shrink:0;}
+.cd-title{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:4px;}
+.cd-body{font-size:12.5px;color:var(--lt);line-height:1.6;}
+
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.07 });
+  document.querySelectorAll('.reveal').forEach(function(el) { observer.observe(el); });
+});
+</script>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo"><div class="nav-logo-dot"></div>careby</a>
+  <div class="nav-links">
+    <a href="#plans">Plans & Pricing</a>
+    <a href="#how">How It Works</a>
+    <a href="#about">About</a>
+    <span style="color:rgba(255,255,255,0.2);font-size:11px;">EN &nbsp;|&nbsp; 繁體 &nbsp;|&nbsp; 简体</span>
+  </div>
+  <div class="nav-right">
+    <a href="tel:4160000000" class="nav-consult">☎ (416) 000‑0000</a>
+    <a href="#plans" class="nav-cta">Get Started</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-orb ho1"></div>
+  <div class="hero-orb ho2"></div>
+  <div class="hero-inner">
+
+    <div class="hero-eyebrow"><div class="hero-eyebrow-dot"></div>Toronto · Mandarin & Cantonese · Doctor-Reviewed · PHIPA Compliant</div>
+
+    <div class="hero-cols">
+      <div class="hero-left">
+
+        <!-- Wordplay — small, brand-setting -->
+        <div class="hero-wordplay">
+          <div class="hwp hwp-experts">Care by<span>Experts.</span></div>
+          <div class="hwp hwp-love">Care by<span>Love.</span></div>
+          <div class="hwp hwp-trust">Care by<span>Trust.</span></div>
+        </div>
+
+        <!-- One headline. Does one job. -->
+        <h1 class="hero-h1">
+          Canada's healthcare<br>
+          system has gaps.<br>
+          All of your household<br>
+          health headaches —<br>
+          <em>we fix it.</em>
+        </h1>
+
+        <p class="hero-sub">
+          AI-powered diagnostics. Same-day virtual doctors. Vetted caregivers at your door.<br>
+          <em>One team that handles everything your family doctor doesn't.</em>
+        </p>
+
+        <!-- Entry product CTA -->
+        <div class="hero-cta-block">
+          <div class="hcb-left">
+            <div class="hcb-label">Start Here · Most Popular First Purchase</div>
+            <div class="hcb-product">The Essentialist — Blood Diagnostics</div>
+            <div class="hcb-desc">~45 biomarkers · Doctor-reviewed · Zero filler · Results in 7 days</div>
+          </div>
+          <div class="hcb-right">
+            <div class="hcb-price">$399<sub>/yr</sub></div>
+            <a href="#plans" class="btn-buy">Get Started →</a>
+          </div>
+        </div>
+
+        <div class="hero-secondary">
+          <a href="#consult" class="btn-consult"><div class="btn-consult-icon">💬</div>Not sure? Talk to us first</a>
+          <div class="hero-sep"></div>
+          <a href="#plans" class="hero-plans-link">See all plans ↓</a>
+        </div>
+
+        <div class="hero-trust">
+          <div class="trust-chip"><div class="trust-dot"></div>No referral needed</div>
+          <div class="trust-chip"><div class="trust-dot"></div>No waiting room</div>
+          <div class="trust-chip"><div class="trust-dot"></div>Same-day virtual doctor</div>
+          <div class="trust-chip"><div class="trust-dot"></div>We come to your door</div>
+          <div class="trust-chip"><div class="trust-dot"></div>Doctor-reviewed results — not a PDF</div>
+          <div class="trust-chip"><div class="trust-dot"></div>Mandarin & Cantonese</div>
+        </div>
+
+      </div>
+
+      <!-- Right side: Careby Health / Careby Home duality -->
+      <div class="hero-right">
+        <div class="hero-preview">
+          <a href="#plans" class="hprev hprev-health">
+            <div class="hprev-top"><span class="hprev-tag hpt-blue">🔬 Careby Health</span></div>
+            <div class="hprev-title">Get ahead of your health</div>
+            <div class="hprev-desc">AI-powered diagnostics, virtual doctors, and health monitoring — before problems appear.</div>
+            <div class="hprev-chips">
+              <span class="hprev-chip hchip-blue">Blood Diagnostics</span>
+              <span class="hprev-chip hchip-blue">Virtual Doctor Today</span>
+              <span class="hprev-chip hchip-blue">Health Monitoring</span>
+              <span class="hprev-chip hchip-blue">Specialists</span>
+            </div>
+            <div class="hprev-price">From $399/yr →</div>
+          </a>
+          <div class="hprev-bridge">— or —</div>
+          <a href="#plans" class="hprev hprev-home">
+            <div class="hprev-top"><span class="hprev-tag hpt-jade">🏠 Careby Home</span></div>
+            <div class="hprev-title">Trusted care at home</div>
+            <div class="hprev-desc">Vetted caregivers who understand your family — culturally, linguistically, and personally.</div>
+            <div class="hprev-chips">
+              <span class="hprev-chip hchip-jade">Vetted PSWs</span>
+              <span class="hprev-chip hchip-jade">陪診 Accompaniment</span>
+              <span class="hprev-chip hchip-jade">Post-Surgery</span>
+              <span class="hprev-chip hchip-jade">Benefits Nav</span>
+            </div>
+            <div class="hprev-price">From $499/mo →</div>
+          </a>
+        </div>
+        <div class="hero-view-all"><a href="#plans">+ Careby Companion from $199/mo &nbsp;·&nbsp; View all plans ↓</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- THREE PROBLEMS -->
+<div class="problem-band">
+  <div class="problem-inner">
+    <div class="problem-eyebrow reveal">Who Careby is built for</div>
+    <h2 class="problem-h2 reveal">Three gaps the system left open. <em>We close all of them.</em></h2>
+    <div class="problem-grid">
+
+      <div class="prob reveal">
+        <div class="prob-num prob-num-1">01</div>
+        <div class="prob-situation">The system won't monitor you</div>
+        <div class="prob-fear">"My doctor sees me once a year. In between — I'm on my own. I have no idea what's actually happening in my body."</div>
+        <div class="prob-answer">Careby's AI-powered diagnostics test the biomarkers that actually matter for your age and risk profile — <em>zero filler</em>. Every result reviewed by a doctor who explains what it means and what to do next. Preventative, not reactive. Management, not guesswork.</div>
+      </div>
+
+      <div class="prob reveal reveal-delay-1">
+        <div class="prob-num prob-num-2">02</div>
+        <div class="prob-situation">Canada's healthcare system won't send anyone to your door</div>
+        <div class="prob-fear">"She started a new medication. I'm at work. She lives alone. Canada's healthcare system has nobody to send to her door. I have nobody to call."</div>
+        <div class="prob-answer">Careby sends vetted, culturally matched caregivers directly to your parents' home — background checked, data-briefed, and <em>speaking their language</em> before they walk through the door. PSW visits, medical accompaniment 陪診, companion visits, therapy. All coordinated. All tracked. Nobody falls through the cracks.</div>
+      </div>
+
+      <div class="prob reveal reveal-delay-2">
+        <div class="prob-num prob-num-3">03</div>
+        <div class="prob-situation">The wait never ends</div>
+        <div class="prob-fear">"30 weeks for a specialist. 5 hours at a walk-in. My family doctor isn't taking new patients. Every door I try is closed."</div>
+        <div class="prob-answer">GoToDoctor gives your family same-day physician access — Mandarin, Cantonese, or English, prescription sent to your pharmacy the same day. Our credit system is interchangeable: PSW visit, therapist, nutritionist, companion, 陪診 escort. <em>Whatever the household needs this month</em> — that's what you use it for.</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<div class="how-wrap" id="how">
+  <div class="how-inner">
+    <div class="section-eyebrow reveal">Simple by design</div>
+    <h2 class="section-h2 reveal">We fill the gaps <em>the system left open.</em></h2>
+    <div class="steps">
+      <div class="step reveal">
+        <div class="step-num sn1">1</div>
+        <div class="step-title">Choose your plan</div>
+        <div class="step-desc">Buy online in minutes. Start with a diagnostic, a care package, or a Companion subscription — or all three.</div>
+      </div>
+      <div class="step reveal reveal-delay-1">
+        <div class="step-num sn2">2</div>
+        <div class="step-title">Meet your coordinator</div>
+        <div class="step-desc">A dedicated bilingual care coordinator is assigned to your family. They learn your situation before anything else happens.</div>
+      </div>
+      <div class="step reveal reveal-delay-2">
+        <div class="step-num sn3">3</div>
+        <div class="step-title">We match & brief your team</div>
+        <div class="step-desc">Every professional — caregiver, companion, NP, specialist — is matched to your family and briefed with your data before day one.</div>
+      </div>
+      <div class="step reveal reveal-delay-3">
+        <div class="step-num sn4">4</div>
+        <div class="step-title">You stay informed</div>
+        <div class="step-desc">Monthly reports. Real-time alerts. One coordinator who handles everything so you don't have to manage a roster of strangers.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CARE BY EQUATION -->
+<div class="equation-wrap">
+  <div class="equation-inner">
+    <div class="eq-headline reveal">What Careby means</div>
+    <div class="eq-grid reveal">
+      <div class="eq-item">
+        <div class="eq-by">Care by</div>
+        <div class="eq-word eq-blue">Experts</div>
+        <div class="eq-def">Doctor-stamped diagnostics. Zero filler biomarkers. Age-specific panels designed for your actual risk profile — not a generic 100-marker list built to look impressive.</div>
+      </div>
+      <div class="eq-op">+</div>
+      <div class="eq-item">
+        <div class="eq-by">Care by</div>
+        <div class="eq-word eq-jade">Love</div>
+        <div class="eq-def">Caregivers who speak your parents<div class="plans-wrap" id="plans">
+  <div class="plans-inner">
+    <div class="section-eyebrow reveal" style="text-align:center;">Plans &amp; Pricing</div>
+    <div class="plans-intro reveal">
+      <h2 class="section-h2">Start with one thing.<br><em>Add what you need.</em></h2>
+      <p>Every plan includes a dedicated bilingual care coordinator. Credits are interchangeable across all Careby Home services and expire 2 years from purchase.</p>
+    </div>
+
+    <!-- TAB NAV -->
+    <div class="tab-nav reveal">
+      <button class="tab-btn tab-active" onclick="showTab('diagnostics',this)">🔬 Diagnostics</button>
+      <button class="tab-btn" onclick="showTab('home',this)">🏠 Home Care</button>
+      <button class="tab-btn" onclick="showTab('companion',this)">🤝 Companion</button>
+      <button class="tab-btn" onclick="showTab('family',this)">👨&#x200D;👩&#x200D;👧 Family Plans</button>
+    </div>
+
+    <!-- ── TAB: DIAGNOSTICS ── -->
+    <div id="tab-diagnostics" class="tab-panel">
+      <div class="plan-hero reveal">
+        <div class="ph-left">
+          <div class="ph-badge">★ Best First Purchase</div>
+          <div class="ph-title">The Essentialist</div>
+          <div class="ph-tagline">~45 biomarkers chosen specifically for your age and risk profile. Doctor-reviewed. Action plan included. No referral. No waiting room.</div>
+          <div class="ph-features">
+            <div class="ph-feat"><span class="ph-feat-ck">✓</span><span>CBC, metabolic panel, heart health (ApoB, LDL, HDL), HbA1c, organ function</span></div>
+            <div class="ph-feat"><span class="ph-feat-ck">★</span><span><em>Hepatitis B panel</em> — included because HBV prevalence is 10× higher in Chinese-Canadian adults</span></div>
+            <div class="ph-feat"><span class="ph-feat-ck">✓</span><span>Bilingual NP consultation — results explained in Mandarin, Cantonese, or English</span></div>
+            <div class="ph-feat"><span class="ph-feat-ck">✓</span><span>Personalized action plan from a doctor who reviewed your full panel</span></div>
+            <div class="ph-feat"><span class="ph-feat-ck">✓</span><span>Mobile blood draw — we come to you. Results in 7 days.</span></div>
+          </div>
+        </div>
+        <div class="ph-right">
+          <div class="ph-price-label">Annual plan</div>
+          <div class="ph-price"><sup>$</sup>399<sub>/yr</sub></div>
+          <div class="ph-price-note">~$33/month · Less than one walk-in visit</div>
+          <a href="#" class="btn-buy-lg">Get The Essentialist →</a>
+          <div class="ph-upgrade-note">Need more biomarkers? Upgrade below ↓</div>
+        </div>
+      </div>
+      <div class="diag-tier-label" style="margin-top:8px;">
+        <span class="diag-tier-eyebrow">↑ Upgrade your diagnostic tier</span>
+      </div>
+      <div class="diag-three-col reveal">
+        <div class="plan-card">
+          <div class="pc-badge">Ages 45–60</div>
+          <div class="pc-title">Longevity Audit</div>
+          <div class="pc-tagline">~80 biomarkers. Deeper cardiovascular, hormonal, and metabolic profiling for the decade when risk quietly builds.</div>
+          <div class="pc-price">$699<sub>/yr</sub></div>
+          <div class="pc-feats">
+            <div class="pc-feat"><span class="pc-ck">✓</span>Everything in Essentialist</div>
+            <div class="pc-feat"><span class="pc-ck">✓</span>Advanced lipids: ApoB, LDL particle size, Lp(a)</div>
+            <div class="pc-feat"><span class="pc-ck">✓</span>Full hormone panel: testosterone, cortisol, DHEA</div>
+            <div class="pc-feat"><span class="pc-ck">✓</span>Inflammation: hs-CRP, homocysteine, fibrinogen</div>
+            <div class="pc-feat"><span class="pc-ck">✓</span>Bilingual NP consultation included</div>
+          </div>
+          <a href="#" class="btn-plan btn-plan-outline">Get Longevity Audit →</a>
+        </div>
+        <div class="plan-card pc-featured">
+          <div class="pc-badge">Ages 60+ · Most Comprehensive</div>
+          <div class="pc-title">Vitality 60+</div>
+          <div class="pc-tagline">~105 biomarkers designed for seniors. Includes markers your family doctor won't order until something's wrong.</div>
+          <div class="pc-price">$999<sub>/yr</sub></div>
+          <div class="pc-saving">★ Imaging add-on available</div>
+          <div class="pc-feats">
+            <div class="pc-feat"><span class="pc-ck">✓</span>Everything in Longevity Audit</div>
+            <div class="pc-feat"><span class="pc-ck">★</span>Cystatin C — superior kidney function marker for seniors</div>
+            <div class="pc-feat"><span class="pc-ck">★</span>Prealbumin — nutritional status &amp; early frailty detection</div>
+            <div class="pc-feat"><span class="pc-ck">✓</span>Bone health: Vitamin D, calcium, PTH</div>
+            <div class="pc-feat"><span class="pc-ck">+</span>Add imaging: abdominal ultrasound, carotid scan, DEXA from $299</div>
+          </div>
+          <a href="#" class="btn-plan btn-plan-solid">Get Vitality 60+ →</a>
+        </div>
+        <div class="plan-card plan-card-infinity">
+          <div class="pc-badge" style="color:var(--gold);">Executive · HNW · Concierge</div>
+          <div class="pc-title" style="color:#fff;">Careby Infinity</div>
+          <div class="pc-tagline" style="color:rgba(255,255,255,0.5);">150+ biomarkers. Biological age tracking. Full imaging suite. Florence AI between visits.</div>
+          <div class="pc-price" style="color:#fff;">$2,499<sub style="color:rgba(255,255,255,0.35);">/yr</sub></div>
+          <div class="pc-saving" style="background:rgba(196,154,60,0.15);color:var(--gold);">Most complete health picture in Canada</div>
+          <div class="pc-feats">
+            <div class="pc-feat" style="color:rgba(255,255,255,0.6);"><span class="pc-ck" style="color:var(--gold);">✓</span>Everything in Vitality 60+</div>
+            <div class="pc-feat" style="color:rgba(255,255,255,0.6);"><span class="pc-ck" style="color:var(--gold);">★</span>Full imaging: ultrasound, carotid, DEXA, ECG, echocardiogram</div>
+            <div class="pc-feat" style="color:rgba(255,255,255,0.6);"><span class="pc-ck" style="color:var(--gold);">★</span>Biological age tracking + Florence AI health monitoring</div>
+            <div class="pc-feat" style="color:rgba(255,255,255,0.6);"><span class="pc-ck" style="color:var(--gold);">✓</span>Concierge coordinator — same-day response</div>
+            <div class="pc-feat" style="color:rgba(255,255,255,0.6);"><span class="pc-ck" style="color:var(--gold);">✓</span>Annual dietitian consultation + nutrition plan</div>
+          </div>
+          <a href="#" class="btn-plan" style="background:var(--gold);color:#fff;border:none;margin-top:auto;">Get Careby Infinity →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── TAB: HOME CARE ── -->
+    <div id="tab-home" class="tab-panel tab-hidden">
+      <div class="upgrade-row">
+        <div class="plan-card pc-featured reveal">
+          <div class="pc-badge">Most Popular</div>
+          <div class="pc-title">Independent Living</div>
+          <div class="pc-tagline">Comprehensive monthly in-home care for seniors who want to stay home safely and independently.</div>
+          <div class="pc-price">$1,499<sub>/mo</sub></div>
+          <div class="pc-saving">Includes 12 service credits/month</div>
+          <div class="pc-feats">
+            <div class="pc-feat"><span class="pc-ck">✓</span>Dedicated bilingual PSW matched to your family</div>
+            <div class="pc-feat"><span class="pc-ck">✓</span>12 Careby Home credits monthly</div>
+            <div class="pc-feat"><span class="pc-ck">✓</span>Weekly check-ins with care coordinator</div>
+            <div class="pc-feat"><span class="pc-ck">✓</span>Benefits navigation &amp; insurance support</div>
+            <div class="pc-feat"><span class="pc-ck">✓</span>GoToDoctor virtual doctor access included</div>
+          </div>
+          <a href="#" class="btn-plan btn-plan-solid">Get Independent Living →</a>
+        </div>
+        <div class="plan-card reveal">
+          <div class="pc-badge">Memory &amp; Complex Care</div>
+          <div class="pc-title">Memory Care at Home</div>
+          <div class="pc-tagline">Specialized in-home support for seniors with dementia, Alzheimer's, or complex care needs.</div>
+          <div class="pc-price">$2,799<sub>/mo</sub></div>
+          <div class="pc-saving">Includes 20 service credits/month</div>
+          <div class="pc-feats">
+            <div class="pc-feat"><span class="pc-ck">✓</span>Specialized memory care PSW</div>
+            <div class="pc-feat"><span class="pc-ck">✓</span>20 Careby Home credits monthly</div>
+            <div class="pc-feat"><span class="pc-ck">✓</span>Daily coordinator check-ins</div>
+            <div class="pc-feat"><span class="pc-ck">✓</span>Family dashboard + monthly reports</div>
+            <div class="pc-feat"><span class="pc-ck">✓</span>Crisis response protocol</div>
+          </div>
+          <a href="#" class="btn-plan btn-plan-outline">Get Memory Care →</a>
+        </div>
+      </div>
+      <div class="credits-row reveal" style="margin-top:4px;">
+        <div class="cr-left">
+          <div class="cr-badge">💳 Flexible Credits</div>
+          <div class="cr-title">Careby Home Credits</div>
+          <div class="cr-desc">1 credit = $60 retail value. Use for PSW visits, companion visits, nutritionist/cook, 陪診 accompaniment, therapy, cleaning — whatever your family needs this month. Credits expire 2 years from purchase.</div>
+        </div>
+        <div class="cr-right">
+          <div class="crpkg"><div class="crpkg-name">Essential</div><div class="crpkg-price">$900</div><div class="crpkg-credits">12 credits · $75 each</div><div class="crpkg-save">25% off retail</div></div>
+          <div class="crpkg crpkg-pop"><div class="crpkg-name">★ Balanced</div><div class="crpkg-price">$2,100</div><div class="crpkg-credits">30 credits · $70 each</div><div class="crpkg-save">33% off retail</div></div>
+          <div class="crpkg"><div class="crpkg-name">Premium</div><div class="crpkg-price">$4,000</div><div class="crpkg-credits">60 credits · $66 each</div><div class="crpkg-save">45% off retail</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── TAB: COMPANION ── -->
+    <div id="tab-companion" class="tab-panel tab-hidden">
+      <div class="diag-three-col">
+        <div class="plan-card reveal">
+          <div class="pc-badge">1 Visit/Month</div>
+          <div class="pc-title">Companion Starter</div>
+          <div class="pc-tagline">One visit per month. Same companion every time. Exercise, accountability, someone paying attention.</div>
+          <div class="pc-price">$199<sub>/mo</sub></div>
+          <div class="pc-feats">
+            <div class="pc-feat"><span class="pc-ck">✓</span>1 visit · 2 hrs · same companion</div>
+            <div class="pc-feat"><span class="pc-ck">✓</span>Pre-visit data review: gait + biomarkers</div>
+            <div class="pc-feat"><span class="pc-ck">✓</span>Post-visit log to family + coordinator</div>
+          </div>
+          <a href="#" class="btn-plan btn-plan-outline" style="margin-top:auto;">Get Starter →</a>
+        </div>
+        <div class="plan-card pc-featured reveal">
+          <div class="pc-badge">Most Popular · 2 Visits/Month</div>
+          <div class="pc-title">Companion Regular</div>
+          <div class="pc-tagline">Two visits per month. Relationship builds fast. Behaviour changes happen. Family sleeps better.</div>
+          <div class="pc-price">$329<sub>/mo</sub></div>
+          <div class="pc-saving">Best relationship-to-cost ratio</div>
+          <div class="pc-feats">
+            <div class="pc-feat"><span class="pc-ck">✓</span>2 visits · 2 hrs each · same companion</div>
+            <div class="pc-feat"><span class="pc-ck">✓</span>Pre-visit data review every time</div>
+            <div class="pc-feat"><span class="pc-ck">✓</span>Post-visit log to family + coordinator</div>
+            <div class="pc-feat"><span class="pc-ck">✓</span>Exercise, cooking, social connection</div>
+          </div>
+          <a href="#" class="btn-plan btn-plan-solid" style="margin-top:auto;">Get Regular →</a>
+        </div>
+        <div class="plan-card reveal">
+          <div class="pc-badge">4 Visits + Full Reports</div>
+          <div class="pc-title">Companion Plus</div>
+          <div class="pc-tagline">Four visits per month plus a written monthly family report. Eyes on your parent every week.</div>
+          <div class="pc-price">$549<sub>/mo</sub></div>
+          <div class="pc-feats">
+            <div class="pc-feat"><span class="pc-ck">✓</span>4 visits · 2 hrs each · same companion</div>
+            <div class="pc-feat"><span class="pc-ck">✓</span>Pre-visit data review + observation log</div>
+            <div class="pc-feat"><span class="pc-ck">★</span>Monthly written family health report</div>
+            <div class="pc-feat"><span class="pc-ck">✓</span>Priority coordinator access</div>
+          </div>
+          <a href="#" class="btn-plan btn-plan-outline" style="margin-top:auto;">Get Plus →</a>
+        </div>
+      </div>
+      <div class="companion-distinction">
+        <div class="cd-icon">💡</div>
+        <div class="cd-text">
+          <div class="cd-title">Companion vs. Credit Visits — what's the difference?</div>
+          <div class="cd-body">Credit visits are transactional — one specific service, no continuity. Companion subscriptions are the same person every visit, who reads your parent's data before arriving, remembers previous visits, and logs observations after. You're not buying a visit. You're buying someone who's paying attention.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── TAB: FAMILY PLANS ── -->
+    <div id="tab-family" class="tab-panel tab-hidden">
+      <div class="plan-hero reveal">
+        <div class="ph-left">
+          <div class="ph-badge">Best Value — Up to 6 People</div>
+          <div class="ph-title">Family Health Hub</div>
+          <div class="ph-tagline">2 seniors + 2 adults + 2 kids. Blood tests, telehealth, monitoring, and 4 service credits — for the whole family.</div>
+          <div class="ph-features">
+            <div class="ph-feat"><span class="ph-feat-ck">✓</span><span>100-biomarker blood tests 2×/year for seniors</span></div>
+            <div class="ph-feat"><span class="ph-feat-ck">✓</span><span>GoToDoctor unlimited telehealth (4 members)</span></div>
+            <div class="ph-feat"><span class="ph-feat-ck">✓</span><span>4 Careby Home service credits included</span></div>
+            <div class="ph-feat"><span class="ph-feat-ck">✓</span><span>OneStep fall detection for seniors</span></div>
+            <div class="ph-feat"><span class="ph-feat-ck">✓</span><span>Dedicated bilingual care coordinator</span></div>
+            <div class="ph-feat"><span class="ph-feat-ck">✓</span><span>Monthly family health update</span></div>
+          </div>
+        </div>
+        <div class="ph-right">
+          <div class="ph-price-label">Annual plan</div>
+          <div class="ph-price"><sup>$</sup>2,499<sub>/yr</sub></div>
+          <div class="ph-price-note">Covers up to 6 family members</div>
+          <a href="#" class="btn-buy-lg">Get Family Health Hub →</a>
+          <div class="ph-upgrade-note">For employers: Workforce Wellness from $8/employee/mo →</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="plans-note reveal">Not sure where to start? <a href="#">Talk to us →</a> &nbsp;·&nbsp; For employers: <a href="#">Workforce Wellness plans →</a></div>
+  </div>
+</div>
+
+credits">12 credits · $75 each</div>
+          <div class="crpkg-save">25% off retail</div>
+        </div>
+        <div class="crpkg crpkg-pop">
+          <div class="crpkg-name">★ Balanced</div>
+          <div class="crpkg-price">$2,100</div>
+          <div class="crpkg-credits">30 credits · $70 each</div>
+          <div class="crpkg-save">33% off retail</div>
+        </div>
+        <div class="crpkg">
+          <div class="crpkg-name">Premium</div>
+          <div class="crpkg-price">$4,000</div>
+          <div class="crpkg-credits">60 credits · $66 each</div>
+          <div class="crpkg-save">45% off retail</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="plans-note reveal">Looking for Workforce Wellness or diagnostic upgrades? <a href="#">View all plans →</a> &nbsp;·&nbsp; Not sure where to start? <a href="#">Talk to us →</a></div>
+  </div>
+</div>
+
+<!-- PROOF -->
+<div class="proof-wrap">
+  <div class="proof-inner">
+    <div class="section-eyebrow reveal" style="text-align:center;color:var(--jade3);margin-bottom:16px;">Why Careby exists</div>
+    <h2 class="section-h2 reveal" style="color:#fff;margin-bottom:48px;">The gaps are real.<br><em>So is the fix.</em></h2>
+    <div class="proof-five reveal">
+      <div class="pstat5">
+        <div class="pstat5-num">6.5<em>M</em></div>
+        <div class="pstat5-title">Canadians without a family doctor</div>
+        <div class="pstat5-body">The system wasn't built for everyone. Careby coordinates healthcare for the families it left behind.</div>
+        <div class="pstat5-source">Source: Statistics Canada</div>
+      </div>
+      <div class="pstat5">
+        <div class="pstat5-num">Up to <em>90%</em></div>
+        <div class="pstat5-title">Reduction in healthcare wait times</div>
+        <div class="pstat5-body">Powered by our GoToDoctor partnership — cutting waits for physicians, specialists, and diagnostic imaging.</div>
+        <div class="pstat5-source">Source: GoToDoctor</div>
+      </div>
+      <div class="pstat5 pstat5-center">
+        <div class="pstat5-num"><em>#1</em></div>
+        <div class="pstat5-title">Longest wait times of 11 peer nations</div>
+        <div class="pstat5-body">Canada ranks last for access to family doctors, specialists, and emergency care. We're fixing that — for your household.</div>
+        <div class="pstat5-source">Source: Commonwealth Fund</div>
+      </div>
+      <div class="pstat5">
+        <div class="pstat5-num">Only <em>43%</em></div>
+        <div class="pstat5-title">Of Canadians can see a doctor same-day</div>
+        <div class="pstat5-body">The OECD average is 57%. In the Netherlands it's 77%. Every Careby member gets same-day virtual physician access — no referral, no waiting room.</div>
+        <div class="pstat5-source">Source: Commonwealth Fund</div>
+      </div>
+      <div class="pstat5">
+        <div class="pstat5-num">1 <em>in</em> 8</div>
+        <div class="pstat5-title">Caregivers pass our vetting</div>
+        <div class="pstat5-body">Background checked, reference checked, culturally matched, data-briefed. The other 7 never meet your family.</div>
+        <div class="pstat5-source">Careby Gold Standard</div>
+      </div>
+    </div>
+    <div class="proof-guarantee-strip reveal">
+      <div class="pgs-left">
+        <div class="pgs-icon">🛡️</div>
+        <div class="pgs-text">
+          <div class="pgs-title">48-Hour Replacement Guarantee</div>
+          <div class="pgs-body">If your caregiver isn't right, we replace them within 48 hours. No fees. No guilt. No questions asked. Only 1 in 8 applicants pass our vetting — that's why we can make this promise.</div>
+        </div>
+      </div>
+      <a href="#plans" class="btn-buy" style="flex-shrink:0;">Get Started →</a>
+    </div>
+  </div>
+</div>
+
+<!-- BILINGUAL -->
+<div class="bilingual-wrap">
+  <div class="bilingual-inner">
+    <div class="bi-col reveal">
+      <div class="bi-tag">English</div>
+      <h3 class="bi-h">Built for your community — <em>by someone who's part of it.</em></h3>
+      <p class="bi-body">Careby was built in Toronto, for the families who live here. Mandarin and Cantonese aren't features — they're the baseline. Our care coordinators, professionals, and support team reflect the community we serve.</p>
+      <div class="bi-wechat">
+        <div class="bi-wc-icon">💬</div>
+        <div class="bi-wc-text">
+          <div class="bi-wc-title">Contact us on WeChat</div>
+          <div class="bi-wc-sub">Scan to message our care team · Monday–Saturday</div>
+        </div>
+      </div>
+    </div>
+    <div class="bi-col reveal reveal-delay-1">
+      <div class="bi-tag">繁體中文</div>
+      <h3 class="bi-h">「為您的社區而建，<em>由您社區的人打造。</em>」</h3>
+      <p class="bi-body">Careby 在多倫多建立，專為生活在這裡的家庭服務。普通話和廣東話不是額外功能——而是我們的基本標準。我們的護理協調員和專業人員都反映了我們所服務的社區。</p>
+      <div class="bi-wechat">
+        <div class="bi-wc-icon">💬</div>
+        <div class="bi-wc-text">
+          <div class="bi-wc-title">微信聯繫我們</div>
+          <div class="bi-wc-sub">掃描二維碼直接與護理團隊發送消息 · 週一至週六</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FINAL CTA -->
+<div class="final-cta" id="consult">
+  <div class="final-inner">
+    <h2 class="final-h reveal">The system won't fix itself.<br><em>We already did.</em></h2>
+    <p class="final-sub reveal">Start with The Essentialist — $399/yr. No referral. No waiting room. A doctor reviews your results and tells you exactly what to do next. Most people learn more about their body in 7 days than they have in the past decade.</p>
+    <div class="final-btns reveal">
+      <a href="#" class="btn-final-buy">Get The Essentialist — $399/yr</a>
+      <a href="tel:4160000000" class="btn-final-consult">Talk to us first →</a>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-logo">🍃 careby</div>
+        <div class="footer-tagline">Solving Canada's health headaches — for your body, your parents, and everyone in your household.</div>
+      </div>
+      <div>
+        <div class="footer-col-title">Careby Health</div>
+        <div class="footer-links">
+          <a href="#">Blood Diagnostics</a>
+          <a href="#">Virtual Doctor</a>
+          <a href="#">Health Monitoring</a>
+          <a href="#">Specialists</a>
+          <a href="#">Workforce Wellness</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Careby Home</div>
+        <div class="footer-links">
+          <a href="#">Vetted Caregivers</a>
+          <a href="#">陪診 Accompaniment</a>
+          <a href="#">Careby Companion</a>
+          <a href="#">Post-Surgery Care</a>
+          <a href="#">Benefits Navigation</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Company</div>
+        <div class="footer-links">
+          <a href="#">About Careby</a>
+          <a href="#">Who We Serve</a>
+          <a href="#">All Plans & Pricing</a>
+          <a href="#">Book Consultation</a>
+          <a href="#">Contact</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-legal">© 2026 Careby Solutions Inc. · Ontario Corp #1001222678 · North York, Toronto &nbsp;·&nbsp; <a href="#">Privacy</a> · <a href="#">Terms</a> · <a href="#">PHIPA Consent</a></div>
+      <div class="footer-lang"><span>EN</span><span>繁體</span><span>简体</span></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+function showTab(id,btn){
+  document.querySelectorAll('.tab-panel').forEach(function(p){p.classList.add('tab-hidden');});
+  document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('tab-active');});
+  document.getElementById('tab-'+id).classList.remove('tab-hidden');
+  btn.classList.add('tab-active');
+}
+</script>
+</body>
+</html>

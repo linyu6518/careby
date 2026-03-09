@@ -53,7 +53,7 @@ const content = {
       audience1: {
         title: 'Entrepreneurs & Busy Professionals',
         subtitle: 'Building a business while caring for health, family, and team.',
-        image: 'https://images.unsplash.com/photo-1551601651-2a8555f1a136?w=400&h=300&fit=crop&q=80',
+        image: 'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=400&h=300&fit=crop&q=80',
         reality: 'The reality:',
         points: [
           'Family needs medical help, but you\'re always at work',
@@ -355,10 +355,10 @@ const content = {
       switchLang: 'English',
     },
     hero: {
-      tagline: '高端家庭护理、AI监测与再生医学——无缝整合，守护您的长期健康。',
-      headline: '由真正关心的人提供护理',
-      headlinePrefix: '由',
-      headlineSuffix: '真正的提供您呵护',
+      tagline: '康伴，家庭健康常陪伴',
+      headline: '康伴，家庭健康常陪伴',
+      headlinePrefix: '',
+      headlineSuffix: '',
       subheadline: '为多伦多老年人及其家庭提供优质上门护理、健康导航和支持服务。',
       slogan: '高端家庭护理 • 智能跌倒检测 • 即时远程医疗 • 再生疗法 • 超越基础支持。',
       ctaPrimary: '探索平台',
@@ -390,7 +390,7 @@ const content = {
       audience1: {
         title: '企业家与忙碌的专业人士',
         subtitle: '创业的同时，关心健康、家人和团队。',
-        image: 'https://images.unsplash.com/photo-1551601651-2a8555f1a136?w=400&h=300&fit=crop&q=80',
+        image: 'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=400&h=300&fit=crop&q=80',
         reality: '现实情况：',
         points: [
           '家人需要医疗帮助，但您总是忙于工作',
@@ -748,9 +748,9 @@ const testimonials = [
 const contactInfo = {
   addressLines: ['Careby Solutions Inc.', '205 Placer Court, Suite 513', 'North York, ON M2H 0A9', 'Canada'],
   phone: '1-646-578-9920',
-  email: 'hr@getcareby.ca',
-  privacyEmail: 'privacy@getcareby.ca',
-  billingEmail: 'billing@getcareby.ca',
+  email: 'hello@getcareby.ca',
+  privacyEmail: 'hello@getcareby.ca',
+  billingEmail: 'hello@getcareby.ca',
   businessHours: [
     { label: 'Monday - Friday', value: '8:00 AM - 8:00 PM' },
     { label: 'Saturday', value: '9:00 AM - 5:00 PM' },
@@ -1057,13 +1057,13 @@ function LanguageSwitcher({ lang, setLang }: { lang: 'en' | 'zh' | 'zh-TW', setL
 
 function HeroSection({ t, lang }: { t: typeof content.en, lang: 'en' | 'zh' | 'zh-TW' }) {
   const typingWords = {
-    en: ['Heart', 'Professionals', 'People', 'Speed', 'Innovation', 'Respect', 'Love'],
-    zh: ['爱心', '专业人士', '人们', '速度', '创新', '尊重', '关爱'],
-    'zh-TW': ['愛心', '專業人士', '人們', '速度', '創新', '尊重', '關愛'],
+    en: ['Trust', 'Experts', 'Love'],
+    zh: ['康伴', '家庭健康常陪伴'],
+    'zh-TW': ['康伴', '家庭健康常陪伴'],
   }
   const currentTypingWords = typingWords[lang] || typingWords.en
   const [currentWordIndex, setCurrentWordIndex] = useState(0)
-  const [displayText, setDisplayText] = useState(currentTypingWords[2] || 'People')
+  const [displayText, setDisplayText] = useState(currentTypingWords[0] || 'Trust')
   const [isDeleting, setIsDeleting] = useState(false)
   // Adjust speed based on language: Chinese needs slower speed
   const baseTypingSpeed = lang === 'zh' ? 250 : 150
@@ -1372,7 +1372,7 @@ function HeroSection({ t, lang }: { t: typeof content.en, lang: 'en' | 'zh' | 'z
   // Reset when language changes
   useEffect(() => {
     setCurrentWordIndex(0)
-    setDisplayText(currentTypingWords[2] || 'People')
+    setDisplayText(currentTypingWords[0] || 'Trust')
     setIsDeleting(false)
     setTypingSpeed(baseTypingSpeed)
     setIsInitial(true)
@@ -1491,7 +1491,7 @@ function HeroSection({ t, lang }: { t: typeof content.en, lang: 'en' | 'zh' | 'z
           </span>
           <h1
             id="hero-heading"
-            className="text-4xl font-bold leading-tight sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl"
+            className="text-5xl font-bold leading-tight sm:text-6xl md:text-7xl lg:text-7xl xl:text-8xl"
             itemProp="headline"
           >
             {lang === 'en' ? (
@@ -1513,22 +1513,10 @@ function HeroSection({ t, lang }: { t: typeof content.en, lang: 'en' | 'zh' | 'z
                 </span>
               </>
             ) : (
-              <>
-                <span className="block">
-                  {t.hero.headlinePrefix}
-                  <span className="relative inline-block mx-1 text-left">
-                    <span className="hand-drawn-underline">
-                      {displayText}
-                    </span>
-                    {!isInitial && (
-                      <span className="inline-block w-0.5 h-5 sm:h-6 bg-yellow-400 ml-1 animate-pulse" />
-                    )}
-                  </span>
-                </span>
-                <span className="block">
-                  {t.hero.headlineSuffix}
-                </span>
-              </>
+              <span className="block text-left">
+                <span className="hand-drawn-underline">康伴</span>
+                {t.hero.tagline.slice(2)}
+              </span>
             )}
           </h1>
           <p className="text-lg sm:text-xl lg:text-2xl xl:text-3xl text-white/85 mb-6 sm:mb-[87px] leading-relaxed">
@@ -2709,12 +2697,12 @@ function ServiceSection({ t, lang }: { t: typeof content.en, lang: 'en' | 'zh' |
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const services = lang === 'en' ? [
-    { icon: 'elderly', service: t.services.service1, keyword: 'Virtual' },
+    { icon: 'medical_services', service: t.services.service1, keyword: 'Virtual' },
     { icon: 'home_health', service: t.services.service2, keyword: 'Trusted' },
     { icon: 'psychology', service: t.services.service3, keyword: 'Innovative' },
     { icon: 'account_balance', service: t.services.service4, keyword: 'Benefit' },
   ] : [
-    { icon: 'elderly', service: t.services.service1, keyword: '虚拟' },
+    { icon: 'medical_services', service: t.services.service1, keyword: '虚拟' },
     { icon: 'home_health', service: t.services.service2, keyword: '值得信赖' },
     { icon: 'psychology', service: t.services.service3, keyword: '创新' },
     { icon: 'account_balance', service: t.services.service4, keyword: '福利' },
@@ -3751,7 +3739,7 @@ function PrivacyPolicyPage({ onBack }: { onBack: () => void }) {
             </p>
             <p className="mt-3 font-semibold">Marketing Communications:</p>
             <p>
-              We will obtain separate explicit consent before sending marketing emails or SMS. You can opt out at any time by clicking &quot;unsubscribe&quot; in any marketing email, replying &quot;STOP&quot; to marketing SMS messages, or contacting us at privacy@getcareby.ca.
+              We will obtain separate explicit consent before sending marketing emails or SMS. You can opt out at any time by clicking &quot;unsubscribe&quot; in any marketing email, replying &quot;STOP&quot; to marketing SMS messages, or contacting us at hello@getcareby.ca.
             </p>
             <p className="mt-3">
               You cannot opt out of essential service communications (account verification, appointment confirmations, critical health updates) as these are necessary for service delivery.
@@ -3841,7 +3829,7 @@ function PrivacyPolicyPage({ onBack }: { onBack: () => void }) {
             <p>
               For privacy questions, to exercise your rights, or to file a complaint: Careby Solutions Inc. 205 Placer Court, Suite 513, North York, ON M2H 0A9, Canada.
             </p>
-            <p>Email: privacy@getcareby.ca | Phone: 1-646-578-9920</p>
+            <p>Email: hello@getcareby.ca | Phone: 1-646-578-9920</p>
             <p>Office of the Privacy Commissioner of Canada: www.priv.gc.ca | 1-800-282-1376</p>
           </div>
         </div>
@@ -3965,7 +3953,7 @@ function TermsOfServicePage({ onBack }: { onBack: () => void }) {
           <div>
             <h3 className="text-lg font-semibold text-midnight">14. Dispute Resolution</h3>
             <p>
-              Contact us first to resolve concerns (hr@getcareby.ca). If unresolved, disputes may be referred to mediation. These Terms are governed by the laws of Ontario and Canada.
+              Contact us first to resolve concerns (hello@getcareby.ca). If unresolved, disputes may be referred to mediation. These Terms are governed by the laws of Ontario and Canada.
             </p>
           </div>
           <div>
@@ -3985,7 +3973,7 @@ function TermsOfServicePage({ onBack }: { onBack: () => void }) {
           <div>
             <h3 className="text-lg font-semibold text-midnight">18. Contact Information</h3>
             <p>
-              Careby Solutions Inc. 205 Placer Court, Suite 513, North York, ON M2H 0A9, Canada | Email: hr@getcareby.ca | Phone: 1-646-578-9920
+              Careby Solutions Inc. 205 Placer Court, Suite 513, North York, ON M2H 0A9, Canada | Email: hello@getcareby.ca | Phone: 1-646-578-9920
             </p>
           </div>
           <div>
