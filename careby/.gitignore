@@ -50,4 +50,5 @@ Thumbs.db
 
 # Large media (use CDN or host elsewhere; GitHub limit 100MB)
 public/hero-intro-portrait.mov
+public/hero-intro.mov
 *.mov
