@@ -1935,8 +1935,7 @@ function HeroSection({ t, lang }: { t: typeof content.en, lang: 'en' | 'zh' | 'z
                 <span className="hand-drawn-underline">康伴</span>
                 <br />
                 <span className="block mt-0.5 sm:mt-1">家庭健康</span>
-                <br />
-                <span className="block mt-0.5 sm:mt-1">常陪伴</span>
+                <span className="block leading-tight">常陪伴</span>
               </span>
             )}
           </h1>
