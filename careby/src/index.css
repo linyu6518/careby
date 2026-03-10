@@ -24,21 +24,40 @@ img, video {
   content-visibility: auto;
 }
 
-/* Mobile SEO optimizations */
+/* Mobile: safe area for notched devices */
+@supports (padding: env(safe-area-inset-bottom)) {
+  .pb-safe {
+    padding-bottom: calc(env(safe-area-inset-bottom) + 1rem);
+  }
+  .bottom-safe {
+    bottom: calc(30px + env(safe-area-inset-bottom));
+  }
+}
+
+/* Mobile SEO and UX optimizations */
 @media (max-width: 768px) {
-  /* Ensure minimum touch target size (44x44px) */
-  button, a, input, select, textarea {
+  /* Touch targets for primary controls only (avoid breaking inline links) */
+  button:not([class*="inline"]),
+  nav a,
+  .min-touch {
     min-height: 44px;
     min-width: 44px;
   }
+  /* Inline buttons/links: ensure tap area with padding */
+  button.inline-touch,
+  a.inline-touch {
+    min-height: 44px;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
   
-  /* Optimize text readability on mobile */
   body {
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
+    /* Prevent horizontal overscroll */
+    overflow-x: hidden;
   }
   
-  /* Improve image loading on mobile */
   img {
     max-width: 100%;
     height: auto;

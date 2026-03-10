@@ -1179,7 +1179,7 @@ function App() {
         canonical="https://getcareby.ca/"
         structuredData={generateHomepageSchema(seoLang, currentFAQs, testimonialsWithDates)}
       />
-      <div className="min-h-screen w-full bg-[#FDFAF5] text-midnight relative overflow-x-hidden">
+      <div className="min-h-screen w-full bg-[#FDFAF5] text-midnight relative overflow-x-hidden pb-[100px] sm:pb-0">
         <StickyNav lang={lang} setLang={setLang} />
         <HeroSection t={t as typeof content.en} lang={lang} />
         <WhoWeServeSection t={t as typeof content.en} />
@@ -1218,13 +1218,12 @@ function App() {
       {/* Updated to work alongside AI Chatbot button with 15px gap */}
       <a
         href="https://app.getcareby.ca/"
-        className="bg-primary hover:bg-primary/90 fixed bottom-[30px] left-[30px] z-[9999] sm:hidden inline-flex items-center justify-center px-7 py-4 text-white transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 rounded-full shadow-lg"
+        className="bg-primary hover:bg-primary/90 fixed z-[9999] sm:hidden inline-flex items-center justify-center min-h-[48px] py-3.5 px-5 text-white text-[15px] font-semibold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 rounded-full shadow-lg"
         style={{ 
           position: 'fixed', 
-          bottom: '30px', 
-          left: '30px', 
-          right: 'auto', 
-          width: 'calc(100vw - 30px - 56px - 15px - 30px)' // left margin - AI button width - gap - right margin
+          bottom: 'max(30px, env(safe-area-inset-bottom))', 
+          left: 'max(16px, env(safe-area-inset-left))', 
+          right: 'calc(56px + 15px + max(16px, env(safe-area-inset-right)))',
         }}
         onFocus={(e) => {
           e.currentTarget.style.outlineColor = '#3B8C75'
@@ -1285,11 +1284,6 @@ function StickyNav({ lang, setLang }: { lang: 'en' | 'zh' | 'zh-TW'; setLang: (l
     if (lang === 'zh') return 'zh-TW'
     return 'en'
   }
-  const getLangLabel = () => {
-    if (lang === 'en') return '简体中文'
-    if (lang === 'zh') return '繁體中文'
-    return 'English'
-  }
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60)
@@ -1319,28 +1313,28 @@ function StickyNav({ lang, setLang }: { lang: 'en' | 'zh' | 'zh-TW'; setLang: (l
 
   return (
     <motion.nav
-      className="fixed top-2 left-0 right-0 z-[999] px-6 sm:top-4 sm:px-10 md:px-16 lg:px-24"
+      className="fixed left-0 right-0 z-[999] pt-[max(12px,env(safe-area-inset-top,0px))] px-4 pb-2 sm:pt-5 sm:px-10 md:px-16 lg:px-24"
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.3 }}
     >
       <div className="mx-auto max-w-6xl w-full flex flex-col items-stretch min-w-0">
-      <div className={`w-full rounded-full backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.25)] pl-4 pr-2 py-2.5 sm:pl-5 sm:pr-3 sm:py-3 flex items-center transition-all duration-500 min-w-0 ${
+      <div className={`w-full rounded-full backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.25)] pl-4 pr-2 py-2.5 sm:pl-5 sm:pr-3 sm:py-3 flex items-center justify-between transition-all duration-500 min-w-0 ${
         scrolled
           ? 'bg-[#0f172a]/75'
           : 'bg-white/10'
       }`}>
         {/* Left: Logo */}
-        <a href="#hero" onClick={(e) => handleClick(e, '#hero')} className="shrink-0 flex items-center min-w-0">
+        <a href="#hero" onClick={(e) => handleClick(e, '#hero')} className="shrink-0 flex items-center justify-center min-w-0">
           <img
             src={lang === 'en' ? '/carebylogo_white.svg' : '/logo-zh.png'}
             alt="Careby"
-            className="h-7 w-auto sm:h-8"
+            className="h-7 w-auto sm:h-8 object-center"
           />
         </a>
 
         {/* Center: Nav links */}
-        <div className="hidden md:flex flex-1 justify-center items-center gap-1 min-w-0 mx-4">
+        <div className="hidden md:flex flex-1 justify-center items-center gap-1 min-w-0 mx-4 self-center">
           {links.map((link) => (
             <a
               key={link.href}
@@ -1353,25 +1347,8 @@ function StickyNav({ lang, setLang }: { lang: 'en' | 'zh' | 'zh-TW'; setLang: (l
           ))}
         </div>
 
-        {/* Right: Lang + Phone + CTA */}
-        <div className="hidden md:flex items-center gap-2 shrink-0 ml-auto">
-          <button
-            onClick={() => setLang(getNextLang())}
-            className="px-4 py-2 text-[14px] font-medium text-white/70 hover:text-white rounded-full hover:bg-white/10 transition-all"
-          >
-            {getLangLabel()}
-          </button>
-          {!contactInfo.phone.includes('XXX') && (
-            <a
-              href={`tel:+1${contactInfo.phone.replace(/\D/g, '')}`}
-              className="p-2.5 text-white/70 hover:text-white rounded-full hover:bg-white/10 transition-all"
-              aria-label="Call"
-            >
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-              </svg>
-            </a>
-          )}
+        {/* Right: 桌面 CTA；手机 语言+电话+汉堡（在汉堡左侧） */}
+        <div className="hidden md:flex items-center justify-center gap-2 shrink-0 self-center">
           <a
             href="https://app.getcareby.ca/"
             className="inline-flex items-center bg-primary hover:bg-primary/90 text-white text-[14px] font-semibold px-6 py-2.5 rounded-full transition-all hover:shadow-[0_4px_16px_rgba(42,139,98,0.4)]"
@@ -1380,17 +1357,39 @@ function StickyNav({ lang, setLang }: { lang: 'en' | 'zh' | 'zh-TW'; setLang: (l
           </a>
         </div>
 
-        <button
-          onClick={() => setMobileOpen(!mobileOpen)}
-          className="md:hidden p-2 ml-auto text-white/70 hover:text-white transition"
-        >
-          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-            {mobileOpen
-              ? <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-              : <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+        <div className="md:hidden flex items-center justify-center gap-2 shrink-0 self-center">
+          <button
+            onClick={() => setLang(getNextLang())}
+            className="p-2.5 text-white/80 hover:text-white rounded-full hover:bg-white/10 transition min-touch"
+            aria-label={lang === 'en' ? 'Switch to 简体中文' : lang === 'zh' ? 'Switch to 繁體中文' : 'Switch to English'}
+          >
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+            </svg>
+          </button>
+          {!contactInfo.phone.includes('XXX') && (
+            <a
+              href={`tel:+1${contactInfo.phone.replace(/\D/g, '')}`}
+              className="p-2.5 text-white/80 hover:text-white rounded-full hover:bg-white/10 transition"
+              aria-label="Call"
+            >
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+              </svg>
+            </a>
+          )}
+          <button
+            onClick={() => setMobileOpen(!mobileOpen)}
+            className="p-2 text-white/70 hover:text-white transition"
+          >
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              {mobileOpen
+                ? <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                : <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
             }
-          </svg>
-        </button>
+            </svg>
+          </button>
+        </div>
       </div>
 
       <AnimatePresence>
@@ -1407,7 +1406,7 @@ function StickyNav({ lang, setLang }: { lang: 'en' | 'zh' | 'zh-TW'; setLang: (l
                 key={link.href}
                 href={link.href}
                 onClick={(e) => handleClick(e, link.href)}
-                className="px-4 py-2.5 text-sm font-medium text-white/70 hover:text-white hover:bg-white/10 rounded-xl transition-all"
+                className="px-4 py-3 text-sm font-medium text-white/70 hover:text-white hover:bg-white/10 rounded-xl transition-all min-touch"
               >
                 {link.label}
               </a>
@@ -1415,9 +1414,12 @@ function StickyNav({ lang, setLang }: { lang: 'en' | 'zh' | 'zh-TW'; setLang: (l
             <div className="flex items-center gap-2 pt-2 mt-2 border-t border-white/10">
               <button
                 onClick={() => { setLang(getNextLang()); setMobileOpen(false); }}
-                className="flex-1 py-2.5 text-sm font-medium text-white/70 rounded-xl bg-white/10"
+                className="p-2.5 text-white/70 hover:text-white rounded-xl bg-white/10 min-touch"
+                aria-label={lang === 'en' ? 'Switch to 简体中文' : lang === 'zh' ? 'Switch to 繁體中文' : 'Switch to English'}
               >
-                {getLangLabel()}
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                </svg>
               </button>
               {!contactInfo.phone.includes('XXX') && (
                 <a href={`tel:+1${contactInfo.phone.replace(/\D/g, '')}`} className="p-2.5 text-white/70 rounded-xl bg-white/10" aria-label="Call">
@@ -1809,7 +1811,7 @@ function HeroSection({ t, lang }: { t: typeof content.en, lang: 'en' | 'zh' | 'z
   return (
     <section
       id="hero"
-      className="relative px-6 pb-16 pt-4 text-soft sm:px-10 md:px-16 lg:px-24 sm:pt-16 sm:pb-24 min-h-[calc(67vh+100px)] sm:min-h-[calc(55vh+100px)] overflow-x-hidden"
+      className="relative px-4 pb-12 pt-[calc(56px+env(safe-area-inset-top,0px))] text-soft sm:px-10 md:px-16 lg:px-24 sm:pt-16 sm:pb-24 min-h-[calc(67vh+80px)] sm:min-h-[calc(55vh+100px)] overflow-x-hidden"
       aria-labelledby="hero-heading"
     >
       {/* Background Video: 1 agent → 2 girl → 3 original → 1 … (three-video cycle) */}
@@ -1893,63 +1895,58 @@ function HeroSection({ t, lang }: { t: typeof content.en, lang: 'en' | 'zh' | 'z
         <div className="absolute inset-0 bg-midnight/30" />
       </div>
       
-      <div className="relative mx-auto flex max-w-6xl flex-col gap-6 sm:gap-12 lg:gap-16 lg:flex-row lg:items-center lg:justify-start min-h-[calc(60vh+100px)] sm:min-h-[calc(48vh+100px)] pt-12 sm:pt-20 lg:pt-12 text-left">
+      <div className="relative mx-auto flex max-w-6xl flex-col gap-6 sm:gap-12 lg:gap-16 lg:flex-row lg:items-end lg:justify-start min-h-[calc(60vh+100px)] sm:min-h-[calc(48vh+100px)] pt-8 sm:pt-20 lg:pt-12 text-left justify-end">
         <motion.div
-          className="text-balance text-left lg:max-w-xl w-full absolute top-[calc(50%+40px)] left-0 right-0 -translate-y-1/2 px-0 pb-12 sm:top-[calc(50%+50px)] sm:relative sm:top-auto sm:translate-y-0 sm:left-auto sm:pb-0 [&>*:not(:last-child)]:mb-4 sm:[&>*:not(:last-child)]:mb-6"
+          className="text-left lg:max-w-xl w-full relative px-0 pb-8 sm:pb-0 space-y-4 sm:space-y-5 mt-auto lg:mt-0"
           initial="hidden"
           animate="visible"
           variants={fadeUp}
           transition={{ duration: 0.8, ease: 'easeOut' }}
         >
           {'eyebrow' in t.hero && t.hero.eyebrow && (
-            <div className="inline-flex items-center gap-2 rounded-full border border-yellow-400/30 bg-yellow-400/10 px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-widest text-yellow-400 mt-[30px] mb-[30px]">
-              <span className="h-1.5 w-1.5 rounded-full bg-yellow-400" />
-              {(t.hero as { eyebrow?: string }).eyebrow}
+            <div className="inline-flex items-center gap-2 rounded-full border border-yellow-400/30 bg-yellow-400/10 px-3 py-1.5 text-[10px] sm:text-[11px] font-semibold uppercase tracking-widest text-yellow-400">
+              <span className="h-1.5 w-1.5 rounded-full bg-yellow-400 shrink-0" />
+              <span className="break-words">{(t.hero as { eyebrow?: string }).eyebrow}</span>
             </div>
           )}
           <h1
             id="hero-heading"
-            className="text-4xl font-bold leading-tight sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl break-words text-left"
+            className="text-left font-bold text-white"
             itemProp="headline"
           >
             {lang === 'en' ? (
-              <>
-                <span className="sm:whitespace-nowrap">
-                  <span className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold">{t.hero.headlinePrefix}</span>
-                  {' '}
-                  <span className="relative inline-block min-w-[140px] sm:min-w-[240px] md:min-w-[280px] lg:min-w-[320px] text-left text-2xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold">
-                    <span className="hand-drawn-underline">
-                      {displayText}
-                    </span>
-                    {!isInitial && (
-                      <span className="inline-block w-0.5 h-4 sm:h-6 bg-yellow-400 ml-1 animate-pulse" />
-                    )}
+              <span className="block text-5xl leading-[1.15] sm:text-6xl sm:leading-[1.12] md:text-7xl lg:text-8xl xl:text-9xl">
+                <span>{t.hero.headlinePrefix}</span>
+                {' '}
+                <span className="relative inline-block min-w-[140px] sm:min-w-[220px] md:min-w-[280px] lg:min-w-[320px] align-baseline">
+                  <span className="hand-drawn-underline">
+                    {displayText}
                   </span>
-                  {t.hero.headlineSuffix ? (
-                    <>
-                      {' '}
-                      <span className="sm:whitespace-nowrap">{t.hero.headlineSuffix}</span>
-                    </>
-                  ) : null}
+                  {!isInitial && (
+                    <span className="inline-block w-0.5 h-3 sm:h-5 bg-yellow-400 ml-0.5 align-middle animate-pulse" aria-hidden />
+                  )}
                 </span>
-              </>
+                {t.hero.headlineSuffix ? (
+                  <span> {t.hero.headlineSuffix}</span>
+                ) : null}
+              </span>
             ) : (
-              <span className="block text-left">
+              <span className="block text-white font-bold text-5xl leading-[1.4] sm:text-6xl sm:leading-[1.3] md:text-7xl lg:text-8xl">
                 <span className="hand-drawn-underline">康伴</span>
                 <br />
-                家庭健康
+                <span className="block mt-0.5 sm:mt-1">家庭健康</span>
                 <br />
-                常陪伴
+                <span className="block mt-0.5 sm:mt-1">常陪伴</span>
               </span>
             )}
           </h1>
           {'subheadlineStrong' in t.hero && (t.hero as { subheadlineStrong?: string }).subheadlineStrong && (
-            <p className="text-sm sm:text-base text-white/70 mb-5 leading-relaxed text-left">
-              <em className="not-italic font-medium text-white/90">{(t.hero as { subheadlineStrong: string }).subheadlineStrong}</em>
+            <p className="text-sm sm:text-base text-white/80 leading-relaxed text-left max-w-xl">
+              <span className="font-medium text-white/95">{(t.hero as { subheadlineStrong: string }).subheadlineStrong}</span>
             </p>
           )}
           {(t.hero as Record<string, unknown>).secondaryConsult != null && (
-            <div className="flex flex-wrap items-center gap-4 mb-4">
+            <div className="flex flex-wrap items-center gap-3 sm:gap-4">
               <a href="https://app.getcareby.ca/" className="inline-flex items-center gap-2 text-white hover:text-white/90 text-sm transition">
                 <span className="flex h-8 w-8 items-center justify-center rounded-full border border-white/20 text-xs">💬</span>
                 {(t.hero as { secondaryConsult: string }).secondaryConsult}
@@ -1961,7 +1958,7 @@ function HeroSection({ t, lang }: { t: typeof content.en, lang: 'en' | 'zh' | 'z
             </div>
           )}
           {'trustChips' in t.hero && Array.isArray((t.hero as { trustChips?: string[] }).trustChips) && (
-            <div className="flex flex-wrap gap-x-4 gap-y-2 mt-6 pt-6 border-t border-white/10">
+            <div className="hidden sm:flex flex-wrap gap-x-4 gap-y-2 pt-4 sm:pt-6 border-t border-white/10">
               {((t.hero as { trustChips: string[] }).trustChips).map((chip, i) => (
                 <span key={i} className="flex items-center gap-1.5 text-[11.5px] text-white">
                   <span className="h-0.75 w-0.75 rounded-full bg-yellow-400" />
@@ -1973,7 +1970,7 @@ function HeroSection({ t, lang }: { t: typeof content.en, lang: 'en' | 'zh' | 'z
           <a
             ref={buttonRef}
             href="https://app.getcareby.ca/"
-            className="bg-primary hover:bg-primary/90 hidden sm:inline-flex items-center justify-center px-8 py-4 sm:px-10 sm:py-4 text-lg sm:text-xl font-semibold text-white transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 w-full sm:w-auto rounded-full sm:!mt-5 shadow-lg"
+            className="bg-primary hover:bg-primary/90 hidden sm:inline-flex items-center justify-center px-8 py-4 sm:px-10 sm:py-4 text-lg sm:text-xl font-semibold text-white transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 w-full sm:w-auto rounded-full shadow-lg"
             onFocus={(e) => {
               e.currentTarget.style.outlineColor = '#3B8C75'
             }}
@@ -4622,7 +4619,7 @@ function MembershipTiersSection({ t, lang }: { t: typeof content.en, lang: 'en' 
   const cards = upgradeTiers[currentTabKey] || []
 
   return (
-    <section id="membership" className="bg-[#FDFAF5] px-6 py-24 lg:py-28 sm:px-10 md:px-16 lg:px-24">
+    <section id="membership" className="bg-[#FDFAF5] px-4 py-16 sm:px-10 md:px-16 lg:px-24 sm:py-24 lg:py-28">
       <div className="mx-auto max-w-6xl">
         <motion.div
           className="text-center mb-14"
@@ -4658,7 +4655,7 @@ function MembershipTiersSection({ t, lang }: { t: typeof content.en, lang: 'en' 
             <button
               key={tab.key}
               onClick={() => setActiveTab(i)}
-              className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-200 ${
+              className={`inline-flex items-center gap-2 px-4 py-3 sm:px-5 sm:py-2.5 rounded-full text-sm font-semibold transition-all duration-200 min-touch ${
                 activeTab === i
                   ? 'bg-primary text-white shadow-md'
                   : 'bg-white text-slate-600 border border-slate-200 hover:border-primary/40 hover:text-primary'
@@ -4960,7 +4957,7 @@ function FAQSection({ t, lang }: { t: typeof content.en, lang: 'en' | 'zh' | 'zh
   const items = faqItems[currentLangForFaq as 'en' | 'zh'] || faqItems.en
 
   return (
-    <section id="faq" className="bg-white px-6 py-32 lg:py-40 sm:px-10 md:px-16 lg:px-24">
+    <section id="faq" className="bg-white px-4 py-20 sm:px-10 md:px-16 lg:px-24 sm:py-32 lg:py-40">
       <div className="mx-auto max-w-6xl">
         <div className="text-center mb-20 lg:mb-24">
           <p className="text-sm font-semibold uppercase tracking-[0.3em] text-primary mb-4">{t.faq.sectionTitle}</p>
@@ -4971,7 +4968,7 @@ function FAQSection({ t, lang }: { t: typeof content.en, lang: 'en' | 'zh' | 'zh
             <div key={item.question} className="border-b border-slate-200 pb-6 last:border-b-0">
               <button
                 onClick={() => setOpenIndex(openIndex === index ? null : index)}
-                className="flex w-full items-center justify-between text-left transition"
+                className="flex w-full items-center justify-between text-left transition min-touch py-2"
               >
                 <p className="text-lg font-semibold text-midnight pr-4">{item.question}</p>
                 <motion.div
@@ -5460,7 +5457,7 @@ function AboutUsPage({ onBack }: { onBack: () => void }) {
 
 function Footer({ setCurrentPage, t }: { setCurrentPage: (page: 'home' | 'privacy' | 'terms' | 'about') => void, t: typeof content.en }) {
   return (
-    <footer className="relative bg-midnight px-6 pt-0 pb-10 text-soft sm:px-10 md:px-16 lg:px-24 overflow-hidden">
+    <footer className="relative bg-midnight px-4 pt-0 pb-24 text-soft sm:px-10 sm:pb-10 md:px-16 lg:px-24 overflow-hidden pb-safe">
       <LogoWatermark className="absolute -left-10 bottom-8 w-[350px] lg:w-[420px] -rotate-6" opacity={0.06} />
       {/* Giant CAREBY text — deep slow gradient shift */}
       <div className="relative mx-auto max-w-6xl mb-10 pt-10 select-none overflow-hidden" aria-hidden>
