@@ -52,3 +52,6 @@ Thumbs.db
 public/hero-intro-portrait.mov
 public/hero-intro.mov
 *.mov
+# Uncompressed backups (compressed versions are used)
+public/hero-intro-agent-original.mp4
+public/hero-intro-portrait-original.mp4
