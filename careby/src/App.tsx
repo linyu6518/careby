@@ -1218,7 +1218,7 @@ function App() {
       {/* Updated to work alongside AI Chatbot button with 15px gap */}
       <a
         href="https://app.getcareby.ca/"
-        className="animated-gradient-button fixed bottom-[30px] left-[30px] z-[9999] sm:hidden inline-flex items-center justify-center px-7 py-4 text-white transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 rounded-full"
+        className="bg-primary hover:bg-primary/90 fixed bottom-[30px] left-[30px] z-[9999] sm:hidden inline-flex items-center justify-center px-7 py-4 text-white transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 rounded-full shadow-lg"
         style={{ 
           position: 'fixed', 
           bottom: '30px', 
@@ -1230,12 +1230,7 @@ function App() {
           e.currentTarget.style.outlineColor = '#3B8C75'
         }}
       >
-        <span className="sparkle"></span>
-        <span className="sparkle"></span>
-        <span className="sparkle"></span>
-        <span className="sparkle"></span>
-        <span className="sparkle"></span>
-        <span className="relative z-10">
+        <span>
           {lang === 'en' ? 'Free Consultation' : lang === 'zh' ? '免费咨询' : '免費諮詢'}
         </span>
       </a>
@@ -1978,17 +1973,12 @@ function HeroSection({ t, lang }: { t: typeof content.en, lang: 'en' | 'zh' | 'z
           <a
             ref={buttonRef}
             href="https://app.getcareby.ca/"
-            className="animated-gradient-button hidden sm:inline-flex items-center justify-center px-8 py-4 sm:px-10 sm:py-4 text-lg sm:text-xl font-semibold text-white transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 w-full sm:w-auto rounded-full sm:!mt-5"
+            className="bg-primary hover:bg-primary/90 hidden sm:inline-flex items-center justify-center px-8 py-4 sm:px-10 sm:py-4 text-lg sm:text-xl font-semibold text-white transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 w-full sm:w-auto rounded-full sm:!mt-5 shadow-lg"
             onFocus={(e) => {
               e.currentTarget.style.outlineColor = '#3B8C75'
             }}
           >
-            <span className="sparkle"></span>
-            <span className="sparkle"></span>
-            <span className="sparkle"></span>
-            <span className="sparkle"></span>
-            <span className="sparkle"></span>
-            <span className="relative z-10">{t.hero.ctaPrimary}</span>
+            {t.hero.ctaPrimary}
           </a>
         </motion.div>
       </div>
