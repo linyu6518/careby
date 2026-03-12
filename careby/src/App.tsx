@@ -915,11 +915,12 @@ const content = {
   },
 }
 
-const partners = [
+const partners: { name: string; logo: string; description?: string; url?: string }[] = [
   { 
     name: 'GoToDoctor', 
     logo: '/partners/gotodoctor.png',
-    description: '24/7 telehealth consultations in English, Mandarin, and Cantonese'
+    description: '24/7 telehealth consultations in English, Mandarin, and Cantonese',
+    url: 'https://gotodoctor.ca/careby/'
   },
   { 
     name: 'HomeEquity Bank', 
@@ -1293,15 +1294,16 @@ function StickyNav({ lang, setLang }: { lang: 'en' | 'zh' | 'zh-TW'; setLang: (l
 
   const links = isEn ? [
     { label: 'How It Works', href: '#how-it-works' },
-    { label: 'Plans & Pricing', href: '#membership' },
+    { label: 'Plans & Pricing', href: 'https://app.getcareby.ca/' },
     { label: 'FAQs', href: '#faq' },
   ] : [
     { label: '服务介绍', href: '#how-it-works' },
-    { label: '方案与价格', href: '#membership' },
+    { label: '方案与价格', href: 'https://app.getcareby.ca/' },
     { label: '常见问题', href: '#faq' },
   ]
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (!href.startsWith('#')) return
     e.preventDefault()
     const id = href.replace('#', '')
     const el = document.getElementById(id)
@@ -1951,7 +1953,7 @@ function HeroSection({ t, lang }: { t: typeof content.en, lang: 'en' | 'zh' | 'z
                 {(t.hero as { secondaryConsult: string }).secondaryConsult}
               </a>
               <span className="h-4 w-px bg-white/15" aria-hidden />
-              <a href="#membership" className="text-sm text-white hover:text-emerald-400 transition">
+              <a href="https://app.getcareby.ca/" className="text-sm text-white hover:text-emerald-400 transition">
                 {(t.hero as { plansLink?: string }).plansLink}
               </a>
             </div>
@@ -3140,7 +3142,7 @@ function WhoWeServeSection({ t }: { t: typeof content.en }) {
                     ))}
                   </ul>
                   <a
-                    href="#membership"
+                    href="https://app.getcareby.ca/"
                     className="inline-flex items-center gap-1 text-[13px] font-semibold text-primary hover:text-primary/80 transition-colors mt-5"
                   >
                     {d.cta}
@@ -3159,7 +3161,7 @@ function WhoWeServeSection({ t }: { t: typeof content.en }) {
           viewport={{ once: true, amount: 0.3 }}
         >
           <a
-            href="#membership"
+            href="https://app.getcareby.ca/"
             className="inline-flex items-center justify-center bg-primary hover:bg-primary/90 text-white font-semibold text-[15px] px-6 py-3 rounded-full transition-all shadow-[0_4px_16px_rgba(42,139,98,0.25)]"
           >
             {isEn ? 'View plans & pricing' : '查看方案与价格'}
@@ -3463,7 +3465,7 @@ function WhyCarebyExistsSection({ t }: { t: typeof content.en }) {
             <p className="text-sm text-white/50 leading-relaxed">{d.guarantee.body}</p>
           </div>
           <a
-            href="#plans"
+            href="https://app.getcareby.ca/"
             className="shrink-0 inline-flex items-center justify-center rounded-full bg-yellow-400 px-8 py-3 text-sm font-semibold text-slate-900 shadow-lg shadow-yellow-400/50 transition hover:-translate-y-1 hover:bg-yellow-300 hover:shadow-yellow-300/60"
           >
             {d.guarantee.cta}
@@ -4103,19 +4105,37 @@ function PartnersSection({ t }: { t: typeof content.en }) {
             viewport={{ once: true, amount: 0.4 }}
             transition={{ duration: 0.5, ease: 'easeOut', delay: index * 0.1 }}
           >
-            <img 
-              src={partner.logo} 
-              alt={`${partner.name} Logo - Careby Healthcare Partner`}
-              className="h-14 w-auto object-contain mix-blend-multiply"
-              loading="eager"
-              decoding="async"
-              onError={(e) => {
-                const img = e.currentTarget as HTMLImageElement;
-                const text = img.nextElementSibling as HTMLElement;
-                img.style.display = 'none';
-                if (text) text.style.display = 'block';
-              }}
-            />
+            {partner.url ? (
+              <a href={partner.url} target="_blank" rel="noopener noreferrer" className="focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded">
+                <img 
+                  src={partner.logo} 
+                  alt={`${partner.name} Logo - Careby Healthcare Partner`}
+                  className="h-14 w-auto object-contain mix-blend-multiply hover:opacity-90 transition"
+                  loading="eager"
+                  decoding="async"
+                  onError={(e) => {
+                    const img = e.currentTarget as HTMLImageElement;
+                    const text = img.nextElementSibling as HTMLElement;
+                    img.style.display = 'none';
+                    if (text) text.style.display = 'block';
+                  }}
+                />
+              </a>
+            ) : (
+              <img 
+                src={partner.logo} 
+                alt={`${partner.name} Logo - Careby Healthcare Partner`}
+                className="h-14 w-auto object-contain mix-blend-multiply"
+                loading="eager"
+                decoding="async"
+                onError={(e) => {
+                  const img = e.currentTarget as HTMLImageElement;
+                  const text = img.nextElementSibling as HTMLElement;
+                  img.style.display = 'none';
+                  if (text) text.style.display = 'block';
+                }}
+              />
+            )}
             {partner.description && (
               <p className="text-[13px] text-slate-500 leading-relaxed">{partner.description}</p>
             )}
@@ -4261,7 +4281,7 @@ function PlanDetailModal({ plan, onClose }: { plan: any; onClose: () => void }) 
               </div>
             )}
             <div className="pt-4">
-              <a href="#" className="inline-block bg-primary hover:bg-primary/90 text-white font-semibold text-sm px-8 py-3 rounded-full transition-all hover:-translate-y-0.5">
+              <a href="https://app.getcareby.ca/" className="inline-block bg-primary hover:bg-primary/90 text-white font-semibold text-sm px-8 py-3 rounded-full transition-all hover:-translate-y-0.5">
                 {plan.cta || 'Get Started →'}
               </a>
             </div>
@@ -4698,13 +4718,13 @@ function MembershipTiersSection({ t, lang }: { t: typeof content.en, lang: 'en' 
               </p>
               <p className="text-xs text-white/30 mt-2 mb-7">{hero.priceNote}</p>
               <div className="flex flex-col items-end gap-2">
-                <a href="#" className="inline-block bg-primary hover:bg-primary/90 text-white font-semibold text-[15px] px-10 py-3.5 rounded-full shadow-[0_6px_28px_rgba(42,139,98,0.4)] transition-all hover:-translate-y-0.5">
+                <a href="https://app.getcareby.ca/" className="inline-block bg-primary hover:bg-primary/90 text-white font-semibold text-[15px] px-10 py-3.5 rounded-full shadow-[0_6px_28px_rgba(42,139,98,0.4)] transition-all hover:-translate-y-0.5">
                   {hero.cta}
                 </a>
                 {hero.detailSections && (
-                  <button onClick={() => setDetailPlan({ ...hero, price: `$${hero.price}`, period: hero.pricePeriod })} className="text-[13px] text-white/50 hover:text-white transition underline underline-offset-2">
+                  <a href="https://app.getcareby.ca/" className="text-[13px] text-white/50 hover:text-white transition underline underline-offset-2">
                     {isEn ? 'View full details →' : '查看完整详情 →'}
-                  </button>
+                  </a>
                 )}
               </div>
               {hero.upgradeNote && (
@@ -4762,7 +4782,7 @@ function MembershipTiersSection({ t, lang }: { t: typeof content.en, lang: 'en' 
                     ))}
                   </div>
                   <a
-                    href="#"
+                    href="https://app.getcareby.ca/"
                     className={`block text-center py-2.5 rounded-[20px] text-[13px] font-semibold transition-all ${
                       card.dark
                         ? 'bg-yellow-400 text-[#0f172a] font-extrabold hover:bg-yellow-300'
@@ -4774,14 +4794,14 @@ function MembershipTiersSection({ t, lang }: { t: typeof content.en, lang: 'en' 
                     {card.cta}
                   </a>
                   {card.detailSections && (
-                    <button
-                      onClick={() => setDetailPlan(card)}
+                    <a
+                      href="https://app.getcareby.ca/"
                       className={`block w-full text-center mt-2 text-[12px] transition underline underline-offset-2 ${
                         card.dark ? 'text-white/40 hover:text-white/70' : 'text-slate-400 hover:text-primary'
                       }`}
                     >
                       {isEn ? 'View full details →' : '查看完整详情 →'}
-                    </button>
+                    </a>
                   )}
                 </div>
               ))}
@@ -4941,7 +4961,7 @@ function MembershipTiersSection({ t, lang }: { t: typeof content.en, lang: 'en' 
           transition={{ duration: 0.5, delay: 0.3 }}
         >
           {isEn ? 'Not sure where to start? ' : '不确定从哪开始？'}
-          <a href="#" className="text-primary hover:underline">{isEn ? 'Talk to us →' : '联系我们 →'}</a>
+          <a href={contactInfo.phone.includes('XXX') ? '#' : `tel:+1${contactInfo.phone.replace(/\D/g, '')}`} className="text-primary hover:underline">{isEn ? 'Talk to us →' : '联系我们 →'}</a>
           {isEn ? ' · All plans include a dedicated bilingual care coordinator.' : ' · 所有方案均含专属双语护理协调员。'}
         </motion.p>
       </div>
