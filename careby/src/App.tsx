@@ -1,9 +1,12 @@
 import { motion, AnimatePresence } from 'framer-motion'
-import { useState, useEffect, useRef, useMemo, Fragment } from 'react'
+import { useState, useEffect, useRef, useMemo, Fragment, type FormEvent } from 'react'
 import ComingSoon from './ComingSoon'
 import SEO from './components/SEO'
 import { generateHomepageSchema } from './utils/structuredData'
 import { convertObjectToTraditional } from './utils/convertToTraditional'
+import { buildHeroPlans } from './heroPlansData'
+import { TermsOfServiceLegalBody } from './legal/TermsOfServiceLegalBody'
+import { CancellationRefundPolicyLegalBody } from './legal/CancellationRefundPolicyLegalBody'
 // import AIChatbot from './components/AIChatbot' // Hidden - using Elfsight AI Chatbot instead
 // import VoiceInputButton from './components/VoiceInputButton' // Hidden
 
@@ -11,6 +14,10 @@ const fadeUp = {
   hidden: { opacity: 0, y: 32 },
   visible: { opacity: 1, y: 0 },
 }
+
+/** Bump when replacing files in `public/avatars/` — root `*.jpg` is long-cached on deploy; `?v=` forces browsers to refetch. */
+const AVATAR_ASSET_V = '20260324'
+const avatarSrc = (path: string) => `${path}?v=${AVATAR_ASSET_V}`
 
 const content = {
   en: {
@@ -161,6 +168,12 @@ const content = {
         title: '48-Hour Replacement Guarantee',
         body: 'If your caregiver isn\'t right, we replace them within 48 hours. No fees. No guilt. No questions asked. Only 1 in 8 applicants pass our vetting — that\'s why we can make this promise.',
         cta: 'Get Started →',
+        contactTitle: 'Contact us',
+        contactHint: 'Tell us how we can help — we typically reply within one business day.',
+        namePlaceholder: 'Your name',
+        emailPlaceholder: 'Your email',
+        messagePlaceholder: 'How can we help?',
+        contactSubmit: 'Send message',
       },
     },
     services: {
@@ -373,7 +386,7 @@ const content = {
     },
     partners: {
       sectionTitle: 'Trusted Partnerships',
-      title: 'Partnering with Industry Leaders for Smart Healthcare',
+      title: 'Partnering with Industry Leaders',
       subtitle: 'We collaborate deeply with leading Canadian and international medical institutions.',
       quote: 'Careby Platform works with partners like GoToDoctor to create a rapid medical matching system, integrating telemedicine, home care, and health management services to provide users with safe and efficient one-stop solutions.',
     },
@@ -386,6 +399,16 @@ const content = {
       metric3: 'User Satisfaction',
       testimonial: 'Careby Platform has made post-surgery care for my parents more reassuring. I can see health changes in the app in real time.',
       author: 'Anna, Toronto',
+    },
+    team: {
+      sectionTitle: 'Our Team',
+      title: 'The people behind Careby',
+      subtitle: 'Clinical leadership, care coordination, and operations working as one team for your family.',
+      members: [
+        { name: 'Dr. Sarah Lin', role: 'Medical Director', bio: 'Board-certified physician focused on integrated senior care and diagnostics.', image: avatarSrc('/avatars/sarah.jpg') },
+        { name: 'Michael Chen', role: 'Head of Care Operations', bio: 'Leads caregiver matching, quality, and bilingual coordination across the GTA.', image: avatarSrc('/avatars/michael.jpg') },
+        { name: 'Anna Williams', role: 'Client Success Lead', bio: 'Helps families navigate plans, benefits, and day-to-day support.', image: avatarSrc('/avatars/anna.jpg') },
+      ],
     },
     cta: {
       quote: 'Technology and care go hand in hand, bringing health closer.',
@@ -405,12 +428,13 @@ const content = {
       partnerships: 'Partnerships',
       privacyPolicy: 'Privacy Policy',
       termsOfService: 'Terms of Service',
+      cancellationRefundPolicy: 'Cancellation & Refund',
       phone: 'Phone',
       email: 'Email',
       privacy: 'Privacy',
       billing: 'Billing',
-      support247: '24/7 Support',
-      emergencySupport: '24/7 Emergency Support Available',
+      support247: '',
+      emergencySupport: '',
       allRightsReserved: 'All rights reserved. Licensed and insured in Ontario, Canada.',
       mondayFriday: 'Monday - Friday',
       saturday: 'Saturday',
@@ -606,6 +630,12 @@ const content = {
         title: '48 小时更换保障',
         body: '如果护理员不合适，48 小时内免费更换。无费用、无压力、无需解释。仅 1/8 的申请者通过筛选——这就是我们敢做出承诺的底气。',
         cta: '立即开始 →',
+        contactTitle: '联系我们',
+        contactHint: '请留下您的需求，我们通常会在一个工作日内回复。',
+        namePlaceholder: '您的姓名',
+        emailPlaceholder: '您的邮箱',
+        messagePlaceholder: '请简述您的问题或需求',
+        contactSubmit: '发送留言',
       },
     },
     services: {
@@ -842,6 +872,16 @@ const content = {
       testimonial: '康伴 平台 让我父母的术后照护更安心，我能实时在App中看到健康变化。',
       author: '— Anna, Toronto',
     },
+    team: {
+      sectionTitle: '我们的团队',
+      title: '康伴背后的团队',
+      subtitle: '临床、护理协调与运营并肩协作，服务每一个家庭。',
+      members: [
+        { name: '林医生', role: '医学总监', bio: '专注整合式长者照护与诊断服务的执业医师。', image: avatarSrc('/avatars/sarah.jpg') },
+        { name: '陈迈克', role: '护理运营负责人', bio: '负责护工匹配、质量与 GTA 双语协调。', image: avatarSrc('/avatars/michael.jpg') },
+        { name: '安娜', role: '客户成功负责人', bio: '协助家庭规划方案、福利与日常支持。', image: avatarSrc('/avatars/anna.jpg') },
+      ],
+    },
     cta: {
       quote: '科技与关怀同行，让健康更近一步。',
       title: '康伴 平台 — 智慧医疗，让健康触手可及。',
@@ -860,12 +900,13 @@ const content = {
       partnerships: '合作伙伴',
       privacyPolicy: '隐私政策',
       termsOfService: '服务条款',
+      cancellationRefundPolicy: '取消与退款政策',
       phone: '电话',
       email: '邮箱',
       privacy: '隐私',
       billing: '账单',
-      support247: '24/7 支持',
-      emergencySupport: '24/7 紧急支持',
+      support247: '',
+      emergencySupport: '',
       allRightsReserved: '版权所有。在安大略省和加拿大获得许可和保险。',
       mondayFriday: '周一 - 周五',
       saturday: '周六',
@@ -927,11 +968,6 @@ const partners: { name: string; logo: string; description?: string; url?: string
     logo: '/partners/he-twocolour-large.png',
     description: 'Reverse mortgage options and financial planning'
   },
-  { 
-    name: 'Progenics', 
-    logo: '/partners/Progenics.jpg',
-    description: 'Regenerative medicine and advanced treatments'
-  },
   {
     name: 'Ebovir',
     logo: '/partners/Ebovir .png',
@@ -950,21 +986,21 @@ const testimonials = [
     location: 'Toronto',
     rating: 5,
     text: 'Careby Platform has made post-surgery care for my parents more reassuring. I can see health changes in the app in real time.',
-    avatar: '/avatars/anna.jpg'
+    avatar: avatarSrc('/avatars/anna.jpg')
   },
   {
     name: 'Michael Chen',
     location: 'Vancouver',
     rating: 5,
     text: 'The AI health monitoring is incredible. It detected my irregular heartbeat before I even noticed symptoms.',
-    avatar: '/avatars/michael.jpg'
+    avatar: avatarSrc('/avatars/michael.jpg')
   },
   {
     name: 'Sarah Johnson',
     location: 'Montreal',
     rating: 5,
     text: 'Professional caregivers and seamless communication. My elderly mother feels safe and cared for.',
-    avatar: '/avatars/sarah.jpg'
+    avatar: avatarSrc('/avatars/sarah.jpg')
   },
 ]
 const contactInfo = {
@@ -1066,7 +1102,9 @@ function App() {
   const [lang, setLang] = useState<'en' | 'zh' | 'zh-TW'>('en')
   const [showComingSoon, setShowComingSoon] = useState(false)
   const [showHowItWorks, setShowHowItWorks] = useState(false)
-  const [currentPage, setCurrentPage] = useState<'home' | 'privacy' | 'terms' | 'about'>('home')
+  const [currentPage, setCurrentPage] = useState<
+    'home' | 'privacy' | 'terms' | 'cancellation-refund' | 'about' | 'careby-health' | 'careby-home'
+  >('home')
   
   // Get base content (English or Chinese)
   const contentLang = lang === 'en' ? 'en' : 'zh'
@@ -1085,24 +1123,65 @@ function App() {
 
   // Read page from URL hash on mount and when hash changes
   useEffect(() => {
-    const hash = window.location.hash.slice(1) // Remove the '#'
-    if (hash === 'privacy' || hash === 'terms' || hash === 'about') {
-      setCurrentPage(hash as 'privacy' | 'terms' | 'about')
-    }
-
-    // Listen for hash changes
-    const handleHashChange = () => {
-      const newHash = window.location.hash.slice(1)
-      if (newHash === 'privacy' || newHash === 'terms' || newHash === 'about') {
-        setCurrentPage(newHash as 'privacy' | 'terms' | 'about')
-      } else if (newHash === '' || newHash === 'home') {
+    const applyHash = () => {
+      const h = window.location.hash.slice(1)
+      if (h === 'privacy' || h === 'terms' || h === 'about' || h === 'cancellation-refund') {
+        setCurrentPage(h as 'privacy' | 'terms' | 'about' | 'cancellation-refund')
+      } else if (h === 'careby-health') {
+        setCurrentPage('careby-health')
+      } else if (h === 'careby-home') {
+        setCurrentPage('careby-home')
+      } else {
         setCurrentPage('home')
       }
     }
-
-    window.addEventListener('hashchange', handleHashChange)
-    return () => window.removeEventListener('hashchange', handleHashChange)
+    applyHash()
+    window.addEventListener('hashchange', applyHash)
+    return () => window.removeEventListener('hashchange', applyHash)
   }, [])
+
+  const goHome = () => {
+    setCurrentPage('home')
+    window.location.hash = ''
+  }
+
+  if (currentPage === 'careby-health') {
+    const isEn = lang === 'en' || lang === 'zh-TW'
+    return (
+      <>
+        <SEO
+          title={seoLang === 'en' ? 'Careby Health — The Essentialist | Careby' : '康伴健康 | 康伴'}
+          description={seoLang === 'en' ? 'Doctor-reviewed blood diagnostics and biomarker panels from Careby Health.' : '康伴健康 — 医生审核的血液诊断与生物标志物检测。'}
+          lang={seoLang}
+          canonical="https://getcareby.ca/#careby-health"
+        />
+        <div className="min-h-screen w-full bg-soft text-midnight relative">
+          <LanguageSwitcher lang={lang} setLang={setLang} />
+          <CarebyPlanDetailPage planKey="diagnostics" isEn={isEn} onBack={goHome} />
+          <Footer setCurrentPage={setCurrentPage} t={t as typeof content.en} />
+        </div>
+      </>
+    )
+  }
+
+  if (currentPage === 'careby-home') {
+    const isEn = lang === 'en' || lang === 'zh-TW'
+    return (
+      <>
+        <SEO
+          title={seoLang === 'en' ? 'Careby Home — Independent Living | Careby' : '康伴居家 | 康伴'}
+          description={seoLang === 'en' ? 'In-home care with bilingual PSWs, credits, and GoToDoctor access from Careby Home.' : '康伴居家 — 双语护理员、服务积分与远程医生支持。'}
+          lang={seoLang}
+          canonical="https://getcareby.ca/#careby-home"
+        />
+        <div className="min-h-screen w-full bg-soft text-midnight relative">
+          <LanguageSwitcher lang={lang} setLang={setLang} />
+          <CarebyPlanDetailPage planKey="home" isEn={isEn} onBack={goHome} />
+          <Footer setCurrentPage={setCurrentPage} t={t as typeof content.en} />
+        </div>
+      </>
+    )
+  }
 
   if (currentPage === 'privacy') {
   return (
@@ -1146,6 +1225,33 @@ function App() {
     )
   }
 
+  if (currentPage === 'cancellation-refund') {
+    return (
+      <>
+        <SEO
+          title={seoLang === 'en' ? 'Cancellation & Refund Policy - Careby' : '取消与退款政策 - 康伴'}
+          description={
+            seoLang === 'en'
+              ? 'Careby cancellation, refund, and billing rules — diagnostic plans, monthly plans, credits, corporate wellness, and Ontario CPA cooling-off.'
+              : '康伴取消、退款与计费规则说明（英文政策全文）。'
+          }
+          lang={seoLang}
+          canonical="https://getcareby.ca/#cancellation-refund"
+        />
+        <div className="min-h-screen w-full bg-soft text-midnight relative">
+          <LanguageSwitcher lang={lang} setLang={setLang} />
+          <CancellationRefundPolicyPage
+            onBack={() => {
+              setCurrentPage('home')
+              window.location.hash = ''
+            }}
+          />
+          <Footer setCurrentPage={setCurrentPage} t={t as typeof content.en} />
+        </div>
+      </>
+    )
+  }
+
   if (currentPage === 'about') {
     return (
       <>
@@ -1167,18 +1273,12 @@ function App() {
   // Get FAQ items for current language
   const currentFAQs = faqItems[lang === 'zh-TW' ? 'zh' : lang] || faqItems.en
   
-  // Prepare testimonials for Review Schema (add datePublished if missing)
-  const testimonialsWithDates = testimonials.map(t => ({
-    ...t,
-    datePublished: new Date().toISOString().split('T')[0] // Use current date as fallback
-  }))
-  
   return (
     <>
       <SEO
         lang={seoLang}
         canonical="https://getcareby.ca/"
-        structuredData={generateHomepageSchema(seoLang, currentFAQs, testimonialsWithDates)}
+        structuredData={generateHomepageSchema(seoLang, currentFAQs, undefined)}
       />
       <div className="min-h-screen w-full bg-[#FDFAF5] text-midnight relative overflow-x-hidden pb-[100px] sm:pb-0">
         <StickyNav lang={lang} setLang={setLang} />
@@ -1193,11 +1293,11 @@ function App() {
         {/* <ServiceSection t={t as typeof content.en} lang={lang} /> */}
         {/* <TechnologySection t={t as typeof content.en} lang={lang} onHowItWorks={() => setShowHowItWorks(true)} /> */}
         <PartnersSection t={t as typeof content.en} />
-        <ImpactSection t={t as typeof content.en} />
+        <TeamSection t={t as typeof content.en} />
         <MembershipTiersSection t={t as typeof content.en} lang={lang} />
         <FAQSection t={t as typeof content.en} lang={lang} />
         {/* <FinalCTASection t={t as typeof content.en} /> */}
-        <WhyCarebyExistsSection t={t as typeof content.en} />
+        <WhyCarebyExistsSection t={t as typeof content.en} lang={lang} />
         <Footer setCurrentPage={setCurrentPage} t={t as typeof content.en} />
       </div>
 
@@ -1239,21 +1339,14 @@ function App() {
 }
 
 
-function LanguageSwitcher({ lang, setLang }: { lang: 'en' | 'zh' | 'zh-TW', setLang: (lang: 'en' | 'zh' | 'zh-TW') => void }) {
-  const getNextLang = () => {
-    if (lang === 'en') return 'zh'
-    if (lang === 'zh') return 'zh-TW'
-    return 'en'
-  }
-
-  const getLangLabel = () => {
-    if (lang === 'en') return '简体中文'
-    if (lang === 'zh') return '繁體中文'
-    return 'English'
-  }
-
+function LanguageSwitcher({ lang, setLang }: { lang: 'en' | 'zh' | 'zh-TW'; setLang: (lang: 'en' | 'zh' | 'zh-TW') => void }) {
+  const opts: { id: 'en' | 'zh' | 'zh-TW'; label: string }[] = [
+    { id: 'en', label: 'EN' },
+    { id: 'zh', label: '简体' },
+    { id: 'zh-TW', label: '繁體' },
+  ]
   return (
-    <div className="absolute right-6 top-6 z-50 flex items-center gap-3">
+    <div className="absolute right-6 top-6 z-50 flex flex-wrap items-center justify-end gap-2 sm:gap-3">
       {!contactInfo.phone.includes('XXX') && (
         <a
           href={`tel:+1${contactInfo.phone.replace(/\D/g, '')}`}
@@ -1265,12 +1358,24 @@ function LanguageSwitcher({ lang, setLang }: { lang: 'en' | 'zh' | 'zh-TW', setL
           </svg>
         </a>
       )}
-      <button
-        onClick={() => setLang(getNextLang())}
-        className="rounded-full border border-white/30 bg-white/10 px-4 py-2 text-sm font-medium text-white backdrop-blur-md transition hover:bg-white/20 hover:border-white/50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+      <div
+        className="flex items-center gap-0.5 rounded-full border border-white/30 bg-white/10 p-1 backdrop-blur-md"
+        role="group"
+        aria-label="Language"
       >
-        {getLangLabel()}
-      </button>
+        {opts.map((o) => (
+          <button
+            key={o.id}
+            type="button"
+            onClick={() => setLang(o.id)}
+            className={`rounded-full px-2.5 py-1.5 text-xs font-semibold transition sm:px-3 ${
+              lang === o.id ? 'bg-white/25 text-white' : 'text-white/70 hover:bg-white/10 hover:text-white'
+            }`}
+          >
+            {o.label}
+          </button>
+        ))}
+      </div>
     </div>
   )
 }
@@ -1280,11 +1385,11 @@ function StickyNav({ lang, setLang }: { lang: 'en' | 'zh' | 'zh-TW'; setLang: (l
   const [mobileOpen, setMobileOpen] = useState(false)
   const isEn = lang === 'en' || lang === 'zh-TW'
 
-  const getNextLang = () => {
-    if (lang === 'en') return 'zh'
-    if (lang === 'zh') return 'zh-TW'
-    return 'en'
-  }
+  const langOpts: { id: 'en' | 'zh' | 'zh-TW'; label: string }[] = [
+    { id: 'en', label: 'EN' },
+    { id: 'zh', label: '简体' },
+    { id: 'zh-TW', label: '繁體' },
+  ]
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60)
@@ -1292,15 +1397,19 @@ function StickyNav({ lang, setLang }: { lang: 'en' | 'zh' | 'zh-TW'; setLang: (l
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  const links = isEn ? [
-    { label: 'How It Works', href: '#how-it-works' },
-    { label: 'Plans & Pricing', href: 'https://app.getcareby.ca/' },
-    { label: 'FAQs', href: '#faq' },
-  ] : [
-    { label: '服务介绍', href: '#how-it-works' },
-    { label: '方案与价格', href: 'https://app.getcareby.ca/' },
-    { label: '常见问题', href: '#faq' },
-  ]
+  const links = isEn
+    ? [
+        { label: 'How It Works', href: '#how-it-works' },
+        { label: 'Plans & Pricing', href: 'https://app.getcareby.ca/' },
+        { label: 'FAQs', href: '#faq' },
+        { label: 'GoToDoctor Login', href: 'https://gotodoctor.ca/careby/', partnerIcon: true as const },
+      ]
+    : [
+        { label: '服务介绍', href: '#how-it-works' },
+        { label: '方案与价格', href: 'https://app.getcareby.ca/' },
+        { label: '常见问题', href: '#faq' },
+        { label: 'GoToDoctor 登录', href: 'https://gotodoctor.ca/careby/', partnerIcon: true as const },
+      ]
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     if (!href.startsWith('#')) return
@@ -1321,58 +1430,79 @@ function StickyNav({ lang, setLang }: { lang: 'en' | 'zh' | 'zh-TW'; setLang: (l
       transition={{ duration: 0.5, delay: 0.3 }}
     >
       <div className="mx-auto max-w-6xl w-full flex flex-col items-stretch min-w-0">
-      <div className={`w-full rounded-full backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.25)] pl-4 pr-2 py-2.5 sm:pl-5 sm:pr-3 sm:py-3 flex items-center justify-between transition-all duration-500 min-w-0 ${
+      <div className={`w-full rounded-full backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.25)] pl-4 pr-2 py-2.5 sm:pl-5 sm:pr-3 sm:py-3 flex items-center transition-all duration-500 min-w-0 ${
         scrolled
           ? 'bg-[#0f172a]/75'
           : 'bg-white/10'
       }`}>
-        {/* Left: Logo */}
-        <a href="#hero" onClick={(e) => handleClick(e, '#hero')} className="shrink-0 flex items-center justify-center min-w-0">
-          <img
-            src={lang === 'en' ? '/carebylogo_white.svg' : '/logo-zh.png'}
-            alt="Careby"
-            className="h-7 w-auto sm:h-8 object-center"
-          />
-        </a>
-
-        {/* Center: Nav links */}
-        <div className="hidden md:flex flex-1 justify-center items-center gap-1 min-w-0 mx-4 self-center">
-          {links.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              onClick={(e) => handleClick(e, link.href)}
-              className="px-4 py-2 text-[14px] font-medium text-white/70 hover:text-white rounded-full hover:bg-white/10 transition-all whitespace-nowrap"
-            >
-              {link.label}
-            </a>
-          ))}
+        {/* Logo (fixed width) | nav (fills middle, nowrap) | lang + CTA */}
+        <div className="flex min-w-0 flex-1 items-center pr-2 md:flex-initial md:pr-3">
+          <a href="#hero" onClick={(e) => handleClick(e, '#hero')} className="flex min-w-0 items-center">
+            <img
+              src={lang === 'en' ? '/carebylogo_white.svg' : '/logo-zh.png'}
+              alt="Careby"
+              className="h-7 w-auto max-w-[min(46vw,140px)] object-contain object-left sm:h-8 sm:max-w-[160px]"
+            />
+          </a>
         </div>
 
-        {/* Right: 桌面 CTA；手机 语言+电话+汉堡（在汉堡左侧） */}
-        <div className="hidden md:flex items-center justify-center gap-2 shrink-0 self-center">
+        <div className="hidden min-w-0 flex-1 items-center justify-center md:flex">
+          <nav
+            className="flex max-w-full items-center justify-center gap-x-1 gap-y-0 overflow-x-auto py-0.5 [-ms-overflow-style:none] [scrollbar-width:none] lg:gap-x-4 [&::-webkit-scrollbar]:hidden"
+            aria-label="Primary"
+          >
+            {links.map((link) => (
+              <a
+                key={link.label + link.href}
+                href={link.href}
+                target={link.href.startsWith('http') ? '_blank' : undefined}
+                rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                onClick={(e) => handleClick(e, link.href)}
+                className="inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full px-2.5 py-2 text-[12px] font-medium leading-none text-white/70 transition-all hover:bg-white/10 hover:text-white sm:px-3 sm:text-[13px] lg:px-4 lg:text-[14px]"
+              >
+                {'partnerIcon' in link && link.partnerIcon ? (
+                  <img
+                    src="/partners/gotodoctor-favicon.ico"
+                    alt=""
+                    width={14}
+                    height={14}
+                    className="h-3.5 w-3.5 shrink-0 rounded-[2px] object-contain opacity-90"
+                  />
+                ) : null}
+                {link.label}
+              </a>
+            ))}
+          </nav>
+        </div>
+
+        <div className="hidden shrink-0 items-center gap-2 md:flex">
+          <div className="flex items-center gap-0.5 rounded-full border border-white/15 bg-white/5 p-0.5" role="group" aria-label="Language">
+            {langOpts.map((o) => (
+              <button
+                key={o.id}
+                type="button"
+                onClick={() => setLang(o.id)}
+                className={`rounded-full px-2 py-1 text-[10px] font-semibold transition sm:px-2.5 sm:text-[11px] ${
+                  lang === o.id ? 'bg-white/20 text-white' : 'text-white/55 hover:bg-white/10 hover:text-white'
+                }`}
+              >
+                {o.label}
+              </button>
+            ))}
+          </div>
           <a
             href="https://app.getcareby.ca/"
-            className="inline-flex items-center bg-primary hover:bg-primary/90 text-white text-[14px] font-semibold px-6 py-2.5 rounded-full transition-all hover:shadow-[0_4px_16px_rgba(42,139,98,0.4)]"
+            className="inline-flex shrink-0 items-center rounded-full bg-primary px-5 py-2.5 text-[13px] font-semibold text-white transition-all hover:bg-primary/90 hover:shadow-[0_4px_16px_rgba(42,139,98,0.4)] sm:px-6 sm:text-[14px]"
           >
             {isEn ? 'Get Started' : '立即开始'}
           </a>
         </div>
 
-        <div className="md:hidden flex items-center justify-center gap-2 shrink-0 self-center">
-          <button
-            onClick={() => setLang(getNextLang())}
-            className="p-2.5 text-white/80 hover:text-white rounded-full hover:bg-white/10 transition min-touch"
-            aria-label={lang === 'en' ? 'Switch to 简体中文' : lang === 'zh' ? 'Switch to 繁體中文' : 'Switch to English'}
-          >
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
-            </svg>
-          </button>
+        <div className="ml-auto flex shrink-0 items-center justify-end gap-0.5 sm:gap-1 md:hidden">
           {!contactInfo.phone.includes('XXX') && (
             <a
               href={`tel:+1${contactInfo.phone.replace(/\D/g, '')}`}
-              className="p-2.5 text-white/80 hover:text-white rounded-full hover:bg-white/10 transition"
+              className="p-2.5 text-white/80 hover:text-white rounded-full hover:bg-white/10 transition min-h-[44px] min-w-[44px] flex items-center justify-center"
               aria-label="Call"
             >
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -1381,8 +1511,12 @@ function StickyNav({ lang, setLang }: { lang: 'en' | 'zh' | 'zh-TW'; setLang: (l
             </a>
           )}
           <button
+            type="button"
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="p-2 text-white/70 hover:text-white transition"
+            className="p-2.5 text-white/70 hover:text-white transition min-h-[44px] min-w-[44px] flex items-center justify-center rounded-full hover:bg-white/10"
+            aria-expanded={mobileOpen}
+            aria-controls="mobile-nav-menu"
+            aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
           >
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               {mobileOpen
@@ -1397,41 +1531,67 @@ function StickyNav({ lang, setLang }: { lang: 'en' | 'zh' | 'zh-TW'; setLang: (l
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
-            className="md:hidden mt-2 rounded-2xl bg-[#0f172a]/80 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.3)] p-4 flex flex-col gap-1"
-            initial={{ opacity: 0, y: -10, scale: 0.95 }}
+            id="mobile-nav-menu"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Main navigation"
+            className={`md:hidden mt-2 max-h-[min(72vh,100dvh-5.5rem)] overflow-y-auto overscroll-contain rounded-2xl border backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.25)] p-3 sm:p-4 flex flex-col gap-0.5 transition-all duration-500 ${
+              scrolled
+                ? 'border-white/10 bg-[#0f172a]/75'
+                : 'border-white/20 bg-white/10'
+            }`}
+            initial={{ opacity: 0, y: -10, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -10, scale: 0.95 }}
+            exit={{ opacity: 0, y: -10, scale: 0.98 }}
             transition={{ duration: 0.2 }}
           >
             {links.map((link) => (
               <a
-                key={link.href}
+                key={link.label + link.href}
                 href={link.href}
-                onClick={(e) => handleClick(e, link.href)}
-                className="px-4 py-3 text-sm font-medium text-white/70 hover:text-white hover:bg-white/10 rounded-xl transition-all min-touch"
+                target={link.href.startsWith('http') ? '_blank' : undefined}
+                rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                onClick={(e) => {
+                  handleClick(e, link.href)
+                  setMobileOpen(false)
+                }}
+                className="flex min-touch items-center gap-2 rounded-xl px-4 py-3.5 text-left text-sm font-medium leading-snug text-white/80 transition-all hover:bg-white/10 hover:text-white break-words"
               >
+                {'partnerIcon' in link && link.partnerIcon ? (
+                  <img
+                    src="/partners/gotodoctor-favicon.ico"
+                    alt=""
+                    width={14}
+                    height={14}
+                    className="h-3.5 w-3.5 shrink-0 rounded-[2px] object-contain opacity-90"
+                  />
+                ) : null}
                 {link.label}
               </a>
             ))}
-            <div className="flex items-center gap-2 pt-2 mt-2 border-t border-white/10">
-              <button
-                onClick={() => { setLang(getNextLang()); setMobileOpen(false); }}
-                className="p-2.5 text-white/70 hover:text-white rounded-xl bg-white/10 min-touch"
-                aria-label={lang === 'en' ? 'Switch to 简体中文' : lang === 'zh' ? 'Switch to 繁體中文' : 'Switch to English'}
-              >
-                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
-                </svg>
-              </button>
-              {!contactInfo.phone.includes('XXX') && (
-                <a href={`tel:+1${contactInfo.phone.replace(/\D/g, '')}`} className="p-2.5 text-white/70 rounded-xl bg-white/10" aria-label="Call">
-                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
-                </a>
-              )}
+            <div className="mt-2 border-t border-white/10 pt-3">
+              <p className="mb-2 px-1 text-[10px] font-semibold uppercase tracking-wider text-white/40">Language</p>
+              <div className="flex flex-wrap gap-2">
+                {langOpts.map((o) => (
+                  <button
+                    key={o.id}
+                    type="button"
+                    onClick={() => {
+                      setLang(o.id)
+                    }}
+                    className={`min-touch rounded-full px-4 py-2 text-xs font-semibold ${
+                      lang === o.id ? 'bg-white/20 text-white' : 'bg-white/10 text-white/75'
+                    }`}
+                  >
+                    {o.label}
+                  </button>
+                ))}
+              </div>
             </div>
             <a
               href="https://app.getcareby.ca/"
-              className="flex items-center justify-center bg-primary text-white text-sm font-semibold px-5 py-2.5 rounded-xl transition-all mt-1"
+              onClick={() => setMobileOpen(false)}
+              className="flex min-touch items-center justify-center bg-primary text-white text-sm font-semibold px-5 py-3 rounded-xl transition-all mt-2"
             >
               {isEn ? 'Get Started' : '立即开始'}
             </a>
@@ -1918,7 +2078,9 @@ function HeroSection({ t, lang }: { t: typeof content.en, lang: 'en' | 'zh' | 'z
           >
             {lang === 'en' ? (
               <span className="block text-5xl leading-[1.15] sm:text-6xl sm:leading-[1.12] md:text-7xl lg:text-8xl xl:text-9xl">
-                <span>{t.hero.headlinePrefix}</span>
+                <span className="whitespace-nowrap">
+                  Care<span className="mx-0.5 sm:mx-1.5 text-yellow-400">·</span>by
+                </span>
                 {' '}
                 <span className="relative inline-block min-w-[140px] sm:min-w-[220px] md:min-w-[280px] lg:min-w-[320px] align-baseline">
                   <span className="hand-drawn-underline">
@@ -1946,6 +2108,34 @@ function HeroSection({ t, lang }: { t: typeof content.en, lang: 'en' | 'zh' | 'z
               <span className="font-medium text-white/95">{(t.hero as { subheadlineStrong: string }).subheadlineStrong}</span>
             </p>
           )}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-xl pt-1">
+            <button
+              type="button"
+              onClick={() => { window.location.hash = 'careby-health' }}
+              className="text-left rounded-2xl bg-[#0c1a33]/28 px-5 py-4 shadow-[0_8px_32px_rgba(0,0,0,0.18),inset_0_1px_0_0_rgba(255,255,255,0.05)] backdrop-blur-xl backdrop-saturate-150 transition hover:bg-[#0c1a33]/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-white/30"
+            >
+              <span className="text-[11px] font-bold uppercase tracking-wider text-yellow-400">
+                {lang === 'en' ? 'Careby Health' : lang === 'zh' ? '康伴 健康' : '康伴 健康'}
+              </span>
+              <p className="mt-1 text-sm font-medium text-white">
+                {lang === 'en' ? 'Diagnostics & doctor-reviewed panels' : '诊断与医生审核检测方案'}
+              </p>
+              <span className="mt-2 inline-block text-xs text-emerald-300/90">{lang === 'en' ? 'View details →' : '查看详情 →'}</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => { window.location.hash = 'careby-home' }}
+              className="text-left rounded-2xl bg-[#0c1a33]/28 px-5 py-4 shadow-[0_8px_32px_rgba(0,0,0,0.18),inset_0_1px_0_0_rgba(255,255,255,0.05)] backdrop-blur-xl backdrop-saturate-150 transition hover:bg-[#0c1a33]/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-white/30"
+            >
+              <span className="text-[11px] font-bold uppercase tracking-wider text-yellow-400">
+                {lang === 'en' ? 'Careby Home' : lang === 'zh' ? '康伴 居家' : '康伴 居家'}
+              </span>
+              <p className="mt-1 text-sm font-medium text-white">
+                {lang === 'en' ? 'In-home care & PSW matching' : '上门护理与护工匹配'}
+              </p>
+              <span className="mt-2 inline-block text-xs text-emerald-300/90">{lang === 'en' ? 'View details →' : '查看详情 →'}</span>
+            </button>
+          </div>
           {(t.hero as Record<string, unknown>).secondaryConsult != null && (
             <div className="flex flex-wrap items-center gap-3 sm:gap-4">
               <a href="https://app.getcareby.ca/" className="inline-flex items-center gap-2 text-white hover:text-white/90 text-sm transition">
@@ -3356,8 +3546,40 @@ function CarebyMeaningSection({ t }: { t: typeof content.en }) {
   )
 }
 
-function WhyCarebyExistsSection({ t }: { t: typeof content.en }) {
+function WhyCarebyExistsSection({
+  t,
+  lang,
+}: {
+  t: typeof content.en
+  lang: 'en' | 'zh' | 'zh-TW'
+}) {
   const d = t.whyCarebyExists
+  const g = d.guarantee as typeof d.guarantee & {
+    contactTitle: string
+    contactHint: string
+    namePlaceholder: string
+    emailPlaceholder: string
+    messagePlaceholder: string
+    contactSubmit: string
+  }
+  const [contactName, setContactName] = useState('')
+  const [contactEmail, setContactEmail] = useState('')
+  const [contactMessage, setContactMessage] = useState('')
+
+  const onContactSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    const name = contactName.trim()
+    const email = contactEmail.trim()
+    const message = contactMessage.trim()
+    if (!email || !message) return
+    const sub = lang === 'en' ? 'Careby website inquiry' : 'Careby 网站咨询'
+    const body =
+      lang === 'en'
+        ? `Name: ${name || '—'}\nEmail: ${email}\n\n${message}`
+        : `姓名：${name || '—'}\n邮箱：${email}\n\n${message}`
+    window.location.href = `mailto:hello@getcareby.ca?subject=${encodeURIComponent(sub)}&body=${encodeURIComponent(body)}`
+  }
+
   return (
     <section className="relative w-full overflow-hidden bg-gradient-to-br from-teal-900 via-emerald-900 to-slate-900 px-6 py-24 lg:py-28 sm:px-10 md:px-16 lg:px-24" aria-labelledby="why-careby-heading">
       {/* Animated Background Effects */}
@@ -3448,28 +3670,71 @@ function WhyCarebyExistsSection({ t }: { t: typeof content.en }) {
         </motion.div>
 
         <motion.div
-          className="rounded-2xl border border-primary/20 bg-primary/[0.05] p-6 sm:p-8 flex flex-col sm:flex-row items-center gap-6"
+          className="flex flex-col gap-8 rounded-2xl border border-primary/20 bg-primary/[0.05] p-6 sm:p-8"
           initial="hidden"
           whileInView="visible"
           variants={fadeUp}
           viewport={{ once: true, amount: 0.3 }}
         >
-          <div className="shrink-0" aria-hidden>
-            <svg viewBox="0 0 48 48" fill="none" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-12 h-12">
-              <path d="M24 4 6 12v12c0 11.1 7.7 21.5 18 24 10.3-2.5 18-12.9 18-24V12L24 4z" className="stroke-yellow-400" />
-              <path d="M16 24l6 6 10-12" className="stroke-yellow-400" />
-            </svg>
+          <div className="flex flex-col items-center gap-6 sm:flex-row">
+            <div className="shrink-0" aria-hidden>
+              <svg viewBox="0 0 48 48" fill="none" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="h-12 w-12">
+                <path d="M24 4 6 12v12c0 11.1 7.7 21.5 18 24 10.3-2.5 18-12.9 18-24V12L24 4z" className="stroke-yellow-400" />
+                <path d="M16 24l6 6 10-12" className="stroke-yellow-400" />
+              </svg>
+            </div>
+            <div className="flex-1 text-center sm:text-left">
+              <p className="mb-1 text-lg font-bold text-white">{d.guarantee.title}</p>
+              <p className="text-sm leading-relaxed text-white/50">{d.guarantee.body}</p>
+            </div>
+            <a
+              href="https://app.getcareby.ca/"
+              className="inline-flex shrink-0 items-center justify-center rounded-full bg-yellow-400 px-8 py-3 text-sm font-semibold text-slate-900 shadow-lg shadow-yellow-400/50 transition hover:-translate-y-1 hover:bg-yellow-300 hover:shadow-yellow-300/60"
+            >
+              {d.guarantee.cta}
+            </a>
           </div>
-          <div className="flex-1 text-center sm:text-left">
-            <p className="text-lg font-bold text-white mb-1">{d.guarantee.title}</p>
-            <p className="text-sm text-white/50 leading-relaxed">{d.guarantee.body}</p>
+
+          <div className="border-t border-primary/20 pt-6">
+            <p className="text-center text-base font-semibold text-white sm:text-left">{g.contactTitle}</p>
+            <p className="mt-1 text-center text-sm text-white/45 sm:text-left">{g.contactHint}</p>
+            <form onSubmit={onContactSubmit} className="mt-5 grid gap-3 sm:grid-cols-2">
+              <input
+                type="text"
+                value={contactName}
+                onChange={(e) => setContactName(e.target.value)}
+                placeholder={g.namePlaceholder}
+                className="rounded-xl border border-white/15 bg-white/[0.07] px-4 py-3 text-sm text-white placeholder:text-white/35 focus:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/25"
+                aria-label={g.namePlaceholder}
+              />
+              <input
+                type="email"
+                required
+                value={contactEmail}
+                onChange={(e) => setContactEmail(e.target.value)}
+                placeholder={g.emailPlaceholder}
+                className="rounded-xl border border-white/15 bg-white/[0.07] px-4 py-3 text-sm text-white placeholder:text-white/35 focus:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/25"
+                aria-label={g.emailPlaceholder}
+              />
+              <textarea
+                required
+                rows={4}
+                value={contactMessage}
+                onChange={(e) => setContactMessage(e.target.value)}
+                placeholder={g.messagePlaceholder}
+                className="sm:col-span-2 min-h-[120px] rounded-xl border border-white/15 bg-white/[0.07] px-4 py-3 text-sm text-white placeholder:text-white/35 focus:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/25"
+                aria-label={g.messagePlaceholder}
+              />
+              <div className="sm:col-span-2 flex justify-center sm:justify-start">
+                <button
+                  type="submit"
+                  className="rounded-full bg-white/90 px-8 py-3 text-sm font-semibold text-slate-900 transition hover:bg-white"
+                >
+                  {g.contactSubmit}
+                </button>
+              </div>
+            </form>
           </div>
-          <a
-            href="https://app.getcareby.ca/"
-            className="shrink-0 inline-flex items-center justify-center rounded-full bg-yellow-400 px-8 py-3 text-sm font-semibold text-slate-900 shadow-lg shadow-yellow-400/50 transition hover:-translate-y-1 hover:bg-yellow-300 hover:shadow-yellow-300/60"
-          >
-            {d.guarantee.cta}
-          </a>
         </motion.div>
       </div>
     </section>
@@ -4041,6 +4306,67 @@ function _TechnologySection({ t, lang, onHowItWorks }: { t: typeof content.en, l
   )
 }
 
+function TeamSection({ t }: { t: typeof content.en }) {
+  if (!('team' in t) || !t.team) return null
+  const tm = t.team as {
+    sectionTitle: string
+    title: string
+    subtitle: string
+    members: { name: string; role: string; bio: string; image: string }[]
+  }
+  return (
+    <section
+      id="team"
+      className="bg-white px-6 py-24 lg:py-28 sm:px-10 md:px-16 lg:px-24"
+      aria-labelledby="team-heading"
+    >
+      <div className="mx-auto max-w-6xl">
+        <motion.div
+          className="text-center mb-14 lg:mb-16"
+          initial="hidden"
+          whileInView="visible"
+          variants={fadeUp}
+          viewport={{ once: true, amount: 0.3 }}
+        >
+          <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-primary mb-4">{tm.sectionTitle}</p>
+          <h2 id="team-heading" className="text-3xl font-bold text-midnight sm:text-4xl lg:text-5xl leading-tight">
+            {tm.title}
+          </h2>
+          <p className="mx-auto mt-4 max-w-2xl text-[15px] text-slate-500 leading-relaxed">{tm.subtitle}</p>
+        </motion.div>
+        <div className="flex w-full flex-wrap">
+          {tm.members.map((member, i) => (
+            <motion.div
+              key={member.name}
+              className={`flex flex-1 basis-full flex-col items-center px-6 py-8 text-center sm:basis-1/2 sm:px-8 lg:basis-1/3 lg:py-10 ${
+                i === 0
+                  ? ''
+                  : i % 2 === 1
+                    ? 'border-l border-slate-200'
+                    : 'border-slate-200 lg:border-l'
+              }`}
+              initial="hidden"
+              whileInView="visible"
+              variants={fadeUp}
+              viewport={{ once: true, amount: 0.25 }}
+              transition={{ delay: i * 0.08 }}
+            >
+              <img
+                src={member.image}
+                alt=""
+                className="mx-auto h-24 w-24 rounded-full object-cover"
+              />
+              <h3 className="mt-5 text-lg font-semibold text-midnight">{member.name}</h3>
+              <p className="text-sm font-medium text-primary">{member.role}</p>
+              <p className="mt-3 max-w-xs text-sm leading-relaxed text-slate-600 sm:max-w-sm">{member.bio}</p>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
 function PartnersSection({ t }: { t: typeof content.en }) {
   return (
     <section
@@ -4088,7 +4414,7 @@ function PartnersSection({ t }: { t: typeof content.en }) {
       </motion.div>
 
       <motion.div
-        className="mt-12 mx-auto max-w-6xl grid grid-cols-2 lg:grid-cols-5"
+        className="mx-auto mt-12 flex w-full max-w-6xl flex-wrap"
         initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.3 }}
@@ -4097,20 +4423,24 @@ function PartnersSection({ t }: { t: typeof content.en }) {
         {partners.map((partner, index) => (
           <motion.div
             key={partner.name}
-            className={`flex flex-col items-center justify-center gap-3 py-8 px-6 text-center ${
-              index < partners.length - 1 ? 'border-r border-slate-200' : ''
-            } ${index < partners.length - 2 ? 'max-lg:border-b max-lg:border-slate-200' : ''} ${index % 2 === 0 ? 'max-lg:border-r' : 'max-lg:border-r-0'}`}
+            className={`flex min-h-[120px] flex-1 basis-1/2 flex-col items-center justify-center gap-3 px-6 py-8 text-center sm:px-10 lg:min-h-[132px] lg:basis-1/4 lg:px-8 ${
+              index === 0
+                ? ''
+                : index % 2 === 1
+                  ? 'border-l border-slate-200'
+                  : 'lg:border-l lg:border-slate-200'
+            }`}
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true, amount: 0.4 }}
             transition={{ duration: 0.5, ease: 'easeOut', delay: index * 0.1 }}
           >
             {partner.url ? (
-              <a href={partner.url} target="_blank" rel="noopener noreferrer" className="focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded">
+              <a href={partner.url} target="_blank" rel="noopener noreferrer" className="flex w-full max-w-[200px] flex-1 items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded">
                 <img 
                   src={partner.logo} 
                   alt={`${partner.name} Logo - Careby Healthcare Partner`}
-                  className="h-14 w-auto object-contain mix-blend-multiply hover:opacity-90 transition"
+                  className="max-h-14 w-full max-w-[180px] object-contain object-center mix-blend-multiply transition hover:opacity-90"
                   loading="eager"
                   decoding="async"
                   onError={(e) => {
@@ -4125,7 +4455,7 @@ function PartnersSection({ t }: { t: typeof content.en }) {
               <img 
                 src={partner.logo} 
                 alt={`${partner.name} Logo - Careby Healthcare Partner`}
-                className="h-14 w-auto object-contain mix-blend-multiply"
+                className="max-h-14 w-full max-w-[180px] object-contain object-center mix-blend-multiply"
                 loading="eager"
                 decoding="async"
                 onError={(e) => {
@@ -4254,7 +4584,7 @@ function PlanDetailModal({ plan, onClose }: { plan: any; onClose: () => void }) 
               <h3 className="text-2xl font-bold text-midnight">{plan.title}</h3>
             </div>
             <div className="flex items-center gap-4">
-              <p className="text-2xl font-light text-midnight">{plan.price}<sub className="text-sm text-slate-400">{plan.period}</sub></p>
+              <p className="text-2xl font-extrabold text-primary">{plan.price}<sub className="text-sm font-semibold text-slate-500">{plan.period}</sub></p>
               <button onClick={onClose} className="rounded-full p-2 hover:bg-slate-100 transition">
                 <svg className="w-5 h-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
               </button>
@@ -4310,164 +4640,7 @@ function MembershipTiersSection({ t, lang }: { t: typeof content.en, lang: 'en' 
 
   const isEn = lang === 'en' || lang === 'zh-TW'
 
-  const heroPlans: Record<string, any> = {
-    diagnostics: {
-      badge: isEn ? 'Tier 1 · Ages 25–45 · Entry Product' : 'Tier 1 · 25–45岁 · 入门产品',
-      title: 'The Essentialist',
-      tagline: isEn
-        ? '~45 biomarkers. The lowest-friction entry point. A complete, doctor-reviewed blood panel built specifically for adults 25–45 — every marker chosen for clinical relevance.'
-        : '约45项生物标志物。专为25–45岁成人设计的完整医生审核血检方案——每项指标均具临床意义。',
-      features: isEn ? [
-        { icon: '✓', text: 'CBC, metabolic panel, heart health (incl. ApoB), organ function, thyroid' },
-        { icon: '★', text: 'Hepatitis B panel — HBV prevalence is 10× higher in Chinese-Canadian adults', highlight: true },
-        { icon: '✓', text: 'Results through AI-powered Longevity platform with biological age tracking' },
-        { icon: '✓', text: 'Bilingual NP consultation — Mandarin, Cantonese, or English' },
-        { icon: '✓', text: 'Doctor-reviewed results + personalized action plan' },
-      ] : [
-        { icon: '✓', text: '血常规、代谢、心血管（含ApoB）、器官功能、甲状腺' },
-        { icon: '★', text: '乙肝筛查——华裔HBV感染率高10倍', highlight: true },
-        { icon: '✓', text: 'AI平台解读结果，含生物年龄追踪' },
-        { icon: '✓', text: '中英粤语护理师咨询' },
-        { icon: '✓', text: '医生审核结果 + 个性化行动方案' },
-      ],
-      priceLabel: isEn ? 'Annual plan' : '年度方案',
-      price: '399',
-      pricePeriod: isEn ? '/yr' : '/年',
-      priceNote: isEn ? '~$33/month · Less than one walk-in visit' : '约$33/月 · 低于一次门诊费用',
-      cta: isEn ? 'Get The Essentialist →' : '获取基础版 →',
-      upgradeNote: isEn ? 'Need more biomarkers? See upgrade tiers below ↓' : '需要更多标志物？查看下方升级 ↓',
-      detailSections: isEn ? [
-        { title: 'Complete Blood Count (CBC)', items: ['Red blood cells, white blood cells, hemoglobin, hematocrit, platelets', 'MCV, MCH, MCHC, RDW — detailed red cell indices', 'Baseline picture of immune health, anemia risk, infection response, and blood oxygen capacity'] },
-        { title: 'Metabolic Panel', items: ['Glucose (fasting), HbA1c, insulin', 'Blood sugar regulation and diabetes risk — HbA1c catches 3-month average glucose trends your doctor\'s annual visit misses'] },
-        { title: 'Heart Health', items: ['ApoB — superior cardiovascular risk marker; most panels don\'t include it', 'LDL cholesterol, HDL cholesterol, total cholesterol, triglycerides, non-HDL cholesterol', 'Cardiovascular risk profiling beyond the standard lipid panel'] },
-        { title: 'Organ Function', items: ['Kidney: Creatinine, eGFR', 'Liver: ALT, AST, GGT, bilirubin, albumin, total protein'] },
-        { title: 'Thyroid', items: ['TSH — thyroid stimulating hormone, foundational screen for hypo/hyperthyroidism'] },
-        { title: 'Iron & Nutrients', items: ['Ferritin, serum iron, TIBC, Vitamin D (25-OH)'] },
-        { title: 'Inflammation', items: ['CRP (C-reactive protein) — general inflammation marker'] },
-        { title: 'Infectious Disease', items: ['Hepatitis B surface antigen (HBsAg)', 'Hepatitis B surface antibody (anti-HBs)', 'Hepatitis B core antibody (anti-HBc)'] },
-        { title: 'Included with Every Tier', items: ['Blood draw', 'Doctor-reviewed — physician reads your full panel, not just flags abnormals', 'Comprehensive lab result visualization and interpretation through an integrated AI platform', 'Built-in AI insights to help translate complex lab data into actionable health recommendations', 'Bilingual NP consultation — results explained in Mandarin, Cantonese, or English', 'Personalized action plan — tells you what to do next, not just what the numbers are'] },
-      ] : [
-        { title: '全血细胞计数 (CBC)', items: ['红细胞、白细胞、血红蛋白、红细胞压积、血小板', 'MCV、MCH、MCHC、RDW — 红细胞指数', '免疫健康、贫血风险、感染反应基线'] },
-        { title: '代谢面板', items: ['空腹血糖、HbA1c、胰岛素', '血糖调节和糖尿病风险评估'] },
-        { title: '心脏健康', items: ['ApoB — 大多数检查不包含的优越心血管风险标志物', 'LDL、HDL、总胆固醇、甘油三酯、非HDL胆固醇'] },
-        { title: '器官功能', items: ['肾脏: 肌酐、eGFR', '肝脏: ALT、AST、GGT、胆红素、白蛋白、总蛋白'] },
-        { title: '甲状腺', items: ['TSH — 甲状腺功能基础筛查'] },
-        { title: '铁和营养素', items: ['铁蛋白、血清铁、TIBC、维生素D (25-OH)'] },
-        { title: '炎症', items: ['CRP（C-反应蛋白）'] },
-        { title: '传染病', items: ['乙肝表面抗原 (HBsAg)', '乙肝表面抗体 (anti-HBs)', '乙肝核心抗体 (anti-HBc)'] },
-        { title: '每层级均含', items: ['上门采血', '医生全面审核', 'AI平台可视化解读', '双语护理师咨询', '个性化行动方案'] },
-      ],
-    },
-    family: {
-      badge: isEn ? 'Best Value — Up to 6 People' : '超值 — 最多6人',
-      title: 'Careby Complete — Family Health Hub',
-      tagline: isEn
-        ? 'One plan that coordinates your whole household\'s health. Blood diagnostics for the seniors. Virtual doctor access for the adults. Service credits already loaded. One coordinator who knows everyone.'
-        : '一个方案协调全家健康。长者血检、成人远程医生、服务积分已加载。一个了解所有人的协调员。',
-      features: isEn ? [
-        { icon: '✓', text: '100-biomarker blood panels 2×/year for both seniors' },
-        { icon: '✓', text: 'GoToDoctor unlimited telehealth for up to 4 members' },
-        { icon: '✓', text: '4 Careby Home service credits included' },
-        { icon: '✓', text: 'Dedicated bilingual care coordinator' },
-        { icon: '✓', text: 'Monthly family health summary report' },
-        { icon: '✓', text: 'Priority booking across all Careby services' },
-      ] : [
-        { icon: '✓', text: '两位长者每年2次100项生物标志物血检' },
-        { icon: '✓', text: '4位成员无限次GoToDoctor远程医生' },
-        { icon: '✓', text: '含4次康伴居家服务积分' },
-        { icon: '✓', text: '专属双语护理协调员' },
-        { icon: '✓', text: '每月家庭健康摘要报告' },
-        { icon: '✓', text: '所有康伴服务优先预约' },
-      ],
-      priceLabel: isEn ? 'Annual plan' : '年度方案',
-      price: '2,499',
-      pricePeriod: isEn ? '/yr' : '/年',
-      priceNote: isEn ? 'Up to 6 people: 2 seniors + 2 adults + 2 kids' : '最多6人：2位长者 + 2位成人 + 2位儿童',
-      cta: isEn ? 'Get Family Health Hub →' : '获取家庭中心 →',
-      detailSections: isEn ? [
-        { title: 'What\'s Included', items: [
-          '100-biomarker blood panels 2×/year for both seniors',
-          'GoToDoctor unlimited telehealth for up to 4 members',
-          '4 Careby Home service credits included',
-          'Dedicated bilingual care coordinator',
-          'Monthly family health summary report',
-          'Priority booking across all Careby services',
-        ]},
-      ] : [
-        { title: '包含内容', items: ['两位长者每年2次100项血检', '4位成员无限远程医生', '含4次服务积分', '专属双语协调员', '每月健康摘要', '优先预约'] },
-      ],
-    },
-    home: {
-      badge: isEn ? 'Monthly Plan · Most Popular' : '月度计划 · 最受欢迎',
-      title: 'Independent Living',
-      tagline: isEn
-        ? 'Built for seniors who want to stay at home — safely, comfortably, and with family peace of mind. Your parent gets consistent, vetted care from someone who speaks their language and knows their history.'
-        : '专为希望安全舒适居家的长者设计。固定的、经过审核的护理人员，讲他们的语言，了解他们的历史。',
-      features: isEn ? [
-        { icon: '✓', text: 'Dedicated bilingual PSW — same caregiver, consistent visits' },
-        { icon: '✓', text: '12 Careby Home credits per month, usable across any home service' },
-        { icon: '✓', text: 'Benefits navigation — we find every government & insurance benefit' },
-        { icon: '✓', text: 'GoToDoctor virtual physician access for urgent health concerns' },
-        { icon: '✓', text: 'Cultural and language matching + replacement guarantee' },
-      ] : [
-        { icon: '✓', text: '专属双语护理员——固定护工、持续上门' },
-        { icon: '✓', text: '每月12次服务积分，适用于任何居家服务' },
-        { icon: '✓', text: '福利导航——找到所有政府和保险福利' },
-        { icon: '✓', text: 'GoToDoctor虚拟医生' },
-        { icon: '✓', text: '文化语言匹配 + 替换保证' },
-      ],
-      priceLabel: isEn ? 'Monthly plan' : '月度方案',
-      price: '1,499',
-      pricePeriod: isEn ? '/mo' : '/月',
-      priceNote: isEn ? '12 credits/month · Best for seniors living at home' : '12积分/月 · 适合居家长者',
-      cta: isEn ? 'Get Independent Living →' : '获取独立生活 →',
-      detailSections: isEn ? [
-        { title: 'What\'s Included', items: [
-          'Dedicated bilingual PSW — same caregiver, consistent visits',
-          '12 Careby Home credits per month, usable across any home service',
-          'Benefits navigation — we find and activate every government and insurance benefit your parent is entitled to',
-          'GoToDoctor virtual physician access — rapid consultations for urgent health concerns, helping reduce specialist referral wait times',
-          'Cultural and language matching — Mandarin, Cantonese, English',
-          'Replacement guarantee',
-        ]},
-      ] : [
-        { title: '包含内容', items: ['专属双语护理员', '每月12次积分', '福利导航', 'GoToDoctor虚拟医生', '文化语言匹配', '替换保证'] },
-      ],
-    },
-    corporate: {
-      badge: isEn ? 'Enhanced Tier · 201+ Employees' : '增强版 · 201+员工',
-      title: 'Workforce Wellness+',
-      tagline: isEn
-        ? 'For employers who understand that a sick employee spends hours scheduling care and waiting. Careby gives your team proactive virtual physician care, reduced time for specialists, and quarterly wellness check-ins.'
-        : '面向理解员工生病需要耗费大量时间排队就诊的雇主。康伴为您的团队提供主动的虚拟医生服务、缩短专科等待时间，以及季度健康检查。',
-      features: isEn ? [
-        { icon: '✓', text: 'GoToDoctor virtual physician access with coordinated specialist referrals' },
-        { icon: '✓', text: 'Quarterly workforce culture coaching and employee check-ins' },
-        { icon: '✓', text: 'Benefits navigation support' },
-        { icon: '✓', text: 'PHIPA compliant' },
-      ] : [
-        { icon: '✓', text: 'GoToDoctor虚拟医生 + 协调专科转介' },
-        { icon: '✓', text: '季度职场文化辅导和员工健康检查' },
-        { icon: '✓', text: '福利导航支持' },
-        { icon: '✓', text: 'PHIPA合规' },
-      ],
-      priceLabel: isEn ? 'Per employee' : '每位员工',
-      price: '12',
-      pricePeriod: isEn ? '/emp/mo' : '/人/月',
-      priceNote: isEn ? 'For organizations with 201+ employees' : '适用于201名以上员工的企业',
-      cta: isEn ? 'Contact Us →' : '联系我们 →',
-      detailSections: isEn ? [
-        { title: 'What\'s Included', items: [
-          'GoToDoctor virtual physician access with coordinated specialist referrals to reduce wait times',
-          'Quarterly workforce culture coaching and employee check-ins',
-          'Benefits navigation support',
-          'PHIPA compliant',
-        ]},
-      ] : [
-        { title: '包含内容', items: ['GoToDoctor虚拟医生+专科转介', '季度职场辅导', '福利导航', 'PHIPA合规'] },
-      ],
-    },
-  }
+  const heroPlans = buildHeroPlans(isEn)
 
   const upgradeTiers: Record<string, any[]> = {
     diagnostics: [
@@ -4713,8 +4886,8 @@ function MembershipTiersSection({ t, lang }: { t: typeof content.en, lang: 'en' 
             </div>
             <div className="relative z-10 text-right">
               <p className="text-[11px] text-white/30 tracking-wide mb-1">{hero.priceLabel}</p>
-              <p className="text-6xl lg:text-7xl font-light text-white leading-none">
-                <sup className="text-2xl align-top">$</sup>{hero.price}<sub className="text-lg text-white/40">{hero.pricePeriod}</sub>
+              <p className="text-6xl lg:text-7xl font-extrabold text-white leading-none">
+                <sup className="text-2xl align-top font-bold">$</sup>{hero.price}<sub className="text-lg font-semibold text-white/50">{hero.pricePeriod}</sub>
               </p>
               <p className="text-xs text-white/30 mt-2 mb-7">{hero.priceNote}</p>
               <div className="flex flex-col items-end gap-2">
@@ -4765,8 +4938,8 @@ function MembershipTiersSection({ t, lang }: { t: typeof content.en, lang: 'en' 
                   <p className={`text-[9.5px] font-bold uppercase tracking-wider mb-2.5 ${card.dark ? 'text-yellow-400' : 'text-primary'}`}>{card.badge}</p>
                   <h4 className={`text-[22px] mb-1 ${card.dark ? 'text-white font-bold' : 'text-midnight font-light'}`}>{card.title}</h4>
                   <p className={`text-[12.5px] leading-relaxed mb-4 ${card.dark ? 'text-white/50' : 'text-slate-500'}`}>{card.tagline}</p>
-                  <p className={`text-3xl font-light mb-1 ${card.dark ? 'text-white' : 'text-midnight'}`}>
-                    {card.price}<sub className={`text-sm ${card.dark ? 'text-white/35' : 'text-slate-400'}`}>{card.period}</sub>
+                  <p className={`text-3xl font-extrabold mb-1 ${card.dark ? 'text-white' : 'text-primary'}`}>
+                    {card.price}<sub className={`text-sm font-semibold ${card.dark ? 'text-white/40' : 'text-slate-600'}`}>{card.period}</sub>
                   </p>
                   {card.saving && (
                     <span className={`inline-block text-[11px] font-semibold px-2 py-0.5 rounded-lg mb-4 ${
@@ -4909,7 +5082,7 @@ function MembershipTiersSection({ t, lang }: { t: typeof content.en, lang: 'en' 
                   }`}
                 >
                   <p className="text-xs font-semibold text-midnight mb-1">{pkg.name}</p>
-                  <p className="text-[22px] font-light text-midnight">{pkg.price}</p>
+                  <p className="text-[22px] font-extrabold text-primary">{pkg.price}</p>
                   <p className="text-[11px] text-slate-400 mt-0.5">{pkg.credits}</p>
                   <p className={`text-[10px] font-bold mt-1 ${pkg.popular ? 'text-primary' : 'text-primary'}`}>{pkg.save}</p>
                 </div>
@@ -5019,6 +5192,72 @@ function FAQSection({ t, lang }: { t: typeof content.en, lang: 'en' | 'zh' | 'zh
   )
 }
 
+function CarebyPlanDetailPage({
+  planKey,
+  isEn,
+  onBack,
+}: {
+  planKey: 'diagnostics' | 'home'
+  isEn: boolean
+  onBack: () => void
+}) {
+  const plan = buildHeroPlans(isEn)[planKey]
+  if (!plan) return null
+  return (
+    <section className="bg-white px-6 py-16 sm:px-10 md:px-16 lg:px-24 pb-24">
+      <div className="mx-auto max-w-3xl space-y-8 text-slate-700">
+        <button
+          type="button"
+          onClick={onBack}
+          className="mb-4 flex items-center gap-2 text-primary transition hover:text-accent"
+        >
+          <span className="material-symbols-outlined">arrow_back</span>
+          <span className="font-semibold">{isEn ? 'Back to Home' : '返回首页'}</span>
+        </button>
+        <p className="text-xs font-bold uppercase tracking-wider text-primary">{plan.badge}</p>
+        <h1 className="text-3xl font-bold text-midnight sm:text-4xl">{plan.title}</h1>
+        <p className="text-lg text-slate-600 leading-relaxed">{plan.tagline}</p>
+        <div className="rounded-2xl border border-slate-200 bg-slate-50/80 p-6">
+          <p className="text-xs uppercase tracking-wide text-slate-500">{plan.priceLabel}</p>
+          <p className="text-4xl font-extrabold text-primary mt-1">
+            <span className="text-2xl align-top">$</span>
+            {plan.price}
+            <span className="text-lg font-semibold text-slate-600">{plan.pricePeriod}</span>
+          </p>
+          <p className="text-sm text-slate-500 mt-2">{plan.priceNote}</p>
+        </div>
+        <div className="space-y-3">
+          <h2 className="text-lg font-semibold text-midnight">{isEn ? 'Highlights' : '要点'}</h2>
+          <ul className="space-y-2">
+            {plan.features.map((f: { icon: string; text: string; highlight?: boolean }, i: number) => (
+              <li key={i} className="flex gap-2 text-sm text-slate-700">
+                <span className="text-primary shrink-0">{f.icon}</span>
+                <span>{f.highlight ? <strong className="font-medium text-midnight">{f.text}</strong> : f.text}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+        {plan.detailSections?.map((sec: { title: string; items: string[] }, si: number) => (
+          <div key={si} className="space-y-2">
+            <h3 className="text-base font-semibold text-midnight">{sec.title}</h3>
+            <ul className="list-disc ml-5 space-y-1 text-sm text-slate-600">
+              {sec.items.map((item, ii) => (
+                <li key={ii}>{item}</li>
+              ))}
+            </ul>
+          </div>
+        ))}
+        <a
+          href="https://app.getcareby.ca/"
+          className="inline-flex items-center justify-center rounded-full bg-primary px-8 py-3 text-sm font-semibold text-white shadow-md transition hover:bg-primary/90"
+        >
+          {plan.cta}
+        </a>
+      </div>
+    </section>
+  )
+}
+
 function PrivacyPolicyPage({ onBack }: { onBack: () => void }) {
   return (
     <>
@@ -5035,209 +5274,242 @@ function PrivacyPolicyPage({ onBack }: { onBack: () => void }) {
             <p className="text-sm font-semibold uppercase tracking-[0.3em] text-primary">Privacy Policy</p>
             <h2 className="mt-4 text-3xl font-semibold text-midnight sm:text-4xl">Privacy Policy</h2>
             <p className="mt-4 text-base">
-              Careby Solutions Inc. (&quot;Careby,&quot; &quot;we,&quot; &quot;our,&quot; or &quot;us&quot;) is committed to protecting your privacy and personal
-              information in accordance with the Personal Information Protection and Electronic Documents Act (PIPEDA) and
-              Canada&apos;s Anti-Spam Legislation (CASL).
+              For the purposes of Ontario&apos;s Personal Health Information Protection Act, 2004, CAREBY SOLUTIONS INC. acts as an agent to Health Information Custodians in relation to any Personal Health Information we handle.
+            </p>
+            <p className="mt-3 text-base">
+              This Privacy Policy, together with all schedules, appendices, attachments, any terms of service, and annexes (the &quot;Agreement&quot;) (all of such documents are accessible via getcareby.ca) and between CAREBY SOLUTIONS INC. and all its affiliates (together &quot;us&quot;, &quot;we&quot;, and/or &quot;our&quot;) and you, the individual or company (&quot;you&quot;, &quot;your&quot;, and/or &quot;User&quot;) governs your use of our website application, accessible at getcareby.ca, and all pages, templates, products, tools, information, protocols, software, and content located therein (the &quot;Service&quot;), and explains how we collect, safeguard, and disclose information that results from your use of the Service. <strong>PLEASE READ THIS POLICY CAREFULLY.</strong>
             </p>
           </div>
         <div className="space-y-6 text-sm leading-relaxed">
           <div>
-            <h3 className="text-lg font-semibold text-midnight">1. Information We Collect</h3>
-            <p>We collect and process the following types of personal information:</p>
-            <p className="mt-3 font-semibold">Personal Identification Information:</p>
-            <ul className="ml-6 list-disc space-y-1">
-              <li>Full name, date of birth, gender</li>
-              <li>Contact details (address, phone number, email address)</li>
-              <li>Government-issued identification numbers (for verification purposes only)</li>
-              <li>Emergency contact information</li>
+            <h3 className="text-lg font-semibold text-midnight">1. Definitions</h3>
+            <p><strong>&quot;Cookies&quot;</strong> are small files stored on your device (computer or mobile device).</p>
+            <p className="mt-2"><strong>&quot;Data Controller&quot;</strong> means a natural or legal person who (either alone or jointly or in common with other persons) determines the purposes for which and the manner in which any personal data are, or are to be, processed. For the purpose of this Privacy Policy, we are a Data Controller of your data.</p>
+            <p className="mt-2"><strong>&quot;Data Processors&quot;</strong> or <strong>&quot;Service Providers&quot;</strong> means any natural or legal person who processes the data on behalf of the Data Controller. We may use the services of various Service Providers in order to process your data more effectively.</p>
+            <p className="mt-2"><strong>&quot;Data Subject&quot;</strong> is any living individual who is the subject of Personal Data.</p>
+            <p className="mt-2"><strong>&quot;Device Information&quot;</strong> is information about the computer or mobile device that a user uses to access the Service, such as the hardware model, operating system and version, identification numbers assigned to the device, such as the ID for Advertising (IDFA) on Apple devices, and the Advertising ID on Android devices, mobile network information, and website or app usage behavior.</p>
+            <p className="mt-2"><strong>Healthcare Practitioners</strong> means practitioners who provide or assist in the provision of healthcare through our service, which may include nurse practitioners, nurses, physicians, mental health therapists, dietitians, and naturopaths.</p>
+            <p className="mt-2"><strong>&quot;Location Information&quot;</strong> is information about the location of a user when the user accesses or uses the Service. For example, via browser information and other similar device or browser attributes (like IP address), a locator page that may exist, or from a mobile application.</p>
+            <p className="mt-2"><strong>&quot;Navigational Information&quot;</strong> – when a user accesses the Service, the user&apos;s computer, phone, and/or device may provide navigational information, such as browser type and version, service-provider identification, IP address, the site or online service from which you came, and the site or online service to which you navigate.</p>
+            <p className="mt-2"><strong>&quot;Personal Data&quot;</strong> means data about an individual defined under s.3 of this Privacy Policy.</p>
+            <p className="mt-2"><strong>&quot;Personal Health Information&quot;</strong> (&quot;PHI&quot;) – information about an identifiable individual that relates to physical or mental health, health services, payments, or provincial health-number identifiers.</p>
+            <p className="mt-2"><strong>&quot;PHIPA&quot;</strong> – the Personal Health Information Protection Act, 2004 (Ontario), together with all current amendments and its companion regulation O. Reg. 329/04.</p>
+            <p className="mt-2"><strong>&quot;Usage Data&quot;</strong> is data collected automatically either generated by the use of Service or from Service infrastructure itself (for example, the duration of a page visit) by you.</p>
+          </div>
+          <div>
+            <h3 className="text-lg font-semibold text-midnight">2. Information Collection and Use</h3>
+            <p>We collect several different types of information for various purposes to provide and improve our service to you; see § 3 below for more information on the types of information we collect from you.</p>
+            <p className="mt-2">Additionally affiliated entities, vendors, social media networks, and advertising networks may provide us with, or supplement, information about you. We may use this information for a variety of operational or marketing purposes related to Personal Data only (non-PHI); we do not use PHI for advertising.</p>
+          </div>
+          <div>
+            <h3 className="text-lg font-semibold text-midnight">3. Types of Information Collected</h3>
+            <p className="font-semibold">Collection of Personal Data</p>
+            <p className="mt-1">While using our Service, we may ask you to provide us with certain personally identifiable information that can be used to contact or identify you (&quot;Personal Data&quot;). Personal Data may include, but is not limited to:</p>
+            <p className="mt-2">(a) Name, address, phone number, email address, personal preferences, payment card number, purchase and ordering information, demographic information, responses to survey questions, your Location Information, your Navigational Information, your Device Information, your Usage Data, and any other information you choose to provide.</p>
+            <p className="mt-2">(b) We may use your Personal Data to contact you with newsletters, marketing or promotional materials and other information that may be of interest to you. You may opt out of receiving any, or all, of these communications from us by emailing at hello@getcareby.ca.</p>
+            <p className="mt-3 font-semibold">Collection of PHI</p>
+            <p className="mt-1">We collect PHI only as needed to deliver the service and comply with Ontario&apos;s PHIPA. PHI may include:</p>
+            <ul className="ml-6 list-disc space-y-1 mt-2">
+              <li><strong>Identity details</strong> – name, date of birth, gender, provincial health-card number.</li>
+              <li><strong>Contact details</strong> – mailing address, email, phone number.</li>
+              <li><strong>Clinical records</strong> – diagnoses, treatment history, prescriptions, referrals, test and lab results uploaded or entered into the platform.</li>
+              <li><strong>Biometric and vitals data</strong> – height, weight, heart rate, blood pressure, glucose readings, or other device-generated measurements.</li>
+              <li><strong>Wellness and lifestyle inputs</strong> – exercise logs, nutrition data, sleep patterns, stress levels, self-reported symptoms, survey answers, and goal-tracking information.</li>
+              <li><strong>Care-related usage data</strong> – timestamps, feature interactions, and audit trails that show when and how you (or your care team) access PHI within the service.</li>
             </ul>
-            <p className="mt-3 font-semibold">Health Information:</p>
+            <p className="mt-2">All PHI is stored and processed in accordance with PHIPA, segregated from non-health personal data, and used only for the purposes described in the &quot;Use of Data&quot; section.</p>
+            <p className="mt-3 font-semibold">Usage Data</p>
+            <p className="mt-1">We may also collect information that your browser sends whenever you visit our Service or when you access Service by or through a mobile device (&quot;Usage Data&quot;). This Usage Data may include information such as your computer&apos;s Internet Protocol address (e.g. IP address), browser type, browser version, the pages of our Service that you visit, the time and date of your visit, the time spent on those pages, unique device identifiers and other diagnostic data. When you access Service with a mobile device, this Usage Data may include information such as the type of mobile device you use, your mobile device unique ID, the IP address of your mobile device, your mobile operating system, the type of mobile Internet browser you use, unique device identifiers and other diagnostic data.</p>
+            <p className="mt-3 font-semibold">Tracking Cookies Data</p>
+            <p className="mt-1">We may use cookies and similar tracking technologies to track the activity on our Service and we hold certain information. Cookies are files with a small amount of data which may include an anonymous unique identifier. Cookies are sent to your browser from a website and stored on your device. Other tracking technologies are also used such as beacons, tags and scripts to collect and track information and to improve and analyze our Service. You can instruct your browser to refuse all cookies or to indicate when a cookie is being sent. However, if you do not accept cookies, you may not be able to use some portions of our Service.</p>
+            <p className="mt-2">Examples of Cookies we may use:</p>
             <ul className="ml-6 list-disc space-y-1">
-              <li>Medical history and current health conditions</li>
-              <li>Medication lists and treatment plans</li>
-              <li>Mobility and functional assessment data</li>
-              <li>Care needs and preferences</li>
-              <li>Health monitoring data collected during caregiver visits (100+ datapoints including mobility patterns, vitals, cognitive function)</li>
-            </ul>
-            <p className="mt-3 font-semibold">Financial Information:</p>
-            <ul className="ml-6 list-disc space-y-1">
-              <li>Payment and billing information</li>
-              <li>Insurance coverage details</li>
-              <li>Government benefit program information</li>
-            </ul>
-            <p className="mt-3 font-semibold">Service Preferences:</p>
-            <ul className="ml-6 list-disc space-y-1">
-              <li>Language preferences</li>
-              <li>Cultural preferences</li>
-              <li>Care history and feedback</li>
-              <li>Communication preferences</li>
+              <li>(a) <strong>Session Cookies:</strong> We use Session Cookies to operate our Service.</li>
+              <li>(b) <strong>Preference Cookies:</strong> We use Preference Cookies to remember your preferences and various settings.</li>
+              <li>(c) <strong>Security Cookies:</strong> We use Security Cookies for security purposes.</li>
             </ul>
           </div>
           <div>
-            <h3 className="text-lg font-semibold text-midnight">2. How We Use Your Information</h3>
-            <p className="mt-3 font-semibold">To Provide Care Services:</p>
+            <h3 className="text-lg font-semibold text-midnight">4. Individual Rights Under PHIPA</h3>
+            <p>Your rights to access, correct, or withdraw consent for PHI are described in Section 6 (Consent to collecting Personal Data and PHI).</p>
+          </div>
+          <div>
+            <h3 className="text-lg font-semibold text-midnight">5. Use of Personal Data (non-health information) and PHI</h3>
+            <p className="font-semibold">Personal Data</p>
+            <p className="mt-1">We use the collected Personal Data for various purposes:</p>
             <ul className="ml-6 list-disc space-y-1">
-              <li>Match you with appropriate caregivers</li>
-              <li>Coordinate healthcare appointments and services</li>
-              <li>Communicate with healthcare providers on your behalf</li>
-              <li>Monitor health trends and adjust care plans</li>
-              <li>Provide medical accompaniment and translation services</li>
+              <li>(a) to provide and maintain our Service;</li>
+              <li>(b) to notify you about changes to our Service;</li>
+              <li>(c) to allow you to participate in interactive features of our Service when you choose to do so;</li>
+              <li>(d) to provide customer support;</li>
+              <li>(e) to gather analysis or valuable information so that we can improve our Service;</li>
+              <li>(f) to monitor the usage of our Service;</li>
+              <li>(g) to detect, prevent and address technical issues;</li>
+              <li>(h) to fulfill any other purpose for which you provide it;</li>
+              <li>(i) to carry out our obligations and enforce our rights arising from any contracts entered into between you and us, including for billing and collection;</li>
+              <li>(j) to provide you with notices about your account and/or subscription, including expiration and renewal notices, email-instructions, etc.;</li>
+              <li>(k) to provide you with news, special offers and general information about other goods, services and events which we offer that are similar to those that you have already purchased or enquired about unless you have opted not to receive such information;</li>
+              <li>(l) in any other way we may describe when you provide the information;</li>
+              <li>(m) to aggregate pseudonymized or anonymized information for statistical or other purposes and;</li>
+              <li>(n) for any other purpose with your consent.</li>
             </ul>
-            <p className="mt-3 font-semibold">For Account Management:</p>
+            <p className="mt-2">Despite anything in this Section 5, Google Workspace APIs are not used to develop, improve, or train generalized AI and/or ML models.</p>
+            <p className="mt-3 font-semibold">Use of PHI</p>
+            <p className="mt-1">We use your PHI only for the following limited purposes:</p>
             <ul className="ml-6 list-disc space-y-1">
-              <li>Process membership applications and payments</li>
-              <li>Maintain accurate records</li>
-              <li>Send service notifications and updates</li>
-              <li>Provide customer support</li>
-            </ul>
-            <p className="mt-3 font-semibold">For Email and SMS Verification:</p>
-            <p className="mt-1">
-              We will only use your email address and phone number for account verification, service notifications, appointment reminders, caregiver updates, important account and billing communications.
-            </p>
-            <p className="mt-3">
-              We will NEVER sell, rent, or share your email address or phone number with third parties for marketing purposes.
-            </p>
-            <p className="mt-3 font-semibold">To Improve Our Services:</p>
-            <ul className="ml-6 list-disc space-y-1">
-              <li>Analyze service quality and outcomes</li>
-              <li>Conduct satisfaction surveys</li>
-              <li>Develop new services and features</li>
-            </ul>
-            <p className="mt-3 font-semibold">For Legal Compliance:</p>
-            <ul className="ml-6 list-disc space-y-1">
-              <li>Comply with applicable laws and regulations</li>
-              <li>Respond to legal requests from authorities</li>
+              <li>(a) <strong>Service delivery</strong> – to create and manage your account, enable the platform&apos;s healthcare and wellness features, and support any clinicians or care teams that you authorize to access your PHI.</li>
+              <li>(b) <strong>De-identified analytics</strong> – to measure performance, improve existing features, develop new tools, and generate statistical reports, but only after the data has been irreversibly de-identified so that no individual can be identified.</li>
+              <li>(c) <strong>Legal and compliance obligations</strong> – to meet requirements under applicable laws, respond to lawful requests from regulators or courts, detect or prevent fraud or security threats, and keep necessary business records.</li>
+              <li>(d) We do not sell PHI. We do not use PHI for marketing, fundraising, or advertising unless you provide a separate, explicit opt-in consent for that specific purpose.</li>
             </ul>
           </div>
           <div>
-            <h3 className="text-lg font-semibold text-midnight">3. Information Sharing</h3>
-            <p>We only share your personal information with:</p>
-            <p className="mt-3 font-semibold">Healthcare Providers:</p>
-            <ul className="ml-6 list-disc space-y-1">
-              <li>Caregivers and Personal Support Workers (PSWs) directly involved in your care</li>
-              <li>Licensed physicians through our GoToDoctor telehealth partnership</li>
-              <li>Specialists and diagnostic centers (with your consent)</li>
-              <li>Traditional Chinese Medicine practitioners (with your consent)</li>
+            <h3 className="text-lg font-semibold text-midnight">6. Consent to collecting Personal Data and PHI</h3>
+            <p className="font-semibold">Collection of Personal Data</p>
+            <p className="mt-1"><strong>How do we get your consent?</strong> When you provide Personal Data to use our software application, you give knowledgeable consent for us to collect and use that data solely to deliver the Service described on our website and for purposes described in s. 5 of this Privacy Policy. If we ask for your Personal Data for a secondary reason, such as for marketing, we will either ask you directly for your express consent.</p>
+            <p className="mt-2"><strong>How do you withdraw your consent?</strong> If you change your mind regarding your consent to our collection of your Personal Data, then you may withdraw your consent for us to contact you, for the continued collection, use or disclosure of your Personal Data, at any time by emailing us at hello@getcareby.ca.</p>
+            <p className="mt-3 font-semibold">Collection of PHI</p>
+            <p className="mt-1"><strong>Express and informed consent to collecting PHI</strong> – We will collect, use, or disclose your PHI only when you give clear, informed consent, unless the PHIPA permits or requires us to act without consent (for example, to prevent serious harm or comply with a court order).</p>
+            <p className="mt-2"><strong>Full explanation of purpose</strong> – Before or at the time we seek your consent, we will explain in plain language what PHI we need, why we need it, how we will use it, to whom we may disclose it, and any significant risks or benefits a reasonable person would want to know.</p>
+            <p className="mt-2"><strong>How you give consent</strong> – You provide consent by taking a positive action, such as clicking &quot;Accept,&quot; signing electronically, or verbally confirming in a recorded call. Consent is never assumed or implied.</p>
+            <p className="mt-2"><strong>Right to withdraw consent</strong> – You may withdraw consent at any time by emailing hello@getcareby.ca or by using the in-app privacy settings. Withdrawal will not affect PHI already processed, but it may limit our ability to continue providing certain services.</p>
+            <p className="mt-2"><strong>Substitute decision makers and Minors</strong> – If you are incapable of consenting, or the PHI relates to a Minor (i.e. under the age of 18 years old), an authorized substitute decision maker may grant, refuse, or withdraw consent on your behalf in accordance with PHIPA.</p>
+            <p className="mt-2"><strong>No marketing without separate opt-in</strong> – We will not use PHI for marketing, fundraising, or advertising unless you give a separate and explicit opt-in consent for that specific purpose.</p>
+            <p className="mt-2"><strong>Record of consent</strong> – We keep an auditable record of every consent and withdrawal, including the date, method, PHI involved, and the purposes you authorized.</p>
+            <p className="mt-2"><strong>Contact for questions or requests</strong> – To ask questions, withdraw consent, or exercise any privacy rights, contact our Privacy Officer at hello@getcareby.ca.</p>
+          </div>
+          <div>
+            <h3 className="text-lg font-semibold text-midnight">7. Retention of Personal Data and PHI</h3>
+            <p className="font-semibold">Retention of personal health information</p>
+            <p className="mt-1">We keep your personal health information (&quot;PHI&quot;) only for as long as is reasonably necessary to deliver the service you have requested and to meet any ongoing legal or regulatory obligations under the PHIPA. Once those purposes have been fulfilled, we securely destroy the PHI or irreversibly de-identify it as soon as practicable, and in any event within a commercially reasonable period, using industry-standard media-sanitisation methods.</p>
+            <p className="mt-3 font-semibold">Retention of Personal Data</p>
+            <p className="mt-1">We retain your Personal Data only for as long as necessary for the purposes described in this Privacy Policy. We keep and use this data to comply with legal obligations, resolve disputes, and enforce our agreements and policies. Usage data held solely for internal analysis is generally kept for a shorter period, unless it is needed to strengthen security, improve the service, or satisfy a legal requirement.</p>
+          </div>
+          <div>
+            <h3 className="text-lg font-semibold text-midnight">8. Transfer of Data</h3>
+            <p className="font-semibold">Cross-border transfer of Personal Data</p>
+            <p className="mt-1">We may use cloud infrastructure or service providers in other jurisdictions to deliver and support the platform. When this occurs, only Personal Data, not PHI, is transferred. Before any such transfer, we ensure the recipient offers privacy and security protections that are contractually equivalent to Ontario standards, including encryption, access controls, and breach-notification duties.</p>
+            <p className="mt-3 font-semibold">Storage and processing of PHI in Canada</p>
+            <p className="mt-1">We store and process your PHI exclusively on servers located in Canada. We will not transmit, disclose, or back-up PHI outside Canada unless you give us express consent for the transfer. Any permitted transfer occurs only under a written agreement that: limits the recipient to the authorised purpose; requires safeguards that provide a level of protection substantially similar to Ontario&apos;s PHIPA, including encryption in transit and at rest, strict access controls, breach-notification duties, and audit rights; and obliges the recipient to delete or return the PHI once it is no longer required.</p>
+          </div>
+          <div>
+            <h3 className="text-lg font-semibold text-midnight">9. Disclosure of Personal Data and PHI</h3>
+            <p className="font-semibold">Disclosures that may involve PHI</p>
+            <ul className="ml-6 list-disc space-y-2 mt-2">
+              <li><strong>With your express consent</strong> – We disclose PHI to any person or service you explicitly authorize (e.g., your clinician).</li>
+              <li><strong>Continuity of care</strong> – We may share PHI with other health-care providers involved in your treatment, but only as permitted by PHIPA and professional standards.</li>
+              <li><strong>Service-provider (&quot;agent&quot;) support</strong> – PHI may be accessed by contracted vendors that host, maintain, or secure our software application. Each vendor signs a written agreement that: (i) restricts use to our stated purposes, (ii) enforces PHIPA-equivalent safeguards, and (iii) requires prompt breach notification. We do not allow agents to use PHI for their own marketing or analytics.</li>
+              <li><strong>Legal or regulatory requirements</strong> – We disclose PHI when a court order, warrant, subpoena, or other statute compels us, or where PHIPA expressly authorises disclosure (e.g., to avert serious bodily harm).</li>
+              <li><strong>Enforcement of our rights / fraud prevention</strong> – We may disclose PHI to establish, exercise, or defend legal claims, detect or prevent fraud or security threats, or investigate suspected unlawful activity, but always using the minimum PHI necessary, in accordance with the PHIPA.</li>
+              <li><strong>Business transaction (succession)</strong> – If we merge, reorganise, or sell assets, PHI is transferred only if the recipient (a) is legally permitted to receive it, and (b) agrees in writing to use or disclose the PHI solely for completing the transaction and to continue protecting it in compliance with PHIPA.</li>
             </ul>
-            <p className="mt-3 font-semibold">Service Partners:</p>
+            <p className="mt-2">We never sell PHI, and we do not use or disclose PHI for marketing, fundraising, or advertising without a separate, explicit opt-in consent.</p>
+            <p className="mt-3 font-semibold">Disclosures that involve only non-health Personal Data</p>
             <ul className="ml-6 list-disc space-y-1">
-              <li>Payment processors for billing purposes (encrypted and secure)</li>
-              <li>Technology service providers who assist with our platform operations (subject to strict confidentiality agreements)</li>
+              <li><strong>Subsidiaries and affiliates</strong> – Internal group companies that support customer service, finance, or product development.</li>
+              <li><strong>Business support vendors</strong> – Cloud-hosting providers, email delivery services, analytics platforms, payment processors, or professional advisers who help us operate the business. These vendors receive only the data necessary for their task and are bound by confidentiality and security obligations.</li>
+              <li><strong>Business transaction</strong> – Transfer of non-health Personal Data to a successor entity in a merger, acquisition, or asset sale, subject to contractual privacy commitments.</li>
+              <li><strong>Legal compliance and risk management</strong> – Courts, regulators, law-enforcement bodies, or insurers when we believe the disclosure is required to comply with law, enforce our terms, protect our rights or the safety of others, or investigate fraud.</li>
+              <li><strong>Brand usage</strong> – With your permission, we may display your company name or logo on our website or marketing materials.</li>
+              <li><strong>Other disclosures with consent</strong> – Any additional sharing you expressly approve at the time of collection.</li>
             </ul>
-            <p className="mt-3 font-semibold">Legal Authorities:</p>
+            <p className="mt-2">Before any disclosure, whether PHI or Personal Data, we ensure that the recipient has appropriate administrative, technical, and physical safeguards to protect the information and that the disclosure complies with this Privacy Policy and applicable law.</p>
+          </div>
+          <div>
+            <h3 className="text-lg font-semibold text-midnight">10. Security of Personal Data and PHI</h3>
+            <p>We maintain a comprehensive information-security program designed to protect both Personal Data and PHI against loss, misuse, and unauthorised access or disclosure. Safeguards include encryption in transit and at rest, multi-factor authentication, strict role-based access controls, continuous intrusion monitoring, regular penetration testing, and audited backup and recovery procedures. Administrative measures, such as employee training, least-privilege policies, and vendor due-diligence reviews, complement these technical controls.</p>
+            <p className="mt-2">Despite these measures, no Internet transmission or electronic storage method can be guaranteed 100 percent secure. We therefore cannot promise absolute security, but we continually assess and enhance our defences to meet or exceed PHIPA requirements and relevant industry standards.</p>
+            <p className="mt-2">If PHI or Personal Data is lost, stolen, or accessed without authorization, we will notify affected individuals, the Health Information Custodian (as defined in PHIPA) and the Information and Privacy Commissioner of Ontario in accordance with PHIPA, and will notify any other regulators where applicable.</p>
+          </div>
+          <div>
+            <h3 className="text-lg font-semibold text-midnight">11. Your Data Protection Rights Under GDPR</h3>
+            <p className="text-xs text-slate-500 italic mb-2">The following sections 11 to 13 apply only to users in the specified jurisdictions and do not modify our obligations under PHIPA for Ontario users.</p>
+            <p>If you are a resident of the European Union (EU) and European Economic Area (EEA), you have certain data protection rights, covered by GDPR. See more at <a href="https://eur-lex.europa.eu/eli/reg/2016/679/oj" target="_blank" rel="noopener noreferrer" className="text-primary underline">https://eur-lex.europa.eu/eli/reg/2016/679/oj</a>.</p>
+            <p className="mt-2">We aim to take reasonable steps to allow you to correct, amend, delete, or limit the use of your Personal Data. If you wish to be informed what Personal Data we hold about you and if you want it to be removed from our systems, please email us at hello@getcareby.ca.</p>
+            <p className="mt-2">In certain circumstances, you have the following data protection rights:</p>
             <ul className="ml-6 list-disc space-y-1">
-              <li>When required by law or court order</li>
-              <li>To protect the safety and wellbeing of our clients</li>
+              <li>(a) the right to access, update or to delete the information we have on you;</li>
+              <li>(b) the right of rectification – you have the right to have your information rectified if that information is inaccurate or incomplete;</li>
+              <li>(c) the right to object – you have the right to object to our processing of your Personal Data;</li>
+              <li>(d) the right of restriction – you have the right to request that we restrict the processing of your personal information;</li>
+              <li>(e) the right to data portability – you have the right to be provided with a copy of your Personal Data in a structured, machine-readable and commonly used format;</li>
+              <li>(f) the right to withdraw consent – you also have the right to withdraw your consent at any time where we rely on your consent to process your personal information.</li>
             </ul>
-            <p className="mt-3">
-              We NEVER sell your personal information to third parties, share your information for marketing purposes without explicit consent, or disclose your health information without proper authorization.
-            </p>
+            <p className="mt-2">Please note that we may ask you to verify your identity before responding to such requests. We may not be able to provide Service without some necessary data. You have the right to complain to a Data Protection Authority about our collection and use of your Personal Data. For more information, please contact your local data protection authority in the European Economic Area (EEA).</p>
           </div>
           <div>
-            <h3 className="text-lg font-semibold text-midnight">4. Email and SMS Communications</h3>
-            <p>In compliance with CASL (Canada&apos;s Anti-Spam Legislation):</p>
-            <p className="mt-3 font-semibold">Express Consent:</p>
-            <p>
-              By creating an account or purchasing services, you provide express consent to receive account verification emails and SMS, service-related notifications, appointment reminders, care updates, important health information, billing and payment confirmations.
-            </p>
-            <p className="mt-3 font-semibold">Marketing Communications:</p>
-            <p>
-              We will obtain separate explicit consent before sending marketing emails or SMS. You can opt out at any time by clicking &quot;unsubscribe&quot; in any marketing email, replying &quot;STOP&quot; to marketing SMS messages, or contacting us at hello@getcareby.ca.
-            </p>
-            <p className="mt-3">
-              You cannot opt out of essential service communications (account verification, appointment confirmations, critical health updates) as these are necessary for service delivery.
-            </p>
+            <h3 className="text-lg font-semibold text-midnight">12. Your Data Protection Rights under CalOPPA</h3>
+            <p>CalOPPA is the first state law in the United States to require commercial websites and online services to post a privacy policy. The law&apos;s reach stretches well beyond California. See more at <a href="https://consumercal.org/about-cfc/cfc-education-foundation/california-online-privacy-protection-act-caloppa-3/" target="_blank" rel="noopener noreferrer" className="text-primary underline">California Online Privacy Protection Act (CalOPPA)</a>.</p>
+            <p className="mt-2">According to CalOPPA we agree to the following: (a) users can visit our site anonymously; (b) our Privacy Policy link includes the word &quot;Privacy&quot;, and can easily be found on the home page of our website; (c) users will be notified of any privacy policy changes on our Privacy Policy Page; (d) users are able to change their personal information by emailing us at hello@getcareby.ca.</p>
+            <p className="mt-2 font-semibold">Our Policy on &quot;Do Not Track&quot; Signals:</p>
+            <p>We honor Do Not Track signals and do not track, plant cookies, or use advertising when a Do Not Track browser mechanism is in place. Do Not Track is a preference you can set in your web browser to inform websites that you do not want to be tracked. You can enable or disable Do Not Track by visiting the Preferences or Settings page of your web browser.</p>
           </div>
           <div>
-            <h3 className="text-lg font-semibold text-midnight">5. Data Security</h3>
-            <p>We implement industry-standard security measures to protect your information:</p>
-            <p className="mt-3 font-semibold">Technical Safeguards:</p>
-            <ul className="ml-6 list-disc space-y-1">
-              <li>256-bit SSL/TLS encryption for data transmission</li>
-              <li>Encrypted storage of sensitive information</li>
-              <li>Secure, password-protected access controls</li>
-              <li>Regular security audits and updates</li>
-              <li>Firewall protection and intrusion detection</li>
+            <h3 className="text-lg font-semibold text-midnight">13. Your Data Protection Rights under the CCPA</h3>
+            <p>If you are a California resident, you are entitled to learn what data we collect about you, ask to delete your data and not to sell (share) it. To exercise your data protection rights, you can make certain requests and ask us:</p>
+            <ul className="ml-6 list-disc space-y-1 mt-2">
+              <li>(a) <strong>What personal information we have about you.</strong> If you make this request, we will return to you: the categories of personal information we have collected about you; the categories of sources; the business or commercial purpose; the categories of third parties with whom we share personal information; the specific pieces of personal information we have collected about you; a list of categories of personal information that we have sold, along with the category of any other company we sold it to (if we have not sold your personal information, we will inform you of that fact); a list of categories of personal information that we have disclosed for a business purpose. You are entitled to ask us to provide you with this information up to two times in a rolling twelve-month period.</li>
+              <li>(b) <strong>To delete your personal information.</strong> If you make this request, we will delete the personal information we hold about you as of the date of your request from our records and direct any service providers to do the same. In some cases, deletion may be accomplished through de-identification. If you choose to delete your personal information, you may not be able to use certain functions that require your personal information to operate.</li>
+              <li>(c) <strong>To stop selling your personal information.</strong> We don&apos;t sell or rent your personal information to any third parties for any purpose. You are the only owner of your Personal Data and can request disclosure or deletion at any time.</li>
             </ul>
-            <p className="mt-3 font-semibold">Administrative Safeguards:</p>
-            <ul className="ml-6 list-disc space-y-1">
-              <li>All staff and caregivers sign confidentiality agreements</li>
-              <li>Role-based access controls</li>
-              <li>Regular privacy and security training</li>
-              <li>Background checks for all employees with access to personal information</li>
-            </ul>
-            <p className="mt-3 font-semibold">Physical Safeguards:</p>
-            <ul className="ml-6 list-disc space-y-1">
-              <li>Secure office facilities with controlled access</li>
-              <li>Locked storage for physical documents</li>
-              <li>Secure disposal of documents containing personal information</li>
-            </ul>
+            <p className="mt-2">Please note, if you ask us to delete or stop selling your data, it may impact your experience with us. But in no circumstances will we discriminate against you for exercising your rights. To exercise your California data protection rights, please send your request by email: hello@getcareby.ca. Your data protection rights are covered by the CCPA (California Consumer Privacy Act), which took effect on 01/01/2020.</p>
           </div>
           <div>
-            <h3 className="text-lg font-semibold text-midnight">6. Data Retention</h3>
-            <p>We retain your personal information only as long as necessary:</p>
-            <p className="mt-3 font-semibold">Active Clients:</p>
-            <p>Information retained throughout the service relationship; health records maintained for continuity of care.</p>
-            <p className="mt-3 font-semibold">Former Clients:</p>
-            <p>Records retained for 7 years after service termination; financial records retained for 7 years as required by law.</p>
-            <p className="mt-3 font-semibold">After Retention Period:</p>
-            <p>Information is securely destroyed or anonymized. Health records transferred to you upon request.</p>
+            <h3 className="text-lg font-semibold text-midnight">14. Analytics</h3>
+            <p>We may use third party Service Providers (like Google Analytics, Firebase, etc.) to monitor and analyze the use of our Service.</p>
           </div>
           <div>
-            <h3 className="text-lg font-semibold text-midnight">7. Your Rights</h3>
-            <ul className="ml-6 list-disc space-y-1">
-              <li>
-                <span className="font-semibold">Access:</span> Request a copy of all personal information we hold about you.
-              </li>
-              <li>
-                <span className="font-semibold">Correction:</span> Request corrections to inaccurate or incomplete information.
-              </li>
-              <li>
-                <span className="font-semibold">Withdrawal of Consent:</span> Withdraw consent for non-essential communications at any time.
-              </li>
-              <li>
-                <span className="font-semibold">Deletion:</span> Request deletion of your personal information (subject to legal retention requirements).
-              </li>
-              <li>
-                <span className="font-semibold">File a Complaint:</span> Contact our Privacy Officer or the Office of the Privacy Commissioner of Canada.
-              </li>
-            </ul>
+            <h3 className="text-lg font-semibold text-midnight">15. CI/CD tools</h3>
+            <p>We may use third party Service Providers (like GitHub) to automate the development process of our software application.</p>
           </div>
           <div>
-            <h3 className="text-lg font-semibold text-midnight">8. Cookies and Website Tracking</h3>
-            <p>
-              Our website uses cookies to remember your preferences, analyze website traffic and usage, and improve user experience. You can control cookies through your browser settings. Disabling cookies may affect website functionality.
-            </p>
+            <h3 className="text-lg font-semibold text-midnight">16. Payments</h3>
+            <p>We may provide paid products and/or services within Service. In that case, we use third party services for payment processing (e.g. payment processors). We will not store or collect your payment card details. That information is provided directly to our third party payment processors whose use of your personal information is governed by their Privacy Policy. These payment processors adhere to the standards set by PCI-DSS as managed by the PCI Security Standards Council, which is a joint effort of brands like Visa, Mastercard, American Express and Discover. PCI-DSS requirements help ensure the secure handling of payment information.</p>
           </div>
           <div>
-            <h3 className="text-lg font-semibold text-midnight">9. Third-Party Links</h3>
-            <p>
-              Our website may contain links to third-party websites. We are not responsible for the privacy practices of these sites. Please review their privacy policies independently.
-            </p>
+            <h3 className="text-lg font-semibold text-midnight">17. Links to Other Sites</h3>
+            <p>Our Service may contain links to other sites that are not operated by us. If you click a third party link, you will be directed to that third party&apos;s site. We strongly advise you to review the Privacy Policy of every site you visit. We have no control over and assume no responsibility for the content, privacy policies or practices of any third party sites or services.</p>
           </div>
           <div>
-            <h3 className="text-lg font-semibold text-midnight">10. Children&apos;s Privacy</h3>
-            <p>
-              Careby services are designed for seniors and their adult caregivers. We do not knowingly collect information from individuals under 18 years of age.
-            </p>
+            <h3 className="text-lg font-semibold text-midnight">18. Minors&apos; Privacy</h3>
+            <p>Our Services are not intended for use by individuals under the age of 18 (&quot;Minors&quot;). We do not knowingly collect personally identifiable information from individuals under 18, unless authorized by their legal guardian. If you become aware that a Minor has provided us with Personal Data without explicit authorization of their legal guardian, please contact us. If we become aware that we have collected Personal Data and/or PHI from Minors without verification of the consent of their legal guardian, we shall take steps to remove that information from our servers.</p>
           </div>
           <div>
-            <h3 className="text-lg font-semibold text-midnight">11. Changes to This Privacy Policy</h3>
-            <p>
-              We may update this Privacy Policy periodically. Changes will be posted on this page with an updated &quot;Last Updated&quot; date. Significant changes will be communicated via email to active members.
-            </p>
+            <h3 className="text-lg font-semibold text-midnight">19. Changes to This Privacy Policy</h3>
+            <p>We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page. We will let you know via email and/or a prominent notice on our website or software application interface, prior to the change becoming effective and update &quot;effective date&quot; at the top of this Privacy Policy. You are advised to review this Privacy Policy periodically for any changes. Changes to this Privacy Policy are effective when they are posted on this page.</p>
           </div>
           <div>
-            <h3 className="text-lg font-semibold text-midnight">12. Contact Us</h3>
-            <p>
-              For privacy questions, to exercise your rights, or to file a complaint: Careby Solutions Inc. 205 Placer Court, Suite 513, North York, ON M2H 0A9, Canada.
-            </p>
-            <p>Email: hello@getcareby.ca | Phone: 1-646-578-9920</p>
-            <p>Office of the Privacy Commissioner of Canada: www.priv.gc.ca | 1-800-282-1376</p>
+            <h3 className="text-lg font-semibold text-midnight">20. Contact Us</h3>
+            <p>If you have any questions about this Privacy Policy, please contact us:</p>
+            <p className="mt-2">By email: <a href="mailto:hello@getcareby.ca" className="text-primary underline">hello@getcareby.ca</a></p>
           </div>
         </div>
       </div>
     </section>
+    </>
+  )
+}
+
+function CancellationRefundPolicyPage({ onBack }: { onBack: () => void }) {
+  return (
+    <>
+      <section id="cancellation-refund" className="bg-soft px-6 py-20 sm:px-10 md:px-16 lg:px-24">
+        <div className="mx-auto max-w-5xl space-y-8 text-slate-700">
+          <button
+            onClick={onBack}
+            className="mb-8 flex items-center gap-2 text-primary transition hover:text-accent"
+          >
+            <span className="material-symbols-outlined">arrow_back</span>
+            <span className="font-semibold">Back to Home</span>
+          </button>
+          <div className="text-center">
+            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-primary">Careby Solutions Inc.</p>
+            <h2 className="mt-4 text-3xl font-semibold text-midnight sm:text-4xl">Cancellation &amp; Refund Policy</h2>
+            <p className="mt-2 text-sm text-slate-500">Effective March 12, 2026 · Version 12.0</p>
+          </div>
+          <CancellationRefundPolicyLegalBody />
+        </div>
+      </section>
     </>
   )
 }
@@ -5258,166 +5530,7 @@ function TermsOfServicePage({ onBack }: { onBack: () => void }) {
             <p className="text-sm font-semibold uppercase tracking-[0.3em] text-primary">Terms of Service</p>
             <h2 className="mt-4 text-3xl font-semibold text-midnight sm:text-4xl">Terms of Service</h2>
           </div>
-        <div className="space-y-6 text-sm leading-relaxed">
-          <p>
-            Please read these Terms of Service (&quot;Terms&quot;) carefully before using Careby&apos;s services. By accessing our website, purchasing membership, or using our services, you agree to be bound by these Terms.
-          </p>
-          <div>
-            <h3 className="text-lg font-semibold text-midnight">1. Definitions</h3>
-            <p>
-              &quot;Careby,&quot; &quot;we,&quot; &quot;us,&quot; &quot;our&quot; refers to Careby Solutions Inc., an Ontario corporation. &quot;Services&quot; refers to all care coordination, caregiver matching, telehealth access, health navigation, pain management, and related services provided by Careby. &quot;Client,&quot; &quot;you,&quot; &quot;your&quot; refers to the person receiving services or the authorized representative. &quot;Member&quot; refers to clients who have purchased an annual membership. &quot;Caregiver&quot; refers to Personal Support Workers (PSWs) and healthcare providers in Careby&apos;s network.
-            </p>
-          </div>
-          <div>
-            <h3 className="text-lg font-semibold text-midnight">2. Services Provided</h3>
-            <p>
-              Careby provides care coordination and navigation services including premium caregiver matching and placement, health navigation and advocacy, access to telehealth services through GoToDoctor, in-home support services, medical accompaniment (peizhun), pain management treatments, financial and benefits navigation, and care planning. Careby is a care coordination platform, not a direct healthcare provider. Medical services are provided by licensed third-party practitioners.
-            </p>
-          </div>
-          <div>
-            <h3 className="text-lg font-semibold text-midnight">3. Eligibility</h3>
-            <p>
-              To use Careby services, you must be 18 years of age or older, be a resident of Ontario, provide accurate and complete information, and have legal authority to make healthcare decisions (or have appointed Power of Attorney).
-            </p>
-          </div>
-          <div>
-            <h3 className="text-lg font-semibold text-midnight">4. Membership Terms</h3>
-            <p className="font-semibold">Membership Plans:</p>
-            <p>Diagnostics (e.g. The Essentialist): from $399/year. Home care (e.g. Independent Living): from $1,499/month. Companion: from $199/month. Family Health Hub: $2,499/year. Other tiers and credits as posted.</p>
-            <p className="mt-3 font-semibold">Membership Benefits:</p>
-            <p>
-              Memberships are valid for 12 months from purchase date. Service credits must be used within the membership year. Unused credits do not roll over and are non-refundable. Member discounts apply only during active membership period.
-            </p>
-            <p className="mt-3 font-semibold">Payment Terms:</p>
-            <p>
-              Memberships are billed annually in advance. Payment accepted by credit card, debit, or e-transfer. HST/GST applies to all services. Failed payment may result in service suspension.
-            </p>
-            <p className="mt-3 font-semibold">Cancellation and Refunds:</p>
-            <p>
-              30-Day Money-Back Guarantee: Full refund if cancelled within 30 days of purchase and no services have been used. After 30 days, membership fees are non-refundable. Service credits are non-refundable upon cancellation. Pro-rated refunds are not available except in cases of death or permanent relocation outside service area.
-            </p>
-            <p className="mt-3 font-semibold">Renewal:</p>
-            <p>
-              Memberships auto-renew unless cancelled 30 days before expiration. Renewal rates may change with 60 days notice. You may opt out of auto-renewal at any time.
-            </p>
-          </div>
-          <div>
-            <h3 className="text-lg font-semibold text-midnight">5. À La Carte Services</h3>
-            <p>
-              Services may be purchased individually without membership. Hourly rates and package prices as posted. Payment due at time of service or as invoiced. Cancellation policies apply.
-            </p>
-          </div>
-          <div>
-            <h3 className="text-lg font-semibold text-midnight">6. Caregiver Matching and Placement</h3>
-            <p>
-              We match clients with caregivers based on needs, preferences, and availability. All caregivers complete our Careby Gold Standard™ 10/10 vetting process. Caregivers are independent contractors, not Careby employees. While we strive for excellent matches, we cannot guarantee specific outcomes or timelines.
-            </p>
-          </div>
-          <div>
-            <h3 className="text-lg font-semibold text-midnight">7. Telehealth Services</h3>
-            <p>
-              Telehealth services are provided through GoToDoctor and subject to their terms. Telehealth is not appropriate for emergencies. Prescriptions are subject to physician discretion and pharmacy availability.
-            </p>
-          </div>
-          <div>
-            <h3 className="text-lg font-semibold text-midnight">8. Cancellation Policies</h3>
-            <p>
-              Caregiver visits require 24 hours notice for cancellation to avoid a $50 fee. Telehealth requires 2 hours notice; pain management requires 24 hours; medical accompaniment requires 48 hours. Package purchases are non-refundable once treatment begins.
-            </p>
-          </div>
-          <div>
-            <h3 className="text-lg font-semibold text-midnight">9. Payment and Billing</h3>
-            <p>
-              Accepted payment methods include credit cards, debit cards, EFT, and cheque (for invoices over $1,000). Membership fees are charged annually, hourly services billed weekly or bi-weekly, and packages billed 50% upfront & 50% upon completion. Accounts overdue by 30+ days may incur 2% monthly interest.
-            </p>
-          </div>
-          <div>
-            <h3 className="text-lg font-semibold text-midnight">10. Privacy and Confidentiality</h3>
-            <p>Your personal and health information is protected under our Privacy Policy and PIPEDA. Please review our Privacy Policy for details.</p>
-          </div>
-          <div>
-            <h3 className="text-lg font-semibold text-midnight">11. Limitation of Liability</h3>
-            <p>
-              Careby provides coordination, not direct medical care. We are not liable for medical outcomes, caregiver performance, or third-party provider actions. Our liability is limited to the amount paid for services in the preceding 12 months.
-            </p>
-          </div>
-          <div>
-            <h3 className="text-lg font-semibold text-midnight">12. Health and Safety</h3>
-            <p>
-              Clients must provide accurate health information, inform us of changes, and maintain a safe home environment. Infectious conditions must be disclosed. We have zero tolerance for abuse or neglect.
-            </p>
-          </div>
-          <div>
-            <h3 className="text-lg font-semibold text-midnight">13. Intellectual Property</h3>
-            <p>
-              All content on getcareby.ca is the property of Careby Solutions Inc. and protected by Canadian copyright law. You may not reproduce, distribute, or misuse our intellectual property.
-            </p>
-          </div>
-          <div>
-            <h3 className="text-lg font-semibold text-midnight">14. Dispute Resolution</h3>
-            <p>
-              Contact us first to resolve concerns (hello@getcareby.ca). If unresolved, disputes may be referred to mediation. These Terms are governed by the laws of Ontario and Canada.
-            </p>
-          </div>
-          <div>
-            <h3 className="text-lg font-semibold text-midnight">15. Modifications to Terms</h3>
-            <p>
-              We may update these Terms periodically. Changes will be posted with 30 days notice, and continued use constitutes acceptance.
-            </p>
-          </div>
-          <div>
-            <h3 className="text-lg font-semibold text-midnight">16. Severability</h3>
-            <p>If any provision is unenforceable, the remaining provisions remain in full effect.</p>
-          </div>
-          <div>
-            <h3 className="text-lg font-semibold text-midnight">17. Entire Agreement</h3>
-            <p>These Terms, together with our Privacy Policy, constitute the entire agreement between you and Careby.</p>
-          </div>
-          <div>
-            <h3 className="text-lg font-semibold text-midnight">18. Contact Information</h3>
-            <p>
-              Careby Solutions Inc. 205 Placer Court, Suite 513, North York, ON M2H 0A9, Canada | Email: hello@getcareby.ca | Phone: 1-646-578-9920
-            </p>
-          </div>
-          <div>
-            <h3 className="text-lg font-semibold text-midnight">19. Acknowledgment</h3>
-            <p>By using Careby services, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service and our Privacy Policy.</p>
-          </div>
-          <div>
-            <h3 className="text-lg font-semibold text-midnight">20. Communications Consent</h3>
-            <p>
-              By creating an account or using Careby&apos;s services, you expressly consent to receive electronic communications from Careby Solutions Inc. via email, SMS, or other electronic means for the following purposes:
-            </p>
-            <p className="mt-3 font-semibold">1. Service-Related Communications</p>
-            <p>
-              You agree to receive transactional and operational messages necessary for your use of our platform, including but not limited to:
-            </p>
-            <ul className="mt-2 list-disc pl-6 space-y-1">
-              <li>Account verification codes and authentication messages</li>
-              <li>Password reset and security notifications</li>
-              <li>Booking confirmations and appointment reminders</li>
-              <li>Service updates and changes affecting your account</li>
-              <li>Billing statements and payment confirmations</li>
-              <li>Legal notices and policy updates</li>
-            </ul>
-            <p className="mt-3 font-semibold">2. Nature of Communications</p>
-            <p>
-              These communications are essential to providing our services and are not marketing materials. You cannot opt out of these service-related messages while maintaining an active account.
-            </p>
-            <p className="mt-3 font-semibold">3. Contact Information Accuracy</p>
-            <p>
-              You are responsible for maintaining accurate email and phone contact information in your account settings. Careby is not liable for missed communications due to outdated or incorrect contact information.
-            </p>
-            <p className="mt-3 font-semibold">4. Marketing Communications (Optional)</p>
-            <p>
-              If you separately opt in to receive marketing communications, newsletters, or promotional content, you may unsubscribe at any time using the unsubscribe link provided in such communications. This opt-out does not affect service-related messages described above.
-            </p>
-            <p className="mt-3 font-semibold">5. Consent Modification</p>
-            <p>
-              By continuing to use our services, you reaffirm your consent to receive these communications. If you wish to withdraw consent, you must close your account.
-            </p>
-          </div>
-        </div>
+        <TermsOfServiceLegalBody />
       </div>
     </section>
     </>
@@ -5474,7 +5587,15 @@ function AboutUsPage({ onBack }: { onBack: () => void }) {
   )
 }
 
-function Footer({ setCurrentPage, t }: { setCurrentPage: (page: 'home' | 'privacy' | 'terms' | 'about') => void, t: typeof content.en }) {
+function Footer({
+  setCurrentPage,
+  t,
+}: {
+  setCurrentPage: (
+    page: 'home' | 'privacy' | 'terms' | 'cancellation-refund' | 'about' | 'careby-health' | 'careby-home'
+  ) => void
+  t: typeof content.en
+}) {
   return (
     <footer className="relative bg-midnight px-4 pt-0 pb-24 text-soft sm:px-10 sm:pb-10 md:px-16 lg:px-24 overflow-hidden pb-safe">
       <LogoWatermark className="absolute -left-10 bottom-8 w-[350px] lg:w-[420px] -rotate-6" opacity={0.06} />
@@ -5530,7 +5651,10 @@ function Footer({ setCurrentPage, t }: { setCurrentPage: (page: 'home' | 'privac
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.35em] text-white/50">{t.footer.contact}</p>
           <div className="mt-3 space-y-2 text-xs text-white/60">
-            <p>{t.footer.phone}: {contactInfo.phone} ({t.footer.support247})</p>
+            <p>
+              {t.footer.phone}: {contactInfo.phone}
+              {t.footer.support247 ? ` (${t.footer.support247})` : ''}
+            </p>
             <p>{t.footer.email}: {contactInfo.email}</p>
           </div>
         </div>
@@ -5563,13 +5687,15 @@ function Footer({ setCurrentPage, t }: { setCurrentPage: (page: 'home' | 'privac
             <p>
               <span className="font-semibold">{t.footer.sunday}:</span> {contactInfo.businessHours[2].value}
             </p>
-            <p className="text-xs text-primary">{t.footer.emergencySupport}</p>
+            {t.footer.emergencySupport ? (
+              <p className="text-xs text-primary">{t.footer.emergencySupport}</p>
+            ) : null}
           </div>
         </div>
       </div>
       <div className="mx-auto mt-8 max-w-6xl border-t border-white/10 pt-5 text-xs text-white/50 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <p>© 2025 Careby Solutions Inc. {t.footer.allRightsReserved}</p>
-        <div className="flex items-center gap-4 justify-end">
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 justify-end">
           <a
             href="#privacy"
             onClick={(e) => {
@@ -5591,6 +5717,21 @@ function Footer({ setCurrentPage, t }: { setCurrentPage: (page: 'home' | 'privac
             aria-label="Read our terms of service"
           >
             {t.footer.termsOfService}
+          </a>
+          <a
+            href="#cancellation-refund"
+            onClick={(e) => {
+              e.preventDefault()
+              window.open(
+                `${window.location.origin}${window.location.pathname}#cancellation-refund`,
+                '_blank',
+                'noopener,noreferrer'
+              )
+            }}
+            className="transition hover:text-accent cursor-pointer"
+            aria-label="Read our cancellation and refund policy"
+          >
+            {t.footer.cancellationRefundPolicy}
           </a>
         </div>
       </div>

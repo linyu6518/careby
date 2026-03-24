@@ -308,7 +308,7 @@ export const generateHomepageBreadcrumbSchema = () => {
     { name: 'Services', url: 'https://getcareby.ca/#services' },
     { name: 'Technology', url: 'https://getcareby.ca/#technology' },
     { name: 'Partners', url: 'https://getcareby.ca/#partners' },
-    { name: 'Impact', url: 'https://getcareby.ca/#impact' },
+    { name: 'Team', url: 'https://getcareby.ca/#team' },
     { name: 'Membership', url: 'https://getcareby.ca/#membership' },
     { name: 'FAQ', url: 'https://getcareby.ca/#faq' }
   ])
